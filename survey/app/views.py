@@ -33,7 +33,7 @@ def survey(request):
             #Please contiue until finished
 
             likert_data = [a1,a2] ## input all
-            uploadDataLikert(likert_data)
+            uploadDataLikert(likert_data) ## upload form data to csv
 
             #Get opinion form data, do not include subject name
             a1 = surveyform.cleaned_data.get('a1')
@@ -41,17 +41,15 @@ def survey(request):
             #Please contiue until finished
 
             survey_data = [a1,a2] ## input all variables
-            uploadDataSentiment(survey_data)
+            uploadDataSentiment(survey_data) ## upload form data to csv
 
             #Get opinion form data
             e1 = opinionForm.cleaned_data.get('e1')
             e2 = opinionForm.cleaned_data.get('e2')
             e3 = opinionForm.cleaned_data.get('e4')
 
+            ### No function for here yet
             opinion_data = [e1,e2,e3] ## input all variables
-
-            #Please contiue until finished
-
             
 
             return render(request, 'app/dashboard.html')
