@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from app.forms import SurveyForm, LikertForm, OpinionForm
 from .models import Surveyquestions
+from .controller import *
 
 # Create your views here.
 
@@ -19,6 +20,40 @@ def survey(request):
 
         if surveyform.is_valid() and likertForm.is_valid() and opinionForm.is_valid():
             print('Form is valid!')
+
+            '''
+            !!! Note !!!
+            Try to print a1 variable if form.cleaned_data.get() is working accordingly
+            you can remove controller.py if it takes too long to load
+            '''
+            
+            #Get likert form data
+            a1 = likertForm.cleaned_data.get('a1')
+            a2 = likertForm.cleaned_data.get('a2')
+            #Please contiue until finished
+
+            likert_data = [a1,a2] ## input all
+            uploadDataLikert(likert_data)
+
+            #Get opinion form data, do not include subject name
+            a1 = surveyform.cleaned_data.get('a1')
+            a2 = surveyform.cleaned_data.get('a2')
+            #Please contiue until finished
+
+            survey_data = [a1,a2] ## input all variables
+            uploadDataSentiment(survey_data)
+
+            #Get opinion form data
+            e1 = opinionForm.cleaned_data.get('e1')
+            e2 = opinionForm.cleaned_data.get('e2')
+            e3 = opinionForm.cleaned_data.get('e4')
+
+            opinion_data = [e1,e2,e3] ## input all variables
+
+            #Please contiue until finished
+
+            
+
             return render(request, 'app/dashboard.html')
             
     # if a GET (or any other method) we'll create a blank form
@@ -46,7 +81,7 @@ def about(request):
 
 def likertPage(request):
 
-    sentiment = countLikert()()
+    sentiment = countLikert()
 
     context = {
         'column_name':column_name,
@@ -54,7 +89,7 @@ def likertPage(request):
         
         }
 
-    return render(request, 'likertChart.html', context)
+    return render(request, 'app/likertChart.html', context)
 
 def sentimentPage(request):
 
@@ -66,7 +101,7 @@ def sentimentPage(request):
         
         }
 
-    return render(request, 'sentimentChart.html', context)
+    return render(request, 'app/sentimentChart.html', context)
 
 def aspectPage(request):
 
@@ -77,4 +112,4 @@ def aspectPage(request):
         'aspect':aspect
     }
 
-    return render(request, 'aspectChart.html', context)
+    return render(request, 'app/aspectChart.html', context)
