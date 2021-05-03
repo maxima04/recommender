@@ -1,0 +1,257 @@
+'''
+DataFrame Manipulation functions should be here
+
+Create folder for csv files
+'''
+import os
+import pandas as pd
+import numpy as np
+import re
+from pathlib import Path
+import json
+import spacy
+
+from .commons import *
+
+import nltk
+
+
+from nltk import word_tokenize, pos_tag, pos_tag_sents
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer 
+from nltk.corpus import wordnet 
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+COMMONS_DIR = os.path.join(BASE_DIR, 'app/commons')
+
+OPINION_SURVEY_DIR = os.path.join(COMMONS_DIR,'opinion_survey.csv')
+LIKERT_SURVEY_DIR = os.path.join(COMMONS_DIR,'likert_survey.csv')
+
+def uploadDataSentiment(data):
+
+    with open(OPINION_SURVEY_DIR, 'a') as csv_file:
+        csv_writer = csv.writer(csv_file, delimiter=',')
+        csv_writer.writerow(data)
+        csv_writer.close()
+
+    return None
+
+def uploadDataLikert(data):
+
+    with open(LIKERT_SURVEY_DIR, 'a') as csv_file:
+        csv_writer = csv.writer(csv_file, delimiter=',')
+        csv_writer.writerow(data)
+        csv_writer.close()
+
+    return None
+
+def countLikert():
+
+    df = pd.read_csv(LIKERT_SURVEY_DIR)
+
+    agg_results = pd.get_dummies(df.stack()).groupby(level=1).sum().reset_index()
+
+    sorter = df.columns.tolist() ### List of correctly positioned titles
+    sorterIndex = dict(zip(sorter, range(len(sorter)))) ## Dictionary of titles with corresponding position number
+
+
+    agg_results['ID'] = agg_results['index'].map(sorterIndex) ### Create ID Column where its number will be based on 
+                                                          ### the position number of the original positioning
+                                                          ### of the titles
+    agg_results = agg_results.sort_values('ID',ascending = True) ## Sort DF by ID Column
+    agg_results = agg_results.drop('ID',axis=1) ## Drop ID column
+    agg_results = agg_results.reset_index() ## Reset index due to the original index numbers will be scrambled
+    agg_results = agg_results.drop(agg_results.columns[[0]], axis=1)
+
+    order = ['index','Strongly Agree', 'Agree', 'Disagree','Strongly Disagree'] ## Original Order
+    agg_results = agg_results.reindex(columns=order) ## Reindexing
+    agg_results.reset_index(drop=True)
+
+
+    result = agg_results.to_json(orient="index")
+    parsed = json.loads(result)
+
+    return parsed
+
+
+def calculateSentiment():
+
+    sid = SentimentIntensityAnalyzer()
+    lemmatizer = WordNetLemmatizer() 
+
+    df = pd.read_csv(OPINION_SURVEY_DIR)
+
+    df = df.replace(np.nan, 'Neutral', regex=True)
+
+    col_range = len(df.columns) # number of columns
+    stored_pos = []
+    for i in range(0,col_range):
+        col = df.columns[i] # The current column
+        df.loc[:,col] = df[col].apply(lambda x : str.lower(str(x))) ## To Lower Case
+        df.loc[:,col] = df[col].apply(lambda x : " ".join(re.findall('[\w]+',x))) # Remove Punctuations
+        df.loc[:,col] = df[col].apply(lambda x : remove_stopWords(x)) # Remove Stop words
+        
+        ##POS TAGGING
+        texts = df.loc[:,col].tolist()
+        tagged_texts = pos_tag_sents(map(word_tokenize, texts)) ### Tag every word in a row with POS
+        
+        ### Lemmatization
+        new = []
+
+        stored_pos.append(tagged_texts)
+        for i in tagged_texts:
+            #if len(i) > 0:
+            lemmatized_sentence = []
+            for word, tag in i:
+                tag = pos_tagger(tag) ### Convert POS Tag to known POS for simplification
+                if tag is None: 
+        # if there is no available tag, append the token as is 
+                    lemmatized_sentence.append(word) 
+                else:         
+        # else use the tag to lemmatize the token 
+                    lemmatized_sentence.append(lemmatizer.lemmatize(word, tag)) 
+
+            lemmatized_sentence = " ".join(lemmatized_sentence) 
+            #print(lemmatized_sentence)
+            new.append(lemmatized_sentence)
+            
+        else:
+            pass
+    
+    
+    df['POS'] = new ## Store tagged words
+    
+    
+    df = df.replace(r'^\s*$', "neutral", regex=True) ## If row value is null, replace with neutral string
+
+
+    comp = []
+    col_range = len(df.columns) # number of columns
+
+    for i in range(0,col_range):
+        col = df.columns[i] # The current column
+        df['scores'] = df[col].apply(lambda x: sid.polarity_scores(x)) ## Get polarity score of every Column
+        compound = df['scores'].apply(lambda score_dict: score_dict['compound']) ## Extract the compound from the results
+        df = df.drop('scores', 1) # Drop score DF in every iteration
+        compound = sum(compound)/140 # Get the mean compound of each columns
+        comp.append(compound) # Save mean and append to list
+
+    return comp ## Im an array
+
+def getAspect():
+
+    df = pd.read_csv(OPINION_SURVEY_DIR)
+    ndf = df
+    nlp = spacy.load('en_core_web_lg')
+
+    col_range = len(ndf.columns) # number of columns
+    stored_pos = []
+    tokens = []
+    aspect_terms = []
+    for i in range(0,col_range):
+        col = df.columns[i] # The current column
+        ndf.loc[:,col] = ndf[col].apply(lambda x : str.lower(str(x))) ## To Lower Case
+        ndf.loc[:,col] = ndf[col].apply(lambda x : " ".join(re.findall('[\w]+',x))) # Remove Punctuations
+        ndf[col + "(CLEANSED TEXT)"] = ndf[col].apply(lambda x : remove_stopWords(x)) # Remove Stop words
+        ndf.loc[:,col] = ndf[col].apply(lambda x : remove_stopWords(x))
+        ndf[col + "(TOKENIZED)"] = ndf[col].apply(lambda x : word_tokenize(x))
+        ndf.loc[:,col] = ndf[col].apply(lambda x : word_tokenize(x))
+        ndf[col + "(POS_TAGGED)"] = ndf[col].apply(lambda x : pos_tag(x))   
+
+    col_range = len(df.columns) # number of columns
+
+    for i in range(0,col_range):
+        aspect_terms = []
+        col = ndf.columns[i]
+        for x in range(len(ndf.loc[:,col])):
+            amod_pairs = []
+            advmod_pairs = []
+            compound_pairs = []
+            xcomp_pairs = []
+            neg_pairs = []
+
+            if len(str(df[col][x])) != 0:
+                lines = str(df[col][x]).replace('*',' ').replace('-',' ').replace('so ',' ').replace('be ',' ').replace('are ',' ').replace('just ',' ').replace('get ','').replace('were ',' ').replace('When ','').replace('when ','').replace('again ',' ').replace('where ','').replace('how ',' ').replace('has ',' ').replace('Here ',' ').replace('here ',' ').replace('now ',' ').replace('see ',' ').replace('why ',' ').split('.')       
+                for line in lines:
+                    doc = nlp(line)
+                    str1=''
+                    str2=''
+                    for token in doc:
+                        if token.pos_ == 'NOUN':
+                            for j in token.lefts:
+                                if j.dep_ == 'compound':
+                                    compound_pairs.append((j.text+' '+token.text,token.text))
+                                if j.dep_ == 'amod' and j.pos_ == 'ADJ': #primary condition
+                                    str1 = j.text+' '+token.text
+                                    amod_pairs.append(j.text+' '+token.text)
+                                    for k in j.lefts:
+                                        if k.dep_ == 'advmod': #secondary condition to get adjective of adjectives
+                                            str2 = k.text+' '+j.text+' '+token.text
+                                            amod_pairs.append(k.text+' '+j.text+' '+token.text)
+                                    mtch = re.search(re.escape(str1),re.escape(str2))
+                                    if mtch is not None:
+                                        amod_pairs.remove(str1)
+                        if token.pos_ == 'VERB':
+                            for j in token.lefts:
+                                if j.dep_ == 'advmod' and j.pos_ == 'ADV':
+                                    advmod_pairs.append(j.text+' '+token.text)
+                                if j.dep_ == 'neg' and j.pos_ == 'ADV':
+                                    neg_pairs.append(j.text+' '+token.text)
+                            for j in token.rights:
+                                if j.dep_ == 'advmod'and j.pos_ == 'ADV':
+                                    advmod_pairs.append(token.text+' '+j.text)
+                        if token.pos_ == 'ADJ':
+                            for j,h in zip(token.rights,token.lefts):
+                                if j.dep_ == 'xcomp' and h.dep_ != 'neg':
+                                    for k in j.lefts:
+                                        if k.dep_ == 'aux':
+                                            xcomp_pairs.append(token.text+' '+k.text+' '+j.text)
+                                elif j.dep_ == 'xcomp' and h.dep_ == 'neg':
+                                    if k.dep_ == 'aux':
+                                            neg_pairs.append(h.text +' '+token.text+' '+k.text+' '+j.text)
+
+
+                pairs = list(set(amod_pairs+advmod_pairs+neg_pairs+xcomp_pairs))
+
+                for i in range(len(pairs)):
+                    if len(compound_pairs)!=0:
+                        for comp in compound_pairs:
+                            mtch = re.search(re.escape(comp[1]),re.escape(pairs[i]))
+                            if mtch is not None:
+                                pairs[i] = pairs[i].replace(mtch.group(),comp[0])
+
+
+            aspect_terms.append(pairs)
+        
+        ndf[col + '(aspect terms)'] = aspect_terms
+
+    ndf = ndf.iloc[:,-21:]
+
+    aspects = ndf.to_dict()
+    df = pd.read_csv(OPINION_SURVEY_DIR)
+    original_value = df.to_dict()
+
+
+    return aspects, original_value
+
+### Functions used in functions ####
+
+def pos_tagger(nltk_tag): 
+    if nltk_tag.startswith('J'): 
+        return wordnet.ADJ 
+    elif nltk_tag.startswith('V'): 
+        return wordnet.VERB 
+    elif nltk_tag.startswith('N'): 
+        return wordnet.NOUN 
+    elif nltk_tag.startswith('R'): 
+        return wordnet.ADV 
+    else:           
+        return None
+
+def remove_stopWords(w): 
+    stoplist = stopwords.words('english') + ['though']
+    w = ' '.join(word for word in w.split() if word not in stoplist)
+    return w
