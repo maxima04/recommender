@@ -2,6 +2,11 @@
 DataFrame Manipulation functions should be here
 
 Create folder for csv files
+
+!!! Note !!!
+
+Download in your free time "python -m spacy download en_core_web_sm" needed for aspect extraction
+
 '''
 import os
 import pandas as pd
