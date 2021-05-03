@@ -42,3 +42,39 @@ def survey(request):
 
 def about(request):
     return render(request, 'app/about.html')
+
+
+def likertPage(request):
+
+    sentiment = countLikert()()
+
+    context = {
+        'column_name':column_name,
+        'likert':likert,
+        
+        }
+
+    return render(request, 'likertChart.html', context)
+
+def sentimentPage(request):
+
+    sentiment = calculateSentiment()
+
+    context = {
+        'sentiment':sentiment,
+        'column_name':column_name,
+        
+        }
+
+    return render(request, 'sentimentChart.html', context)
+
+def aspectPage(request):
+
+    _aspect, _comment = getAspect()
+
+    context = {
+        'column_name':column_name,
+        'aspect':aspect
+    }
+
+    return render(request, 'aspectChart.html', context)
