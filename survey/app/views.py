@@ -79,15 +79,15 @@ def about(request):
 
 def likertPage(request):
 
-    sentiment = countLikert()
-
+    likert = countLikert()
+    likert = json.dumps(likert)
     context = {
         'column_name':column_name,
         'likert':likert,
         
         }
 
-    return render(request, 'app/likertChart.html', context)
+    return render(request, 'likertChart.html', context)
 
 def sentimentPage(request):
 

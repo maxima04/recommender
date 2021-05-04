@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <title>Likert Chart</title>
+</head>
+<body>
+    
+    
+        <canvas id="myChart" width="300" height="300"></canvas>
+        <br><br><br><br>
+        <canvas id="2ndChart" width="300" height="300"></canvas>
+
+
+</div>
+<script type="text/javascript">
+    var a = '{{likert|safe}}'
+
+
+    var ctx = document.getElementById('myChart').getContext('2d')
+
+            new Chart(ctx, {
+            type: 'pie',
+            data: {
+            labels: ['Strongly Agree', 'Agree', 'Disagree', 'Strongly Disagree'],
+            datasets: [{
+                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                data: JSON.parse(a)[0] /// BABAGUHIN BAWAT CHART
+            }]
+            },
+            options: {
+                responsive: false,
+                maintainAspectRatio: false,
+                
+                plugins: {
+                    title: {
+                    display: true,
+                    text: "{{column_name.0}}" /// PATI ITO BABAGUHIN BAWAT CHART
+                 },
+                    legend:{
+                        display:true
+                    }
+                }
+            }
+        });
+
+        var ctx = document.getElementById('2ndChart').getContext('2d')
+
+            new Chart(ctx, {
+            type: 'pie',
+            data: {
+            labels: ['Strongly Agree', 'Agree', 'Disagree', 'Strongly Disagree'],
+            datasets: [{
+                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                data: JSON.parse(a)[1]
+            }]
+            },
+            options: {
+                responsive: false,
+                maintainAspectRatio: false,
+                
+                plugins: {
+                    title: {
+                    display: true,
+                    text: "{{column_name.1}}"
+                 },
+                    legend:{
+                        display:true
+                    }
+                }
+            }
+        });
+
+    </script>
+    
+</body>
+
+</html>
