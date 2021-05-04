@@ -8,6 +8,11 @@ Create folder for csv files
 Download in your free time "python -m spacy download en_core_web_sm" needed for aspect extraction
 
 '''
+'''
+DataFrame Manipulation functions should be here
+
+Create folder for csv files
+'''
 import os
 import pandas as pd
 import numpy as np
@@ -127,11 +132,12 @@ def calculateSentiment():
             pass
     
     
-    df['POS'] = new ## Store tagged words
+        df['POS'] = new ## Store tagged words
     
     
     df = df.replace(r'^\s*$', "neutral", regex=True) ## If row value is null, replace with neutral string
-
+    df = df.iloc[:,:-1]
+    
 
     comp = []
     col_range = len(df.columns) # number of columns
@@ -144,7 +150,7 @@ def calculateSentiment():
         compound = sum(compound)/140 # Get the mean compound of each columns
         comp.append(compound) # Save mean and append to list
 
-    return comp ## Im an array
+    return comp
 
 def getAspect():
 
