@@ -1,0 +1,20 @@
+{% extends 'app/main.html' %}
+{% block content %}
+  <br>
+  <h1>Register</h1>
+  <br>
+
+  <form action="#" method="post" >
+    {% csrf_token %}
+
+    {% for item in registrationForm %}
+
+      {{ item.label }}
+      {{ item }}
+      <br>
+    {% endfor %}
+
+    <input type="submit" value="Submit">
+  </form>
+
+{% endblock %}

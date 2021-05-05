@@ -1,7 +1,9 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
+from django.contrib import messages
 from django.http import HttpResponse
-from app.forms import SurveyForm, LikertForm, OpinionForm
-from .models import Surveyquestions
+from app.forms import SurveyForm, LikertForm, OpinionForm, RegistrationForm, LoginForm
+from .models import Surveyquestions, User
 from .controller import *
 
 # Create your views here.
@@ -111,3 +113,60 @@ def aspectPage(request):
     }
 
     return render(request, 'app/aspectChart.html', context)
+
+def login(request):
+
+    if request.method == 'POST':
+        loginForm = LoginForm(request.POST)
+
+        if loginForm.is_valid():
+            username = loginForm.cleaned_data['username']
+            userpass = loginForm.cleaned_data['password']
+
+            if User.objects.filter(username=username, password=userpass):
+                context = {
+                    'username': username
+                }
+
+                messages.success(request, "You have login successfully!")
+                return redirect('/home', context)
+
+        messages.error(request, "Wrong Username/Password!")
+        return redirect('/login')
+
+    else:
+        loginForm = LoginForm()
+
+        context = {
+            'loginForm': loginForm,
+        }
+
+        return render(request, 'app/login.html', context)
+
+def register(request):
+
+
+    if request.method == 'POST':
+        registrationForm = RegistrationForm(request.POST)
+
+        if registrationForm.is_valid():
+            name = registrationForm.cleaned_data['name']
+            uname = registrationForm.cleaned_data['username']
+            pword = registrationForm.cleaned_data['password']
+
+            userdata = User(name=name, username=uname, password=pword, is_user=1, is_admin=0, is_itbl=0, is_ito=0)
+            userdata.save()
+
+            context = {
+                'name': name,
+                'uname': uname,
+            }
+            return redirect('/home', context)
+    else:
+        registrationForm = RegistrationForm()
+
+        context = {
+            'registrationForm': registrationForm,
+        }
+
+        return render(request, 'app/register.html', context)

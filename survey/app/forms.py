@@ -85,4 +85,12 @@ class OpinionForm(forms.Form):
     e1 = forms.CharField(label="26. What I like best in Canvas is/are: ", max_length=255)
     e2 = forms.CharField(label="27. What I like least in Canvas is/are:  ", max_length=255)
     e3 = forms.CharField(label="28. I would like to suggest:  ", max_length=255)
-        
+
+class RegistrationForm(forms.Form):
+    name = forms.CharField(label="Name", max_length=55)
+    username = forms.CharField(label="Username", max_length=255)
+    password = forms.CharField(label="Password", max_length=55, widget=forms.PasswordInput)
+
+class LoginForm(forms.Form):
+    username = forms.CharField(label="Username", max_length=255)
+    password = forms.CharField(label="Password", max_length=55, widget=forms.PasswordInput)
