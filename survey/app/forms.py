@@ -1,5 +1,24 @@
 from django import forms
 from .models import Surveyquestions
+from pathlib import Path
+import os
+import pandas as pd
+import re
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+COMMONS_DIR = os.path.join(BASE_DIR, 'app/commons')
+OPINION_SURVEY_DIR = os.path.join(COMMONS_DIR,'opinion_survey.csv')
+
+op_col = pd.read_csv(OPINION_SURVEY_DIR)
+
+opinion_column = [tuple([col,col]) for col in op_col.columns]
+
+COLUMN_CHOICES = opinion_column
+
+
+class TitleForm(forms.Form):
+ 
+    title = forms.ChoiceField(choices = COLUMN_CHOICES)
 
 questions = Surveyquestions.objects.all()
 
