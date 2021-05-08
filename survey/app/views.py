@@ -2,13 +2,32 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.http import HttpResponse
-from app.forms import SurveyForm, LikertForm, OpinionForm, RegistrationForm, LoginForm
+from app.forms import SurveyForm, LikertForm, OpinionForm, RegistrationForm, LoginForm, TitleForm
 from .models import Surveyquestions, User
 from .controller import *
+import pickle
 
 # Create your views here.
 
 def home(request):
+    aspect, comment = getAspect()
+
+    ASPECT_DICT_DIR = os.path.join(COMMONS_DIR,'aspect.pkl')
+    COMMENT_DICT_DIR = os.path.join(COMMONS_DIR,'comment.pkl')
+
+    with open(ASPECT_DICT_DIR, "wb") as tf:
+        pickle.dump(aspect,tf)
+
+    with open(COMMENT_DICT_DIR, "wb") as td:
+        pickle.dump(comment,td)
+
+    SENTIMENT_DICT_DIR = os.path.join(COMMONS_DIR,'sentiment.pkl')
+
+    sentiment, _ndf = calculateSentiment()
+
+    with open(SENTIMENT_DICT_DIR, "wb") as tf:
+        pickle.dump(_ndf,tf)
+
     return render(request, 'app/dashboard.html')
 
 def survey(request):
@@ -105,12 +124,89 @@ def sentimentPage(request):
 
 def aspectPage(request):
 
-    _aspect, _comment = getAspect()
+    ASPECT_DICT_DIR = os.path.join(COMMONS_DIR,'aspect.pkl')
+    COMMENT_DICT_DIR = os.path.join(COMMONS_DIR,'comment.pkl')
+    SENTIMENT_DICT_DIR = os.path.join(COMMONS_DIR,'sentiment.pkl')
 
+
+    with open(ASPECT_DICT_DIR, "rb") as tf:
+        aspect = pickle.load(tf)
+
+    with open(COMMENT_DICT_DIR, "rb") as tb:
+        comment = pickle.load(tb)
+
+    with open(SENTIMENT_DICT_DIR, "rb") as ts:
+        sent = pickle.load(ts)
+    
+    selected_title = 'I can easily log-in and log-out my Canvas account. '
+    form = TitleForm()
+    if request.method == 'POST':
+        form = TitleForm(request.POST)
+      
+        if form.is_valid():
+            selected_title = request.POST.get('title')
+
+
+    
+
+    #print(list(comment[selected].values()))
+    
+    
+    sentiment = list(sent[selected_title].values())
+
+    acad_filter = ['subject','teacher','teach','professor','school','system','learning','modules',
+                    'assignments','assignment']
+    ito_filter = ['system','internet','connection','slow']
+    itbl_filter = ['canvas','design','slow','platform','application','access']
+
+    
+    acad_dict = {}
+    ito_dict = {}
+    itbl_dict = {}
+
+
+
+    for i, k in aspect[selected_title].items():
+
+        acad_results = findAc(acad_filter, k)
+        ito_results = findAc(ito_filter, k)
+        itbl_results = findAc(itbl_filter, k)
+
+        
+        if len(acad_results) != 0:
+            acad_dict[i] = k
+
+        if len(ito_results) != 0:
+            ito_dict[i] = k
+
+        if len(itbl_results) != 0:
+            itbl_dict[i] = k
+        else:
+            None
+
+    filterd_acad_comment = {key: value for key, value in comment[selected_title].items() if key in acad_dict.keys()}
+    filterd_ito_comment = {key: value for key, value in comment[selected_title].items() if key in ito_dict.keys()}
+    filterd_itbl_comment = {key: value for key, value in comment[selected_title].items() if key in itbl_dict.keys()}
+    
+    
     context = {
         'column_name':column_name,
-        'aspect':aspect
+
+        'acad_dict':acad_dict,
+        'ito_dict':ito_dict,
+        'itbl_dict':itbl_dict,
+
+        'sentiment':sentiment,
+
+        'filterd_acad_comment':filterd_acad_comment,
+        'filterd_ito_comment':filterd_ito_comment,
+        'filterd_itbl_comment':filterd_itbl_comment,
+
+        'form':form,
+
+        
     }
+
 
     return render(request, 'app/aspectChart.html', context)
 

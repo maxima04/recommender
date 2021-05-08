@@ -137,7 +137,8 @@ def calculateSentiment():
     
     df = df.replace(r'^\s*$', "neutral", regex=True) ## If row value is null, replace with neutral string
     df = df.iloc[:,:-1]
-    
+
+
 
     comp = []
     col_range = len(df.columns) # number of columns
@@ -150,7 +151,11 @@ def calculateSentiment():
         compound = sum(compound)/140 # Get the mean compound of each columns
         comp.append(compound) # Save mean and append to list
 
-    return comp
+    ndf = pd.DataFrame(data = np.array([comp]), columns=df.columns)
+    ndf = ndf.to_dict()
+
+    return comp, ndf
+    
 
 def getAspect():
 
@@ -237,9 +242,9 @@ def getAspect():
 
             aspect_terms.append(pairs)
         
-        ndf[col + '(aspect terms)'] = aspect_terms
+        ndf[col] = aspect_terms
 
-    ndf = ndf.iloc[:,-21:]
+    ndf = ndf.iloc[:,:21]
 
     aspects = ndf.to_dict()
     df = pd.read_csv(OPINION_SURVEY_DIR)
@@ -266,3 +271,13 @@ def remove_stopWords(w):
     stoplist = stopwords.words('english') + ['though']
     w = ' '.join(word for word in w.split() if word not in stoplist)
     return w
+
+def findAc(filtr, word):
+    r = re.compile('|'.join([r'\b%s\b' % w for w in filtr]), flags=re.I)
+    results = r.findall(str(word))
+    
+    return results
+
+def remove_parenthesis(value):
+    res = re.sub(r"\([^()]*\)", "", value)
+    return res
