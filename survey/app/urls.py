@@ -10,5 +10,7 @@ urlpatterns = [
     path('register/', views.register, name="register"),
     path('sentimentChart/', views.sentimentPage, name="sentiment"), 
     path('likertChart/', views.likertPage, name="likert"),
+    path('aspectChart/', views.aspectPage, name="aspect"), 
+
 
 ]

@@ -11,6 +11,12 @@
 <style>
     li {
         display: inline-block;
+        
+}
+.center {
+
+text-align: center;
+margin: auto;
 }
 </style>
 <body>
@@ -20,11 +26,18 @@
         <input class="btn btn-primary" type="submit" name="Update Information">
     </form>
     <br>
-   
+    <div class="center">
+        <img src="{{ uri }}">
+    </div>
+
      <div class="container">
         <div class="row">
           <div class="col">
               <b>ASPECT</b>
+
+              {% if acad_dict.items|length == 0 %}
+              <div>No Relative Aspect</div>
+          {% endif %}
             {% for key, aspect in acad_dict.items %}
                 {% for asp in aspect %}
             
@@ -38,23 +51,53 @@
 
           <div class="col">
             <b>Comment</b>
+            {% if filterd_acad_comment.items|length == 0 %}
+                <div>No Relative Comment</div>
+            {% endif %}
 
             {% for key, aspect in filterd_acad_comment.items %}
+                
                 <div>{{ aspect }}</div>
         
             
 
             {% endfor %}
           </div>
+          <div class="col">
+            <b>Average student sentiment</b>
+            <div>{{sentiment}}</div>
+            
+          </div>
+
+          <div class="col">
+            <b>Average sentiment</b>
+            <div>
+
+                {% if sentiment > 0.5 %}
+                   <div>positive</div>
+
+
+                {% elif sentiment < -0.5 %}
+                    <div>negative</div>
+
+                    {% else %}
+                   <div>neutral</div>
+                {% endif %}
+
+
+
+            </div>
+            
+          </div>
+
+          
         </div>
     </div>
      
 
-    <div>
+    <div class="center">
         
-        <canvas id="myChart" width="100" height="100">
-            
-        </canvas>
+        <canvas class="center" id="myChart" width="500" height="200"></canvas>
     </div>
 
        <script>
@@ -68,6 +111,7 @@
             data: {
                 labels: title,
                 datasets: [{
+                    
                     data: sent,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
@@ -89,9 +133,9 @@
                 }]
             },
             options: {
-                responsive: true,
+                responsive: false,
                 indexAxis: 'y',
-                maintainAspectRatio: false,
+                maintainAspectRatio: true,
                 
                 plugins: {
                     title: {
