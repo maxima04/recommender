@@ -5,6 +5,27 @@ from django.http import HttpResponse
 from app.forms import SurveyForm, LikertForm, OpinionForm, RegistrationForm, LoginForm, TitleForm
 from .models import Surveyquestions, User
 from .controller import *
+import json
+from PIL import Image
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
+import io
+import base64
+import urllib
+# Create your views here.
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+COMMONS_DIR = os.path.join(BASE_DIR, 'app/commons')
+LIKERT_SURVEY_DIR = os.path.join(COMMONS_DIR,'likert_survey.csv')
+OPINION_SURVEY_DIR = os.path.join(COMMONS_DIR,'opinion_survey.csv')
+
+
+
+col_df = pd.read_csv(LIKERT_SURVEY_DIR)
+op_col = pd.read_csv(OPINION_SURVEY_DIR)
+column_name = [col for col in col_df.columns]
+opinion_column = [col for col in op_col.columns]
+
 import pickle
 
 # Create your views here.
@@ -154,18 +175,26 @@ def aspectPage(request):
     
     sentiment = list(sent[selected_title].values())
 
-    acad_filter = ['subject','teacher','teach','professor','school','system','learning','modules',
-                    'assignments','assignment']
-    ito_filter = ['system','internet','connection','slow']
-    itbl_filter = ['canvas','design','slow','platform','application','access']
+    acad_filter = ['subject','teacher','teach','faculty',
+                    'professor','school','system','learning',
+                    'modules','module','teaching'
+                    'assignments','assignment','knowledge','activities']
+
+    ito_filter = ['system','internet','connection',
+                    'slow','laboratory','access',
+                    'equipment']
+
+    itbl_filter = ['canvas','design','slow','platform',
+                    'application','access','survey',
+                    'modules','modules','log']
 
     
     acad_dict = {}
     ito_dict = {}
     itbl_dict = {}
 
-
-
+    print(selected_title)
+    print(aspect[selected_title])
     for i, k in aspect[selected_title].items():
 
         acad_results = findAc(acad_filter, k)
@@ -187,10 +216,34 @@ def aspectPage(request):
     filterd_acad_comment = {key: value for key, value in comment[selected_title].items() if key in acad_dict.keys()}
     filterd_ito_comment = {key: value for key, value in comment[selected_title].items() if key in ito_dict.keys()}
     filterd_itbl_comment = {key: value for key, value in comment[selected_title].items() if key in itbl_dict.keys()}
-    
-    
+
+    print(acad_dict)
+    print(filterd_acad_comment)
+
+
+    word = [i for i in aspect[selected_title].values()]
+
+    comment = ''
+
+    for i in aspect[selected_title].values():
+        comment += " ".join(i)+" "
+
+    wordcloud = WordCloud(background_color="white",width=1000,height=1000, max_words=10).generate(comment)
+    plt.figure(figsize=(3,3))
+    plt.imshow(wordcloud, interpolation="bilinear", aspect='auto')
+    plt.axis('off')
+
+    fig = plt.gcf()
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png')
+    buf.seek(0)
+    string = base64.b64encode(buf.read())
+
+    uri = 'data:image/png;base64,' + urllib.parse.quote(string)
+
     context = {
         'column_name':column_name,
+        'uri':uri,
 
         'acad_dict':acad_dict,
         'ito_dict':ito_dict,
