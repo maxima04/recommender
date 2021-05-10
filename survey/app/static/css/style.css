@@ -1,0 +1,44 @@
+body {
+}
+
+/*Login and register*/
+#login-form, #register-form, #form-label{
+    margin-top: 20px;
+}
+
+#login-button, #login-fields-label, #register-button, #register-fields-label{
+    margin-top: 20px;
+}
+
+#login-register-link, #register-login-link{
+    margin-top: 5px;
+}
+
+
+/*Survey*/
+
+#submit-button-row{
+       margin-top: 60px;
+}
+
+#survey-submit-button{
+    margin-bottom: 100px;
+
+}
+
+#survey-label{
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+#comment-field-div{
+    margin-bottom: 30px;
+}
+
+#survey-opinion-field{
+    margin-bottom: 20px;
+}
+
+ul {
+    list-style: none;
+}
