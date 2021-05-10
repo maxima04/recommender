@@ -3,7 +3,7 @@
 
 <div class="container">
   <br>
-  <h1>CANVAS EXPERIENCE SURVEY </h1>
+  <h3 class="text-center">CANVAS EXPERIENCE SURVEY</h3>
   <br>
 
   <form action="#" method="post" >
@@ -12,79 +12,112 @@
     <!--Fields-->
     {% for radioButtons, commentsField in form %}
 
-    {% if forloop.counter0 == 1 %}
-      <h5>ACCESSIBILITY</h5>
+      {% if forloop.counter0 == 1 %}
+        <h5 id="survey-label">ACCESSIBILITY</h5>
 
-    {% elif forloop.counter0 == 19 %}
-      <h5>INSTRUCTION</h5>
+      {% elif forloop.counter0 == 19 %}
+        <h5 id="survey-label">INSTRUCTION</h5>
 
-    {% elif forloop.counter0 == 22  %}
-      <h5>ASSESSMENT AND COLLABORATION</h5>
+      {% elif forloop.counter0 == 22  %}
+        <h5 id="survey-label">ASSESSMENT AND COLLABORATION</h5>
+      {% endif %}
 
-    {% endif %}
 
-    {% if forloop.counter0 == 0 %}
-      <!-- Display Course Field -->
-      {{ radioButtons.label }}
-      {{ radioButtons }}
-      <p>--------------------------</p>
-      <br>
-    {% elif forloop.counter0 == 15  %}
-      {{ questions.14.question_description }}
-      <!-- Display Questions No Fields -->
-      <!-- Question ID si equal to 15, 23, 28-->
-      <!--  {{ questions.15.question_description }} -->
-      <br>
-      {{ radioButtons.label }}
-      {{ radioButtons }}
-      <h6>Comments</h6>
-      {{ commentsField }}
-      <p>--------------------------</p>
-    {% elif forloop.counter0 == 22  %}
-      {{ questions.22.question_description }}
-      <!-- Display Questions No Fields -->
-      <!-- Question ID si equal to 15, 23, 28-->
-      <!--  {{ questions.15.question_description }} -->
-      <br>
-      {{ radioButtons.label }}
-      {{ radioButtons }}
-      <h6>Comments</h6>
-      {{ commentsField }}
-      <p>--------------------------</p>
+      {% if forloop.counter0 == 0 %}
+        <!-- Display Course Field -->
+        <div class="row" id="survey-fields-label">
+          {{ radioButtons.label }}
+        </div>
+        <div class="row">
+          {{ radioButtons }}
+        </div>
 
-    {% elif forloop.counter0 == 26  %}
-      {{ questions.27.question_description }}
-      <!-- Display Questions No Fields -->
-      <!-- Question ID si equal to 15, 23, 28-->
-      <!--  {{ questions.15.question_description }} -->
-      <br>
-      {{ radioButtons.label }}
-      {{ radioButtons }}
-      <h6>Comments</h6>
-      {{ commentsField }}
-      <p>--------------------------</p>
+      {% elif forloop.counter0 == 15  %}
+        <div class="row">
+          {{ questions.14.question_description }}
+        </div>
+        <!-- Display Questions No Fields -->
+        <!-- Question ID si equal to 15, 23, 28-->
+        <!--  {{ questions.15.question_description }} -->
+        <div class="row" id="survey-fields-label">
+          {{ radioButtons.label }}
+        </div>
+        <div class="row">
+          {{ radioButtons }}
+        </div>
+        <h6>Comment</h6>
+        <div class="row" id="comment-field-div">
+          {{ commentsField }}
+        </div>
+      {% elif forloop.counter0 == 22  %}
+        <div class="row">
+          {{ questions.22.question_description }}
+        </div>
+        <!-- Display Questions No Fields -->
+        <!-- Question ID si equal to 15, 23, 28-->
+        <!--  {{ questions.15.question_description }} -->
+        <div class="row" id="survey-fields-label">
+          {{ radioButtons.label }}
+        </div>
+        <div class="row">
+          {{ radioButtons }}
+        </div>
+        <h6>Comment</h6>
+        <div class="row" id="comment-field-div">
+          {{ commentsField }}
+        </div>
 
-    {% elif forloop.counter0 != 15 or forloop.counter0 != 22 or forloop.counter0 != 26 %}
-      {{ radioButtons.label }}
-      {{ radioButtons }}
-      <h6>Comments</h6>
-      {{ commentsField }}
-      <p>--------------------------</p>
-    {% endif %}
+      {% elif forloop.counter0 == 26  %}
+        <div class="row">
+          {{ questions.27.question_description }}
+        </div>
+        <!-- Display Questions No Fields -->
+        <!-- Question ID si equal to 15, 23, 28-->
+        <!--  {{ questions.15.question_description }} -->
+        <div class="row" id="survey-fields-label">
+          {{ radioButtons.label }}
+        </div>
+        <div class="row">
+          {{ radioButtons }}
+        </div>
+        <h6>Comment</h6>
+        <div class="row" id="comment-field-div">
+          {{ commentsField }}
+        </div>
 
+      {% elif forloop.counter0 != 15 or forloop.counter0 != 22 or forloop.counter0 != 26 %}
+        <div class="row" id="survey-fields-label">
+          {{ radioButtons.label }}
+        </div>
+        <div class="row">
+          {{ radioButtons }}
+        </div>
+        <h6>Comment</h6>
+        <div class="row" id="comment-field-div">
+          {{ commentsField }}
+        </div>
+      {% endif %}
     {% endfor %}
 
     {% for opinion in opinionform %}
-      {{ opinion.label }}
-      <br>
-      {{ opinion }}
-      <br>
-      <br>
+      <div class="row" id="survey-opinion-fields-label">
+          {{ opinion.label }}
+      </div>
+      <div class="row" id="survey-opinion-field">
+          {{ opinion }}
+      </div>
     {% endfor %}
 
-    <input type="submit" value="Submit">
+    <div class="row" id="submit-button-row">
+      <div class="row col-sm-4 col-md-5 col-lg-5" >
+      </div>
+      <div class="row col-sm-4 col-md-2 col-lg-3" id="survey-submit-button">
+        <input class="btn btn-primary" type="submit" value="Submit">
+      </div>
+      <div class="row col-sm-4 col-md-5 col-lg-5">
+      </div>
+    </div>
   </form>
-
 </div>
 <!--End of container-->
 
