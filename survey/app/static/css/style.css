@@ -2,7 +2,7 @@ body {
 }
 
 /*Login and register*/
-#login-form, #register-form, #form-label{
+#login-form, #register-form, #form-label, #aspect-form{
     margin-top: 20px;
 }
 
@@ -41,4 +41,10 @@ body {
 
 ul {
     list-style: none;
+}
+
+
+/*aspect from*/
+#aspect-submit-button{
+    width: 200px;
 }

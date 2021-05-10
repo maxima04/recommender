@@ -1,153 +1,126 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Document</title>
-</head>
-<style>
-    li {
-        display: inline-block;
-        
-}
-.center {
+{% extends 'app/main.html' %}
+{% block content %}
 
-text-align: center;
-margin: auto;
-}
-</style>
-<body>
-    <form method="POST" action="" enctype="multipart/form-data" name="drop1">
-        {% csrf_token %}
-        {{form.as_p}}
-        <input class="btn btn-primary" type="submit" name="Update Information">
-    </form>
-    <br>
-    <div class="center">
+<div class="row" id="form-label">
+    <h3 class="text-center">Aspect Chart</h3>
+</div>
+
+<div class="row">
+    <div class="col text-center">
         <img src="{{ uri }}">
     </div>
 
-     <div class="container">
-        <div class="row">
-          <div class="col">
-              <b>ASPECT</b>
+    <div class="col text-center">
+        <canvas  id="myChart" width="500" height="200"></canvas>
+    </div>
+</div>
 
-              {% if acad_dict.items|length == 0 %}
-              <div>No Relative Aspect</div>
-          {% endif %}
-            {% for key, aspect in acad_dict.items %}
-                {% for asp in aspect %}
-            
-                     <div>{{asp}}</div>
-           
-               
-                {% endfor %}
-   
-           {% endfor %}
-          </div>
 
-          <div class="col">
-            <b>Comment</b>
-            {% if filterd_acad_comment.items|length == 0 %}
-                <div>No Relative Comment</div>
+<div class="row">
+    <div class="col text-center">
+        <b>ASPECT</b>
+        {% if acad_dict.items|length == 0 %}
+        <div>No Relative Aspect</div>
+        {% endif %}
+
+        {% for key, aspect in acad_dict.items %}
+        {% for asp in aspect %}
+        <div>{{asp}}</div>
+        {% endfor %}
+        {% endfor %}
+    </div>
+    <div class="col text-center">
+        <b>Comment</b>
+        {% if filterd_acad_comment.items|length == 0 %}
+        <div>No Relative Comment</div>
+        {% endif %}
+
+        {% for key, aspect in filterd_acad_comment.items %}
+            <div>{{ aspect }}</div>
+        {% endfor %}
+    </div>
+    <div class="col text-center">
+        <b>Average student sentiment</b>
+        <div>{{sentiment}}</div>
+    </div>
+
+    <div class="col text-center">
+        <b>Average sentiment</b>
+        <div>
+            {% if sentiment > 0.5 %}
+            <div>positive</div>
+
+            {% elif sentiment < -0.5 %}
+            <div>negative</div>
+
+            {% else %}
+            <div>neutral</div>
             {% endif %}
-
-            {% for key, aspect in filterd_acad_comment.items %}
-                
-                <div>{{ aspect }}</div>
-        
-            
-
-            {% endfor %}
-          </div>
-          <div class="col">
-            <b>Average student sentiment</b>
-            <div>{{sentiment}}</div>
-            
-          </div>
-
-          <div class="col">
-            <b>Average sentiment</b>
-            <div>
-
-                {% if sentiment > 0.5 %}
-                   <div>positive</div>
-
-
-                {% elif sentiment < -0.5 %}
-                    <div>negative</div>
-
-                    {% else %}
-                   <div>neutral</div>
-                {% endif %}
-
-
-
-            </div>
-            
-          </div>
-
-          
         </div>
     </div>
-     
+</div>
 
-    <div class="center">
-        
-        <canvas class="center" id="myChart" width="500" height="200"></canvas>
+
+<div class="row justify-content-md-center" id="aspect-form">
+    <div class="col">
+        <form method="POST" action="" enctype="multipart/form-data" name="drop1">
+            {% csrf_token %}
+            {{form.as_p}}
+            <div class="row">
+                <div class="col col-sm-8 col-md-6 col-lg-6">
+                    <input class="btn btn-primary" type="submit" name="Update Information" id="aspect-submit-button">
+                </div>
+            </div>
+        </form>
     </div>
+</div>
 
-       <script>
-            var ctx = document.getElementById('myChart').getContext('2d')
-        var title = ["{{selected}}"]
-        var sent = JSON.parse("{{sentiment}}")
-        
-        console.log(title, sent)
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: title,
-                datasets: [{
-                    
-                    data: sent,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: false,
-                indexAxis: 'y',
-                maintainAspectRatio: true,
-                
-                plugins: {
-                    title: {
+
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d')
+    var title = ["{{selected}}"]
+    var sent = JSON.parse("{{sentiment}}")
+
+    console.log(title, sent)
+    var myChart = new Chart(ctx, {
+         type: 'bar',
+         data: {
+             labels: title,
+             datasets: [{
+                 data: sent,
+                 backgroundColor: [
+                     'rgba(255, 99, 132, 0.2)',
+                     'rgba(54, 162, 235, 0.2)',
+                     'rgba(255, 206, 86, 0.2)',
+                     'rgba(75, 192, 192, 0.2)',
+                     'rgba(153, 102, 255, 0.2)',
+                     'rgba(255, 159, 64, 0.2)'
+                 ],
+                 borderColor: [
+                      'rgba(255, 99, 132, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(255, 206, 86, 1)',
+                      'rgba(75, 192, 192, 1)',
+                      'rgba(153, 102, 255, 1)',
+                      'rgba(255, 159, 64, 1)'
+                 ],
+                 borderWidth: 1
+             }]
+         },
+         options: {
+             responsive: false,
+             indexAxis: 'y',
+             maintainAspectRatio: true,
+             plugins: {
+                 title: {
                     display: true,
                     text: 'Average sentiment of Students'
                  },
-                    legend:{
-                        display:false
-                    }
-                }
-            }
-        });
-       </script>
-</body>
-</html>
+                 legend:{
+                    display:false
+                 }
+             }
+         }
+    });
+</script>
+{% endblock %}
