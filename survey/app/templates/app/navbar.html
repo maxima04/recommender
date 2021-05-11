@@ -11,6 +11,9 @@
           <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
         {% endif %}
 
+        <a class="nav-link" href="{% url 'aspect' %}">Aspect</a>
+        <a class="nav-link" href="{% url 'sentiment' %}">Sentiment</a>
+        <a class="nav-link" href="{% url 'likert' %}">Likert</a>
         <a class="nav-link" href="{% url 'survey' %}">Survey</a>
         <a class="nav-link" href="#">About</a>
       </div>
