@@ -159,7 +159,7 @@ def aspectPage(request):
     with open(SENTIMENT_DICT_DIR, "rb") as ts:
         sent = pickle.load(ts)
     
-    selected_title = 'I can easily log-in and log-out my Canvas account.  '
+    selected_title = 'I can easily log-in and log-out my Canvas account. '
     form = TitleForm()
     if request.method == 'POST':
         form = TitleForm(request.POST)
