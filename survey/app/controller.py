@@ -161,7 +161,7 @@ def getAspect():
 
     df = pd.read_csv(OPINION_SURVEY_DIR)
     ndf = df
-    nlp = spacy.load('en_core_web_lg')
+    nlp = spacy.load('en_core_web_sm')
 
     col_range = len(ndf.columns) # number of columns
     stored_pos = []

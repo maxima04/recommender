@@ -1,41 +1,42 @@
 {% extends 'app/main.html' %}
 {% block content %}
 
-<div class="row" id="form-label">
-    <h3 class="text-center">Course Feedback Mining System</h3>
-</div>
+
 <div class="row justify-content-md-center" id="login-form">
     <div class="col-sm-2 col-md-auto col-lg-4">
     </div>
-    <div class="col-sm-8 col-md-3 col-lg-3">
-        <form action="#" method="post" >
-            <h4 class="text-center">Login</h4>
-            {% csrf_token %}
+    <div class="col-sm-8 col-md-4 col-lg-4">
 
-            {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-danger alert-dismissible fade show">
-                <strong></strong> {{message}}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
+        <div class="card">
+            <div class="card-header text-center">
+                <h4>Course Feedback Mining System</h4>
             </div>
-            {% endfor %}
-            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title text-center">Login</h5>
+                <form action="#" method="post" >
+                    {% csrf_token %}
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" id="alert-message-div">
+                        <p id="alert-message">{{message}}</p>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
 
-            {% for item in loginForm %}
-                <div class="row" id="login-fields-label">
-                    {{ item.label }}
-                </div>
-                <div class="row">
-                    {{ item }}
-                </div>
-            {% endfor %}
-            <div class="row" id="login-button">
-                <input class="btn btn-primary" type="submit" value="Login">
+                    {% for item in loginForm %}
+                    <div class="form-group">
+                        <label>{{ item.label }}</label>
+                        {{ item }}
+                    </div>
+                    {% endfor %}
+                    <input class="btn btn-primary btn-block" type="submit" value="Login">
+                </form>
+                <p class="text-center" id="login-register-link">No account?<a href="{% url 'register' %}"> Register here!</a></p>
             </div>
-        </form>
-        <p class="text-center" id="login-register-link">No account?<a href="{% url 'register' %}"> Register here!</a></p>
+        </div>
     </div>
     <div class="col-sm-2 col-md-auto col-lg-4">
     </div>

@@ -1,7 +1,7 @@
 {% extends 'app/main.html' %}
 {% block content %}
 
-<div class="container">
+<div class="container" id="div-margin-top">
   <br>
   <h3 class="text-center">CANVAS EXPERIENCE SURVEY</h3>
   <br>
@@ -25,96 +25,93 @@
 
       {% if forloop.counter0 == 0 %}
         <!-- Display Course Field -->
-        <div class="row" id="survey-fields-label">
-          {{ radioButtons.label }}
-        </div>
-        <div class="row">
+        <div class="form-group">
+          <label>{{ radioButtons.label }}</label>
           {{ radioButtons }}
         </div>
 
       {% elif forloop.counter0 == 15  %}
-        <div class="row">
+        <div class="form-group">
           {{ questions.14.question_description }}
         </div>
         <!-- Display Questions No Fields -->
         <!-- Question ID si equal to 15, 23, 28-->
         <!--  {{ questions.15.question_description }} -->
-        <div class="row" id="survey-fields-label">
+        <div class="form-group">
           {{ radioButtons.label }}
         </div>
-        <div class="row">
+        <div class="form-check">
           {{ radioButtons }}
         </div>
-        <h6>Comment</h6>
-        <div class="row" id="comment-field-div">
+
+        <div class="form-group">
+          <label>Comment</label>
           {{ commentsField }}
         </div>
       {% elif forloop.counter0 == 22  %}
-        <div class="row">
+        <div class="form-group">
           {{ questions.22.question_description }}
         </div>
         <!-- Display Questions No Fields -->
         <!-- Question ID si equal to 15, 23, 28-->
         <!--  {{ questions.15.question_description }} -->
-        <div class="row" id="survey-fields-label">
+        <div class="form-group">
           {{ radioButtons.label }}
         </div>
-        <div class="row">
+        <div class="form-check">
           {{ radioButtons }}
         </div>
-        <h6>Comment</h6>
-        <div class="row" id="comment-field-div">
+        <div class="form-group">
+          <label>Comment</label>
           {{ commentsField }}
         </div>
 
       {% elif forloop.counter0 == 26  %}
-        <div class="row">
+        <div class="form-group">
           {{ questions.27.question_description }}
         </div>
         <!-- Display Questions No Fields -->
         <!-- Question ID si equal to 15, 23, 28-->
         <!--  {{ questions.15.question_description }} -->
-        <div class="row" id="survey-fields-label">
+        <div class="form-group">
           {{ radioButtons.label }}
         </div>
-        <div class="row">
+        <div class="form-check">
           {{ radioButtons }}
         </div>
-        <h6>Comment</h6>
-        <div class="row" id="comment-field-div">
+        <div class="form-group">
+          <label>Comment</label>
           {{ commentsField }}
         </div>
 
       {% elif forloop.counter0 != 15 or forloop.counter0 != 22 or forloop.counter0 != 26 %}
-        <div class="row" id="survey-fields-label">
+        <div class="form-group">
           {{ radioButtons.label }}
         </div>
-        <div class="row">
+        <div class="form-check">
           {{ radioButtons }}
         </div>
-        <h6>Comment</h6>
-        <div class="row" id="comment-field-div">
+        <div class="form-group">
+          <label>Comment</label>
           {{ commentsField }}
         </div>
       {% endif %}
     {% endfor %}
 
     {% for opinion in opinionform %}
-      <div class="row" id="survey-opinion-fields-label">
-          {{ opinion.label }}
-      </div>
-      <div class="row" id="survey-opinion-field">
+      <div class="form-group">
+        <label>{{ opinion.label }}</label>
           {{ opinion }}
       </div>
     {% endfor %}
 
-    <div class="row" id="submit-button-row">
-      <div class="row col-sm-4 col-md-5 col-lg-5" >
+    <div class="row" id="survey-submit-button">
+      <div class="col-sm-2 col-md-auto col-lg-4">
       </div>
-      <div class="row col-sm-4 col-md-2 col-lg-3" id="survey-submit-button">
-        <input class="btn btn-primary" type="submit" value="Submit">
+      <div class="col-sm-8 col-md-4 col-lg-4">
+        <input class="btn btn-primary btn-block" type="submit" value="Submit">
       </div>
-      <div class="row col-sm-4 col-md-5 col-lg-5">
+      <div class="col-sm-2 col-md-auto col-lg-4">
       </div>
     </div>
   </form>
