@@ -3,7 +3,7 @@ body {
 }
 
 /*top margin*/
-#div-margin-top, #login-form, #register-form, #form-label{
+#div-margin-top, #login-form, #register-form, #form-label, #thankyou{
     margin-top: 80px;
 }
 
