@@ -26,6 +26,47 @@
 <div class="row">
     <div class="col text-center">
         <b>ASPECT</b>
+
+
+
+        <!-- SEMPAI NOTICE ME!!
+            Use when there is user credentials
+            {% if request.user.is_acad %}
+                {% if acad_dict.items|length == 0 %}
+                <div>No Relative Aspect</div>
+                {% endif %}
+
+                {% for key, aspect in acad_dict.items %}
+                {% for asp in aspect %}
+                <div>{{asp}}</div>
+                {% endfor %}
+                {% endfor %}
+            {% elif request.user.is_ito %}
+                {% if ito_dict.items|length == 0 %}
+                <div>No Relative Aspect</div>
+                {% endif %}
+
+                {% for key, aspect in ito_dict.items %}
+                {% for asp in aspect %}
+                <div>{{asp}}</div>
+                {% endfor %}
+                {% endfor %}
+            {% elif request.user.is_itbl %}
+                {% if itbl_dict.items|length == 0 %}
+                <div>No Relative Aspect</div>
+                {% endif %}
+
+                {% for key, aspect in itbl_dict.items %}
+                {% for asp in aspect %}
+                <div>{{asp}}</div>
+                {% endfor %}
+                {% endfor %}
+
+
+            {% endif %}
+        -->
+
+        <!--REmove me when may user credentials na-->
         {% if acad_dict.items|length == 0 %}
         <div>No Relative Aspect</div>
         {% endif %}
@@ -38,6 +79,41 @@
     </div>
     <div class="col text-center">
         <b>Comment</b>
+
+        <!-- SEMPAI NOTICE ME!!
+            Use when there is user credentials
+            {% if request.user.is_acad %}
+                {% if filterd_acad_comment.items|length == 0 %}
+                <div>No Relative Comment</div>
+                {% endif %}
+
+                {% for key, aspect in filterd_acad_comment.items %}
+                    <div>{{ aspect }}</div>
+                {% endfor %}
+            {% elif request.user.is_ito %}
+                {% if filterd_ito_comment.items|length == 0 %}
+                <div>No Relative Comment</div>
+                {% endif %}
+
+                {% for key, aspect in filterd_ito_comment.items %}
+                    <div>{{ aspect }}</div>
+                {% endfor %}
+            {% elif request.user.is_itbl %}
+                {% if filterd_itbl_comment.items|length == 0 %}
+                <div>No Relative Comment</div>
+                {% endif %}
+
+                {% for key, aspect in filterd_itbl_comment.items %}
+                    <div>{{ aspect }}</div>
+                {% endfor %}
+
+
+            {% endif %}
+        -->
+
+
+
+        <!--REmove me when may user credentials na-->
         {% if filterd_acad_comment.items|length == 0 %}
         <div>No Relative Comment</div>
         {% endif %}
@@ -54,10 +130,10 @@
     <div class="col text-center">
         <b>Average sentiment</b>
         <div>
-            {% if sentiment > 0.5 %}
+            {% if sentiment > 0.05 %}
             <div>positive</div>
 
-            {% elif sentiment < -0.5 %}
+            {% elif sentiment < 0.03 %}
             <div>negative</div>
 
             {% else %}
@@ -65,8 +141,67 @@
             {% endif %}
         </div>
     </div>
+    <div class="bs-example">
+        <!-- Button HTML (to Trigger Modal) -->
+        <a href="#myModal" role="button" class="btn btn-lg btn-primary" data-toggle="modal">Show Action Plan</a>
+    
+        <!-- Modal HTML -->
+        <div id="myModal" class="modal fade" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+
+                        <!-- SEMPAI NOTICE ME!!
+                            Use when there is user credentials
+                            {% if request.user.is_acad %}
+                                <h5 class="modal-title">Academic Council</h5>
+
+                            {% elif request.user.is_ito %}
+                                <h5 class="modal-title">Information Technology Office</h5>
+
+                            {% elif request.user.is_itbl %}
+                             <h5 class="modal-title">Institute of Technology-Based Learning</h5>
+
+
+
+                            {% endif %}
+                        -->
+                        <h5 class="modal-title">Institute of Technology-Based Learning</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- SEMPAI NOTICE ME!!
+                            Use when there is user credentials
+                            {% if request.user.is_acad %}
+                                <p>{{acadPlan}}</p>
+                            {% elif request.user.is_ito %}
+                                <p>{{itoPlan}}</p>
+                            {% elif request.user.is_itbl %}
+                                <p>{{itblPlan}}</p>
+
+
+                            {% endif %}
+                        -->
+                        <p>{{acadPlan}}</p>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
+<script>
+    $('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})
+</script>
 
 <div class="row justify-content-md-center" id="aspect-form">
     <div class="col">
@@ -86,7 +221,7 @@
 <script>
     var ctx = document.getElementById('myChart').getContext('2d')
     var title = ["{{selected}}"]
-    var sent = JSON.parse("{{sentiment}}")
+    var sent = "{{sentiment}}"
 
     console.log(title, sent)
     var myChart = new Chart(ctx, {

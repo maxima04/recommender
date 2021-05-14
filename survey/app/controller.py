@@ -88,6 +88,8 @@ def countLikert():
 
 
 def calculateSentiment():
+    stoplist = stopwords.words('english') + ['though']
+    c_vec = CountVectorizer(stop_words=stoplist, ngram_range=(3,5))
 
     sid = SentimentIntensityAnalyzer()
     lemmatizer = WordNetLemmatizer() 
@@ -137,24 +139,32 @@ def calculateSentiment():
     
     df = df.replace(r'^\s*$', "neutral", regex=True) ## If row value is null, replace with neutral string
     df = df.iloc[:,:-1]
+    static_df = df
 
-
+    
 
     comp = []
-    col_range = len(df.columns) # number of columns
-
+    col_range = len(static_df.columns) # number of columns
+    
     for i in range(0,col_range):
-        col = df.columns[i] # The current column
-        df['scores'] = df[col].apply(lambda x: sid.polarity_scores(x)) ## Get polarity score of every Column
+        col = static_df.columns[i] # The current column
+        ngrams = c_vec.fit_transform(static_df[col])
+        vocab = c_vec.vocabulary_
+        vocab = vocab.keys()
+
+        df = pd.DataFrame(vocab, columns = ['ngram'])
+
+        df['scores'] = df['ngram'].apply(lambda x: sid.polarity_scores(x)) ## Get polarity score of every Column
         compound = df['scores'].apply(lambda score_dict: score_dict['compound']) ## Extract the compound from the results
-        df = df.drop('scores', 1) # Drop score DF in every iteration
-        compound = sum(compound)/140 # Get the mean compound of each columns
-        comp.append(compound) # Save mean and append to list
+        ave = np.average(compound)# Get the mean compound of each columns
+        comp.append(ave)
+    
+    labels = static_df.columns
+    labels = list(labels)
 
-    ndf = pd.DataFrame(data = np.array([comp]), columns=df.columns)
-    ndf = ndf.to_dict()
+    new_sent = [dict(zip(labels, datum)) for datum in [comp]]
 
-    return comp, ndf
+    return new_sent[0]
     
 
 def getAspect():
@@ -281,3 +291,36 @@ def findAc(filtr, word):
 def remove_parenthesis(value):
     res = re.sub(r"\([^()]*\)", "", value)
     return res
+
+def unique_list(l):
+    ulist = []
+    [ulist.append(x) for x in l if x not in ulist]
+    return ulist
+
+def actionPlan(aspect,sentiment):
+    nlp = spacy.load('en_core_web_sm')
+    tok = ''
+    for ap in aspect.values():
+
+        if len(str(ap)) != 0:
+            doc = nlp(str(ap))
+
+            for token in doc:
+                if token.pos_ == 'NOUN':
+                    tok += token.text +' ' 
+                    #print(token.text)
+                if token.pos == 'ADJ':
+                    print(token)
+                if token.pos == 'VERB':
+                    print(token)
+
+    answer =' '.join(unique_list(tok.split()))
+
+    if sentiment >= 0.2 and len(answer) != 0:
+        return "The students enjoyed the services of: " + answer
+    elif sentiment <= 0.15 and len(answer) != 0:
+        return "There is significant unsatisfaction in terms of ["+ answer + "] provide immediate intervention" 
+    elif sentiment > 0.15 and sentiment < 0.2 and len(answer) != 0:
+        return "There is no immediate action needed for [" + answer +"] but needs improvement"
+    else:
+        return "No Aspect and Comment to decide on"

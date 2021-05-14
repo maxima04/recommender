@@ -250,7 +250,8 @@ def aspectPage(request):
     #print(list(comment[selected].values()))
     
     
-    sentiment = list(sent[selected_title].values())
+    sentiment = sent[selected_title]
+
 
     acad_filter = ['subject','teacher','teach','faculty',
                     'professor','school','system','learning',
@@ -262,7 +263,7 @@ def aspectPage(request):
                     'equipment']
 
     itbl_filter = ['canvas','design','slow','platform',
-                    'application','access','survey',
+                    'application','survey',
                     'modules','modules','log']
 
     
@@ -318,6 +319,11 @@ def aspectPage(request):
 
     uri = 'data:image/png;base64,' + urllib.parse.quote(string)
 
+    acadPlan = actionPlan(filterd_acad_comment,sentiment)
+    itoPlan = actionPlan(filterd_ito_comment,sentiment)
+    itblPlan = actionPlan(filterd_itbl_comment,sentiment)
+
+
     context = {
         'column_name':column_name,
         'uri':uri,
@@ -331,6 +337,11 @@ def aspectPage(request):
         'filterd_acad_comment':filterd_acad_comment,
         'filterd_ito_comment':filterd_ito_comment,
         'filterd_itbl_comment':filterd_itbl_comment,
+
+        'acadPlan':acadPlan,
+        'itoPlan':itoPlan,
+        'itblPlan':itblPlan,
+
 
         'form':form,
 
