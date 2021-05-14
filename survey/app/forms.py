@@ -1,5 +1,5 @@
 from django import forms
-from .models import Surveyquestions
+from .models import Surveyquestions, Course
 from pathlib import Path
 import os
 import pandas as pd
@@ -15,7 +15,6 @@ opinion_column = [tuple([col,col]) for col in op_col.columns]
 
 COLUMN_CHOICES = opinion_column
 
-
 class TitleForm(forms.Form):
  
     title = forms.ChoiceField(choices = COLUMN_CHOICES)
@@ -27,10 +26,13 @@ ANSWER_LISTS = (('Strongly Agree', 'Strongly Agree'),
                 ('Disagree', 'Disagree'),
                 ('Strongly Disagree', 'Strongly Disagree'))
 
+course_list = Course.objects.values_list('id','course_name', named=True)
+COURSES = [tuple([x.course_name, x.course_name]) for x in course_list]
+
 
 class LikertForm(forms.Form):
-    course_name = forms.CharField(max_length=70, widget=forms.TextInput(attrs={'class' : 'form-control'}))
-    a1 = forms.CharField(label=questions[0].question_description, max_length=255, widget=forms.RadioSelect(choices=ANSWER_LISTS), attrs={'class' : 'form-check-input'})
+    course_name = forms.CharField(max_length=70, widget=forms.Select(choices=COURSES, attrs={'class' : 'form-control'}))
+    a1 = forms.CharField(label=questions[0].question_description, max_length=255, widget=forms.RadioSelect(choices=ANSWER_LISTS))
     a2 = forms.CharField(label=questions[1].question_description, max_length=255, widget=forms.RadioSelect(choices=ANSWER_LISTS))
     a3 = forms.CharField(label=questions[2].question_description, max_length=255, widget=forms.RadioSelect(choices=ANSWER_LISTS))
     a4 = forms.CharField(label=questions[3].question_description, max_length=255, widget=forms.RadioSelect(choices=ANSWER_LISTS))

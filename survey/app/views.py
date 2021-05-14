@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.utils import timezone
 from django.contrib import messages
 from django.http import HttpResponse
 from app.forms import SurveyForm, LikertForm, OpinionForm, RegistrationForm, LoginForm, TitleForm
-from .models import Surveyquestions, User
+from .models import Surveyquestions, User, Likert, Opinion, Survey
 from .controller import *
 import json
 from PIL import Image
@@ -27,6 +28,12 @@ column_name = [col for col in col_df.columns]
 opinion_column = [col for col in op_col.columns]
 
 import pickle
+
+#globalvariable
+global userId;
+global userName;
+userId = 0
+userName = ""
 
 # Create your views here.
 
@@ -52,17 +59,17 @@ def home(request):
     return render(request, 'app/dashboard.html')
 
 def survey(request):
+    if userId == 0:
+        messages.success(request, "You need to login!")
+        return redirect('/login')
 
     if request.method == 'POST':
-
 
         surveyform = SurveyForm(request.POST)
         likertForm = LikertForm(request.POST)
         opinionForm = OpinionForm(request.POST)
 
         if surveyform.is_valid() and likertForm.is_valid() and opinionForm.is_valid():
-            print('Form is valid!')
-
             '''
             !!! Note !!!
             Try to print a1 variable if form.cleaned_data.get() is working accordingly
@@ -70,31 +77,101 @@ def survey(request):
             '''
             
             #Get likert form data
-            a1 = likertForm.cleaned_data.get('a1')
-            a2 = likertForm.cleaned_data.get('a2')
+            #a1 = likertForm.cleaned_data.get('a1')
+            #a2 = likertForm.cleaned_data.get('a2')
             #Please contiue until finished
 
-            likert_data = [a1,a2] ## input all
-            uploadDataLikert(likert_data) ## upload form data to csv
+            # Likert data
+            courseName = likertForm.cleaned_data['course_name']
+            a1 = likertForm.cleaned_data['a1']
+            a2 = likertForm.cleaned_data['a2']
+            a3 = likertForm.cleaned_data['a3']
+            a4 = likertForm.cleaned_data['a4']
+            a5 = likertForm.cleaned_data['a5']
+            a6 = likertForm.cleaned_data['a6']
+            a7 = likertForm.cleaned_data['a7']
+            a8 = likertForm.cleaned_data['a8']
+            a9 = likertForm.cleaned_data['a9']
+            a10 = likertForm.cleaned_data['a10']
+            a11 = likertForm.cleaned_data['a11']
+            a12 = likertForm.cleaned_data['a12']
+            a13 = likertForm.cleaned_data['a13']
+            a14 = likertForm.cleaned_data['a14']
+            a15 = likertForm.cleaned_data['a15']
+            a16 = likertForm.cleaned_data['a16']
+            a17 = likertForm.cleaned_data['a17']
+            a18 = likertForm.cleaned_data['a18']
+            i1 = likertForm.cleaned_data['i1']
+            i2 = likertForm.cleaned_data['i2']
+            i3 = likertForm.cleaned_data['i3']
+            ac1 = likertForm.cleaned_data['ac1']
+            ac2 = likertForm.cleaned_data['ac3']
+            ac3 = likertForm.cleaned_data['ac3']
+            ac4 = likertForm.cleaned_data['ac4']
+            ac5 = likertForm.cleaned_data['ac5']
+            ac6 = likertForm.cleaned_data['ac6']
+            ac7 = likertForm.cleaned_data['ac7']
+            ac8 = likertForm.cleaned_data['ac8']
+
+            likert_data = [a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16,a17,a18,i1,i2,i3,ac1,ac2,ac3,ac4,ac5,ac6,ac7,ac8]
+            #uploadDataLikert(likert_data) ## upload form data to csv
 
             #Get opinion form data, do not include subject name
-            a1 = surveyform.cleaned_data.get('a1')
-            a2 = surveyform.cleaned_data.get('a2')
-            #Please contiue until finished
+            sa1 = surveyform.cleaned_data['a1']
+            sa2 = surveyform.cleaned_data['a2']
+            sa3 = surveyform.cleaned_data['a3']
+            sa4 = surveyform.cleaned_data['a4']
+            sa5 = surveyform.cleaned_data['a5']
+            sa6 = surveyform.cleaned_data['a6']
+            sa7 = surveyform.cleaned_data['a7']
+            sa8 = surveyform.cleaned_data['a8']
+            sa9 = surveyform.cleaned_data['a9']
+            sa10 = surveyform.cleaned_data['a10']
+            sa11 = surveyform.cleaned_data['a11']
+            sa12 = surveyform.cleaned_data['a12']
+            sa13 = surveyform.cleaned_data['a13']
+            sa14 = surveyform.cleaned_data['a14']
+            sa15 = surveyform.cleaned_data['a15']
+            sa16 = surveyform.cleaned_data['a16']
+            sa17 = surveyform.cleaned_data['a17']
+            sa18 = surveyform.cleaned_data['a18']
+            si1 = surveyform.cleaned_data['i1']
+            si2 = surveyform.cleaned_data['i2']
+            si3 = surveyform.cleaned_data['i3']
+            sac1 = surveyform.cleaned_data['ac1']
+            sac2 = surveyform.cleaned_data['ac3']
+            sac3 = surveyform.cleaned_data['ac3']
+            sac4 = surveyform.cleaned_data['ac4']
+            sac5 = surveyform.cleaned_data['ac5']
+            sac6 = surveyform.cleaned_data['ac6']
+            sac7 = surveyform.cleaned_data['ac7']
+            sac8 = surveyform.cleaned_data['ac8']
 
-            survey_data = [a1,a2] ## input all variables
-            uploadDataSentiment(survey_data) ## upload form data to csv
+            survey_data = [sa1,sa2,sa3,sa4,sa5,sa6,sa7,sa8,sa9,sa10,sa11,sa12,sa13,sa14,sa15,sa16,sa17,sa18,si1,si2,si3,sac1,sac2,sac3,sac4,sac5,sac6,sac7,sac8]
+            #uploadDataSentiment(survey_data) ## upload form data to csv
 
             #Get opinion form data
-            e1 = opinionForm.cleaned_data.get('e1')
-            e2 = opinionForm.cleaned_data.get('e2')
-            e3 = opinionForm.cleaned_data.get('e4')
+            e1 = opinionForm.cleaned_data['e1']
+            e2 = opinionForm.cleaned_data['e2']
+            e3 = opinionForm.cleaned_data['e3']
 
             ### No function for here yet
-            opinion_data = [e1,e2,e3] ## input all variables
-            
+            opinion_data = [e1,e2,e3]
 
-            return render(request, 'app/dashboard.html')
+            timeStamp = timezone.make_naive(timezone.now())
+
+            #save data to database
+            likertData = Likert(user_id=userId, course_name=courseName, timestamp=timeStamp, a1=a1, a2=a2, a3=a3, a4=a4, a5=a5, a6=a6, a7=a7, a8=a8, a9=a9, a10=a10, a11=a11, a12=a12, a13=a13, a14=a14, a15=a15, a16=a16, a17=a17, a18=a18, i1=i1, i2=i2, i3=i3, ac1=ac1, ac2=ac2, ac3=ac3, ac4=ac4, ac5=ac5, ac6=ac6, ac7=ac7, ac8=ac8)
+            likertData.save()
+
+            surveyData = Survey(user_id=userId, course_name=courseName, timestamp=timeStamp, a1=sa1, a2=sa2, a3=sa3, a4=sa4, a5=sa5, a6=sa6, a7=sa7, a8=sa8, a9=sa9, a10=sa10, a11=sa11, a12=sa12, a13=sa13, a14=sa14, a15=sa15, a16=sa16, a17=sa17, a18=sa18, i1=si1, i2=si2, i3=si3, ac1=sac1, ac2=sac2, ac3=sac3, ac4=sac4, ac5=sac5, ac6=sac6, ac7=sac7, ac8=sac8)
+            surveyData.save()
+
+            opinionData = Opinion(user_id=userId, e1=e2, e2=e2, e3=e3)
+            opinionData.save()
+
+            messages.success(request, "Submitted successfully!")
+            return render(request, 'app/submitted.html')
             
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -273,12 +350,37 @@ def login(request):
             userpass = loginForm.cleaned_data['password']
 
             if User.objects.filter(username=username, password=userpass):
-                context = {
-                    'username': username
-                }
+                userIsUser = 0
+                userIsAdmin = 0
+                userIsItbl = 0
+                userIsIto = 0
 
+                getUser = User.objects.filter(username=username, password=userpass)
+                for userInfo in getUser:
+                    global userId;
+                    userId = userInfo.id
+                    userName = userInfo.username
+                    userIsUser = userInfo.is_user
+                    userIsAdmin = userInfo.is_admin
+                    userIsItbl = userInfo.is_itbl
+                    userIsIto = userInfo.is_ito
+
+                context = {
+                    'username': userName
+                }
                 messages.success(request, "You have login successfully!")
-                return redirect('/home', context)
+
+                if userIsUser == 1:
+                    print("Done")
+                    return redirect('/survey', context)
+                elif userIsAdmin == 1:
+                    return redirect('/dashboard', context)
+                elif userIsItbl == 1:
+                    return redirect('/survey', context)
+                elif userIsIto == 1:
+                    return redirect('/survey', context)
+                else:
+                    return redirect('/login')
 
         messages.error(request, "Wrong Username/Password!")
         return redirect('/login')
@@ -319,3 +421,12 @@ def register(request):
         }
 
         return render(request, 'app/register.html', context)
+
+def submitted(request):
+
+    message = "Submitted Successfully!"
+    context = {
+        'message': message,
+    }
+
+    return render(request, 'app/thankyou.html', context)
