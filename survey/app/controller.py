@@ -31,6 +31,9 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer 
 from nltk.corpus import wordnet 
+from sklearn.feature_extraction.text import CountVectorizer
+nltk.download('averaged_perceptron_tagger')
+nltk.download('vader_lexicon')
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent

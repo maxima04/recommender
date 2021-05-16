@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from app.forms import SurveyForm, LikertForm, OpinionForm, RegistrationForm, LoginForm, TitleForm
 from .models import Surveyquestions, User, Likert, Opinion, Survey
+from django.contrib.auth import authenticate, login, logout
 from .controller import *
 import json
 from PIL import Image
@@ -112,9 +113,9 @@ def survey(request):
             ac6 = likertForm.cleaned_data['ac6']
             ac7 = likertForm.cleaned_data['ac7']
             ac8 = likertForm.cleaned_data['ac8']
-
+            print(a1)
             likert_data = [a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16,a17,a18,i1,i2,i3,ac1,ac2,ac3,ac4,ac5,ac6,ac7,ac8]
-            #uploadDataLikert(likert_data) ## upload form data to csv
+            uploadDataLikert(likert_data) ## upload form data to csv
 
             #Get opinion form data, do not include subject name
             sa1 = surveyform.cleaned_data['a1']
@@ -323,6 +324,11 @@ def aspectPage(request):
     itoPlan = actionPlan(filterd_ito_comment,sentiment)
     itblPlan = actionPlan(filterd_itbl_comment,sentiment)
 
+    
+    userIsAcad = request.session['userIsAcad']
+    userIsItbl = request.session['userIsItbl']
+    userIsIto = request.session['userIsIto']
+
 
     context = {
         'column_name':column_name,
@@ -342,13 +348,17 @@ def aspectPage(request):
         'itoPlan':itoPlan,
         'itblPlan':itblPlan,
 
+        'userIsAcad':userIsAcad,
+        'userIsItbl':userIsItbl,
+        'userIsIto':userIsIto,
+
 
         'form':form,
 
         
     }
 
-
+    
     return render(request, 'app/aspectChart.html', context)
 
 def login(request):
@@ -373,11 +383,18 @@ def login(request):
                     userName = userInfo.username
                     userIsUser = userInfo.is_user
                     userIsAdmin = userInfo.is_admin
+                    userIsAcad = userInfo.is_acad
                     userIsItbl = userInfo.is_itbl
                     userIsIto = userInfo.is_ito
 
+                request.session['userIsAcad'] = userIsAcad
+                request.session['userIsItbl'] = userIsItbl
+                request.session['userIsIto'] = userIsIto
+
                 context = {
-                    'username': userName
+                    'username': userName,
+                   
+                    
                 }
                 messages.success(request, "You have login successfully!")
 
@@ -385,11 +402,13 @@ def login(request):
                     print("Done")
                     return redirect('/survey', context)
                 elif userIsAdmin == 1:
-                    return redirect('/dashboard', context)
+                    return redirect('/aspectChart', context)
+                elif userIsAcad == 1:
+                    return redirect('/aspectChart',context)
                 elif userIsItbl == 1:
-                    return redirect('/survey', context)
+                    return redirect('/aspectChart', context)
                 elif userIsIto == 1:
-                    return redirect('/survey', context)
+                    return redirect('/aspectChart', context)
                 else:
                     return redirect('/login')
 
@@ -405,6 +424,9 @@ def login(request):
 
         return render(request, 'app/login.html', context)
 
+def logoutUser(request):
+	logout(request)
+	return redirect('login')
 def register(request):
 
 
