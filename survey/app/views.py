@@ -269,12 +269,15 @@ def likertPage(request):
     likert = countLikert()
     likert = json.dumps(likert)
     currentPage = "/likertChart/"
+  
+
 
     context = {
         'column_name':column_name,
         'likert':likert,
         'currentPage': currentPage,
-        'role': UserVariables.userRole
+        'role': UserVariables.userRole,
+        
         }
 
     return render(request, 'app/likertChart.html', context)
@@ -286,13 +289,15 @@ def sentimentPage(request):
         messages.error(request, "You need to login!")
         return redirect('/login')
 
-    sentiment = calculateSentiment()
+    sentiment,comp = calculateSentiment()
+    print(comp)
     currentPage = "/sentimentChart/"
     context = {
         'sentiment':sentiment,
         'column_name':column_name,
         'currentPage': currentPage,
-        'role': UserVariables.userRole
+        'role': UserVariables.userRole,
+        'comp':comp
         }
 
     return render(request, 'app/sentimentChart.html', context)

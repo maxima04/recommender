@@ -34,35 +34,35 @@
             {% if userIsAcad == 1 %}
             
                 {% if acad_dict.items|length == 0 %}
-                <div>No Relative Aspect</div>
+                    <div>No Relative Aspect</div>
                 {% endif %}
 
                 {% for key, aspect in acad_dict.items %}
-                {% for asp in aspect %}
-                <div>{{asp}}</div>
-                {% endfor %}
+                    {% for asp in aspect %}
+                        <div>{{asp}}</div>
+                    {% endfor %}
                 {% endfor %}
 
             {% elif userIsIto == 1 %}
                 {% if ito_dict.items|length == 0 %}
-                <div>No Relative Aspect</div>
+                    <div>No Relative Aspect</div>
                 {% endif %}
 
                 {% for key, aspect in ito_dict.items %}
-                {% for asp in aspect %}
-                <div>{{asp}}</div>
-                {% endfor %}
+                    {% for asp in aspect %}
+                        <div>{{asp}}</div>
+                    {% endfor %}
                 {% endfor %}
 
             {% elif userIsItbl == 1 %}
                 {% if itbl_dict.items|length == 0 %}
-                <div>No Relative Aspect</div>
+                    <div>No Relative Aspect</div>
                 {% endif %}
 
                 {% for key, aspect in itbl_dict.items %}
-                {% for asp in aspect %}
-                <div>{{asp}}</div>
-                {% endfor %}
+                    {% for asp in aspect %}
+                        <div>{{asp}}</div>
+                    {% endfor %}
                 {% endfor %}
 
 
@@ -72,22 +72,12 @@
         <!--REmove me when may user credentials na-->
 
 
-        {% if acad_dict.items|length == 0 %}
-        <div>No Relative Aspect</div>
-        {% endif %}
-
-        {% for key, aspect in acad_dict.items %}
-        {% for asp in aspect %}
-        <div>{{asp}}</div>
-        {% endfor %}
-        {% endfor %}
 
     </div>
+
     <div class="col text-center">
         <b>Comment</b>
 
-        
-           
             {% if userIsAcad == 1 %}
                 {% if filterd_acad_comment.items|length == 0 %}
                 <div>No Relative Comment</div>
@@ -118,13 +108,6 @@
         
 
 
-        {% if filterd_acad_comment.items|length == 0 %}
-        <div>No Relative Comment</div>
-        {% endif %}
-
-        {% for key, aspect in filterd_acad_comment.items %}
-            <div>{{ aspect }}</div>
-        {% endfor %}
     </div>
     <div class="col text-center">
         <b>Average student sentiment</b>

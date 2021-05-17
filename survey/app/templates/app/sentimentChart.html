@@ -14,6 +14,9 @@
     <canvas id="myChart" width="500" height="500"></canvas>
 
     </div>
+    <script>
+        console.log('{{comp.0}}')
+    </script>
     <script type="text/javascript">
         
         var ctx = document.getElementById('myChart').getContext('2d')
@@ -24,11 +27,11 @@
                 'Canvas has made it easy for me to: communicate with my instructor, receive class announcements, share ideas on group discussions', 'I can answer the assessment materials (quiz, exam) posted in Canvas.  ', 'I find the course materials on Canvas aligned with the: quizzes, major exams, assignments, forums, etc.)  ',
                 'I have been give enough time to accomplish the activities on Canvas. ']
 
-        var b = ["{{sentiment.0}}","{{sentiment.1}}","{{sentiment.2}}","{{sentiment.3}}","{{sentiment.4}}",
-                "{{sentiment.5}}","{{sentiment.6}}","{{sentiment.7}}","{{sentiment.8}}","{{sentiment.9}}",
-                "{{sentiment.10}}","{{sentiment.11}}","{{sentiment.12}}","{{sentiment.13}}","{{sentiment.14}}",
-                "{{sentiment.15}}","{{sentiment.16}}","{{sentiment.17}}","{{sentiment.18}}","{{sentiment.19}}",
-                "{{sentiment.20}}"
+        var b = ["{{comp.0}}","{{comp.1}}","{{comp.2}}","{{comp.3}}","{{comp.4}}",
+                "{{comp.5}}","{{comp.6}}","{{comp.7}}","{{comp.8}}","{{comp.9}}",
+                "{{comp.10}}","{{comp.11}}","{{comp.12}}","{{comp.13}}","{{comp.14}}",
+                "{{comp.15}}","{{comp.16}}","{{comp.17}}","{{comp.18}}","{{comp.19}}",
+                "{{comp.20}}"
                 ]
 
         var myChart = new Chart(ctx, {
@@ -76,5 +79,5 @@
 
 
 </body>
-<div>{{sentiment}}</div>
+
 </html>

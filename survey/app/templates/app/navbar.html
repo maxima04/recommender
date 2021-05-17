@@ -11,7 +11,7 @@
         {% url 'likert' as likert %}
         {% url 'survey' as survey %}
         {% url 'aspect' as aspect %}
-        {% if role == "admin" %}
+        {% if role == "admin" or role == "head" %}
           <a href="{% url 'sentiment' %}" class="nav-item nav-link {% if currentPage == sent %} active" {% endif %}">Sentiment</a>
           <a href="{% url 'likert' %}" class="nav-item nav-link {% if currentPage == likert %} active {% endif %}">Likert</a>
           <a href="{% url 'survey' %}" class="nav-item nav-link  {% if currentPage == survey %} active {% endif %}">Survey</a>

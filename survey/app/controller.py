@@ -84,10 +84,10 @@ def countLikert():
     agg_results.reset_index(drop=True)
 
 
-    result = agg_results.to_json(orient="index")
-    parsed = json.loads(result)
+    likert_list = agg_results.values.tolist()
+    likert_results = [i[1:] for i in likert_list]
 
-    return parsed
+    return likert_results
 
 
 def calculateSentiment():
@@ -166,8 +166,8 @@ def calculateSentiment():
     labels = list(labels)
 
     new_sent = [dict(zip(labels, datum)) for datum in [comp]]
-
-    return new_sent[0]
+    
+    return new_sent[0], comp
     
 
 def getAspect():
