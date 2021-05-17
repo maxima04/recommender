@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from app.forms import SurveyForm, LikertForm, OpinionForm, RegistrationForm, LoginForm, TitleForm
 from .models import Surveyquestions, User, Likert, Opinion, Survey
+from django.contrib.auth import authenticate, login, logout
 from .controller import *
 import json
 from PIL import Image
@@ -43,13 +44,13 @@ def user_auth():
         redirectUser = True
         return redirectUser
 
-def login_user(username, password):
+def login_user(username, password, request):
     if User.objects.filter(username=username, password=password):
         userIsUser = 0
         userIsAdmin = 0
         userIsItbl = 0
         userIsIto = 0
-        userIsAcads = 0
+        userIsAcad = 0
 
         getUser = User.objects.filter(username=username, password=password)
         for userInfo in getUser:
@@ -59,7 +60,11 @@ def login_user(username, password):
             userIsAdmin = userInfo.is_admin
             userIsItbl = userInfo.is_itbl
             userIsIto = userInfo.is_ito
-            userIsAcads = userInfo.is_acads
+            userIsAcad = userInfo.is_acad
+
+        request.session['userIsAcad'] = userIsAcad
+        request.session['userIsItbl'] = userIsItbl
+        request.session['userIsIto'] = userIsIto
 
         if userIsUser == 1:
             UserVariables.userRole = "user"
@@ -73,7 +78,7 @@ def login_user(username, password):
         elif userIsIto == 1:
             UserVariables.userRole = "acads"
             page = "/aspectChart"
-        elif userIsAcads == 1:
+        elif userIsAcad == 1:
             UserVariables.userRole = "ito"
             page = "/aspectChart"
         else:
@@ -321,13 +326,11 @@ def aspectPage(request):
         if form.is_valid():
             selected_title = request.POST.get('title')
 
-
-    
-
     #print(list(comment[selected].values()))
     
     
-    sentiment = list(sent[selected_title].values())
+    sentiment = sent[selected_title]
+
 
     acad_filter = ['subject','teacher','teach','faculty',
                     'professor','school','system','learning',
@@ -339,7 +342,7 @@ def aspectPage(request):
                     'equipment']
 
     itbl_filter = ['canvas','design','slow','platform',
-                    'application','access','survey',
+                    'application','survey',
                     'modules','modules','log']
 
     
@@ -396,6 +399,16 @@ def aspectPage(request):
     uri = 'data:image/png;base64,' + urllib.parse.quote(string)
     currentPage = "/aspectChart/"
 
+    acadPlan = actionPlan(filterd_acad_comment,sentiment)
+    itoPlan = actionPlan(filterd_ito_comment,sentiment)
+    itblPlan = actionPlan(filterd_itbl_comment,sentiment)
+
+
+    userIsAcad = request.session['userIsAcad']
+    userIsItbl = request.session['userIsItbl']
+    userIsIto = request.session['userIsIto']
+
+
     context = {
         'column_name':column_name,
         'uri':uri,
@@ -410,14 +423,21 @@ def aspectPage(request):
         'filterd_ito_comment':filterd_ito_comment,
         'filterd_itbl_comment':filterd_itbl_comment,
 
+        'acadPlan':acadPlan,
+        'itoPlan':itoPlan,
+        'itblPlan':itblPlan,
+
+        'userIsAcad':userIsAcad,
+        'userIsItbl':userIsItbl,
+        'userIsIto':userIsIto,
+
+
         'form':form,
         'currentPage': currentPage,
         'role': UserVariables.userRole
 
         
     }
-
-
     return render(request, 'app/aspectChart.html', context)
 
 def login(request):
@@ -429,7 +449,7 @@ def login(request):
             username = loginForm.cleaned_data['username']
             userpass = loginForm.cleaned_data['password']
 
-            redirectToPage = login_user(username, userpass)
+            redirectToPage = login_user(username, userpass, request)
 
             if redirectToPage != "/login":
                 message = "Hello " + UserVariables.userName + "!"

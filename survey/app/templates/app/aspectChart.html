@@ -22,10 +22,56 @@
     </div>&ndash;&gt;
 </div>-->
 
+<script>
 
+
+
+</script>
 <div class="row">
     <div class="col text-center">
         <b>ASPECT</b>
+
+            {% if userIsAcad == 1 %}
+            
+                {% if acad_dict.items|length == 0 %}
+                <div>No Relative Aspect</div>
+                {% endif %}
+
+                {% for key, aspect in acad_dict.items %}
+                {% for asp in aspect %}
+                <div>{{asp}}</div>
+                {% endfor %}
+                {% endfor %}
+
+            {% elif userIsIto == 1 %}
+                {% if ito_dict.items|length == 0 %}
+                <div>No Relative Aspect</div>
+                {% endif %}
+
+                {% for key, aspect in ito_dict.items %}
+                {% for asp in aspect %}
+                <div>{{asp}}</div>
+                {% endfor %}
+                {% endfor %}
+
+            {% elif userIsItbl == 1 %}
+                {% if itbl_dict.items|length == 0 %}
+                <div>No Relative Aspect</div>
+                {% endif %}
+
+                {% for key, aspect in itbl_dict.items %}
+                {% for asp in aspect %}
+                <div>{{asp}}</div>
+                {% endfor %}
+                {% endfor %}
+
+
+            {% endif %}
+        
+
+        <!--REmove me when may user credentials na-->
+
+
         {% if acad_dict.items|length == 0 %}
         <div>No Relative Aspect</div>
         {% endif %}
@@ -35,9 +81,43 @@
         <div>{{asp}}</div>
         {% endfor %}
         {% endfor %}
+
     </div>
     <div class="col text-center">
         <b>Comment</b>
+
+        
+           
+            {% if userIsAcad == 1 %}
+                {% if filterd_acad_comment.items|length == 0 %}
+                <div>No Relative Comment</div>
+                {% endif %}
+
+                {% for key, aspect in filterd_acad_comment.items %}
+                    <div>{{ aspect }}</div>
+                {% endfor %}
+            {% elif userIsIto == 1 %}
+                {% if filterd_ito_comment.items|length == 0 %}
+                <div>No Relative Comment</div>
+                {% endif %}
+
+                {% for key, aspect in filterd_ito_comment.items %}
+                    <div>{{ aspect }}</div>
+                {% endfor %}
+            {% elif userIsItbl == 1 %}
+                {% if filterd_itbl_comment.items|length == 0 %}
+                <div>No Relative Comment</div>
+                {% endif %}
+
+                {% for key, aspect in filterd_itbl_comment.items %}
+                    <div>{{ aspect }}</div>
+                {% endfor %}
+
+
+            {% endif %}
+        
+
+
         {% if filterd_acad_comment.items|length == 0 %}
         <div>No Relative Comment</div>
         {% endif %}
@@ -54,19 +134,80 @@
     <div class="col text-center">
         <b>Average sentiment</b>
         <div>
-            {% if sentiment > 0.5 %}
+            {% if sentiment > 0.05 %}
             <div>positive</div>
 
-            {% elif sentiment < -0.5 %}
+            {% elif sentiment < 0.03 %}
             <div>negative</div>
 
             {% else %}
             <div>neutral</div>
             {% endif %}
         </div>
+
     </div>
+   
+    <div class="bs-example">
+        <!-- Button HTML (to Trigger Modal) -->
+        <a href="#myModal" role="button" class="btn btn-lg btn-primary" data-toggle="modal">Show Action Plan</a>
+    
+        <!-- Modal HTML -->
+        <div id="myModal" class="modal fade" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+
+                        
+                            
+                            {% if userIsAcad == 1 %}
+                                <h5 class="modal-title">Academic Council</h5>
+
+                            {% elif userIsIto == 1 %}
+                                <h5 class="modal-title">Information Technology Office</h5>
+
+                            {% elif userIsItbl == 1 %}
+                             <h5 class="modal-title">Institute of Technology-Based Learning</h5>
+
+
+
+                            {% endif %}
+                        
+                      
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        
+                     
+                            {% if userIsAcad == 1 %}
+                                <p>{{acadPlan}}</p>
+                            {% elif userIsIto == 1 %}
+                                <p>{{itoPlan}}</p>
+                            {% elif userIsItbl == 1 %}
+                                <p>{{itblPlan}}</p>
+
+
+                            {% endif %}
+                        
+                       
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
+<script>
+    $('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})
+</script>
 
 <div class="row justify-content-md-center" id="aspect-form">
     <div class="col">
@@ -86,7 +227,7 @@
 <script>
     var ctx = document.getElementById('myChart').getContext('2d')
     var title = ["{{selected}}"]
-    var sent = JSON.parse("{{sentiment}}")
+    var sent = "{{sentiment}}"
 
     console.log(title, sent)
     var myChart = new Chart(ctx, {

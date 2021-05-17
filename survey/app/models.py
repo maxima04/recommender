@@ -234,9 +234,9 @@ class User(models.Model):
     role = models.CharField(max_length=55)
     is_user = models.IntegerField()
     is_admin = models.IntegerField()
+    is_acad = models.IntegerField()
     is_itbl = models.IntegerField()
     is_ito = models.IntegerField()
-    is_acads = models.IntegerField()
 
     class Meta:
         managed = False
