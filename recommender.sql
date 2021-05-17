@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 03, 2021 at 05:42 AM
+-- Generation Time: May 17, 2021 at 09:17 AM
 -- Server version: 10.1.29-MariaDB
 -- PHP Version: 7.2.0
 
@@ -172,6 +172,13 @@ CREATE TABLE `auth_user` (
   `date_joined` datetime(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `auth_user`
+--
+
+INSERT INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active`, `date_joined`) VALUES
+(1, 'pbkdf2_sha256$216000$AipGnKXEY6BH$2tTDfkRcTX2Ai24i7DClM2dnNLMoMkcB7UTqZMCEPVQ=', '2021-05-06 03:14:18.886016', 1, 'admin', '', '', 'eingelfigueroa20@gmail.com', 1, 1, '2021-05-06 03:13:17.639349');
+
 -- --------------------------------------------------------
 
 --
@@ -212,7 +219,9 @@ CREATE TABLE `course` (
 --
 
 INSERT INTO `course` (`id`, `course_name`) VALUES
-(1, 'HIS C101- Readings in Philippine History');
+(1, 'HIS C101- Readings in Philippine History'),
+(2, 'HIS C102- Course Name Temp 1'),
+(3, 'HIS C103- Course Name Temp 2');
 
 -- --------------------------------------------------------
 
@@ -321,6 +330,14 @@ CREATE TABLE `django_session` (
   `session_data` longtext NOT NULL,
   `expire_date` datetime(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `django_session`
+--
+
+INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
+('3y4dlaye6ggle676ygbazpm7al5t3gkj', '.eJxVjDsOwjAQBe_iGln-7tqU9DlDtF4vJIASKU4qxN0hUgpo38y8l-ppW4d-a7L0Y1VnZdXpdyvED5l2UO803WbN87QuY9G7og_adDdXeV4O9-9goDZ860TsMDqsnhDtVSIED2wKJQZvHHrAYEqUgAYgJc7RBFckWQuBXc7q_QG7YjZd:1leUSx:z7miMBm5HQKV2ipWbTTlW6FoxOQDfPDbzEFKdsPIClQ', '2021-05-20 03:14:19.054643'),
+('dy27eeav8a8srm3g33c4vhruag1dbw5e', '.eJyrViotTi3yLHZMTkxRsjLUgXI9S5JylKwMENx8IK8WAFy1Du0:1liXBd:9IBqafNzLw3_qeUKnUB0yTQjbmzW3IsnMC4HTkABZN0', '2021-05-31 06:57:09.846802');
 
 -- --------------------------------------------------------
 
@@ -509,7 +526,8 @@ INSERT INTO `likert` (`id`, `user_id`, `course_name`, `timestamp`, `a1`, `a2`, `
 (137, 137, 'HIS C101- Readings in Philippine History', '2019/10/01 2:47:05 PM GMT+8', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Disagree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', '', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree'),
 (138, 138, 'HIS C101- Readings in Philippine History', '2019/10/02 7:33:59 AM GMT+8', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', '', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree'),
 (139, 139, 'HIS C101- Readings in Philippine History', '2019/10/03 12:29:58 AM GMT+8', 'Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Disagree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', '', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Agree', 'Disagree', 'Agree', 'Strongly Agree', 'Strongly Agree', 'Agree', 'Agree', 'Strongly Agree'),
-(140, 140, 'HIS C101- Readings in Philippine History', '2019/10/03 3:07:30 PM GMT+8', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Agree', 'Agree', 'Agree', 'Agree', '', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Agree', 'Strongly Agree', 'Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree');
+(140, 140, 'HIS C101- Readings in Philippine History', '2019/10/03 3:07:30 PM GMT+8', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Agree', 'Agree', 'Agree', 'Agree', '', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Agree', 'Strongly Agree', 'Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree', 'Strongly Agree'),
+(141, 141, 'HIS C101- Readings in Philippine History', '2021-05-14 11:38:53.802121', 'nkjsdhksdh', 'ijedowjed', 'jeodjw', 'sjfsjfosj', 'oijsojdos', 'jsodjosjoj', 'jsojofjspeipi', 'kpkpkpkpk', 'pkpkpjoh', 'johojij', 'jojojojpj', 'pojjjihihi', 'hjhkhkk', 'ihihihiuho', 'bbjsbcsc', 'uihihihih', 'hihihi', 'hihhihihi', 'hvghvvnn', 'bbjbjbjbb', 'hugguvvgyv', 'bjjbjbjb', 'jhbjhbjbj', 'jhbjhbjbj', 'ihihihih', 'hihihi', 'ihihihi', 'ooojojojoj', 'ohihihi');
 
 -- --------------------------------------------------------
 
@@ -524,6 +542,13 @@ CREATE TABLE `opinion` (
   `e2` varchar(255) NOT NULL,
   `e3` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `opinion`
+--
+
+INSERT INTO `opinion` (`id`, `user_id`, `e1`, `e2`, `e3`) VALUES
+(1, 141, 'hihihih', 'hihihih', 'iuhihih');
 
 -- --------------------------------------------------------
 
@@ -714,7 +739,8 @@ INSERT INTO `survey` (`id`, `user_id`, `course_name`, `timestamp`, `a1`, `a2`, `
 (137, 137, 'HIS C101- Readings in Philippine History', '2019/10/01 2:47:05 PM GMT+8', 'strongly agree', 'strongly agree', 'strongly agree', 'strongly agree', 'strongly agree', 'strongly agree', 'strongly agree', 'strongly agree', 'strongly agree', 'strongly agree', 'strongly agree', 'strongly agree', 'strongly agree', 'strongly agree', '', '', '', '', 'strongly agree', 'strongly agree', 'strongly agree', 'strongly agree', 'strongly agree', 'strongly agree', 'strongly agree', '', '', '', ''),
 (138, 138, 'HIS C101- Readings in Philippine History', '2019/10/02 7:33:59 AM GMT+8', 'Yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', '', '', '', '', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', '', '', '', ''),
 (139, 139, 'HIS C101- Readings in Philippine History', '2019/10/03 12:29:58 AM GMT+8', 'There are some times where i cant log in when i use other computers. This is very troubling since those times i need to take quizzes', 'No problem here', 'No problem here', 'No problem here', 'The guys at itbl gets the job done.', 'Sometimes i cant log in', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', '', '', '', '', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', '', '', '', ''),
-(140, 140, 'HIS C101- Readings in Philippine History', '2019/10/03 3:07:30 PM GMT+8', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', '', '', '', '', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', '', '', '', '');
+(140, 140, 'HIS C101- Readings in Philippine History', '2019/10/03 3:07:30 PM GMT+8', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', '', '', '', '', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', 'yes', '', '', '', ''),
+(141, 141, 'HIS C101- Readings in Philippine History', '2021-05-14 11:38:53.802121', 'nkjsdhksdh', 'ijedowjed', 'jeodjw', 'sjfsjfosj', 'oijsojdos', 'jsodjosjoj', 'jsojofjspeipi', 'kpkpkpkpk', 'pkpkpjoh', 'johojij', 'jojojojpj', 'pojjjihihi', 'hjhkhkk', 'ihihihiuho', 'bbjsbcsc', 'uihihihih', 'hihihi', 'hihhihihi', 'hvghvvnn', 'bbjbjbjbb', 'hugguvvgyv', 'bjjbjbjb', 'jhbjhbjbj', 'jhbjhbjbj', 'ihihihih', 'hihihi', 'ihihihi', 'ooojojojoj', 'ohihihi');
 
 -- --------------------------------------------------------
 
@@ -747,7 +773,7 @@ INSERT INTO `surveyquestions` (`question_id`, `question_description`, `type`) VA
 (12, '* 15. I notice that course materials on Canvas have connection with the face to face (classroom) lesson content. ', 'RB'),
 (13, '* 16. I understand the lessons better with the help of course materials in Canvas. ', 'RB'),
 (14, '* 17. Canvas course materials make me interested. ', 'RB'),
-(15, '* 18. The course materials on Canvas helped me prepare for: ', 'WS'),
+(15, '* 18. The course materials on Canvas helped me prepare for:', 'WS'),
 (16, 'a. Face to Face discussions', 'SQ'),
 (17, 'b. Quizzes ', 'SQ'),
 (18, 'c. Prelim/Mid-term/Final Exam', 'SQ'),
@@ -784,154 +810,161 @@ CREATE TABLE `user` (
   `is_user` tinyint(1) NOT NULL,
   `is_admin` tinyint(1) NOT NULL,
   `is_itbl` tinyint(1) NOT NULL,
-  `is_ito` tinyint(1) NOT NULL
+  `is_ito` tinyint(1) NOT NULL,
+  `is_acad` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `name`, `username`, `password`, `role`, `is_user`, `is_admin`, `is_itbl`, `is_ito`) VALUES
-(1, 'Robert Buskirk', 'UERobertBuskirk', 'UERobertBuskirk123', 'student', 1, 0, 0, 0),
-(2, 'Helen Slater', 'UEHelenSlater', 'UEHelenSlater123', 'student', 1, 0, 0, 0),
-(3, 'William Miller', 'UEWilliamMiller', 'UEWilliamMiller123', 'student', 1, 0, 0, 0),
-(4, 'Adam Lau', 'UEAdamLau', 'UEAdamLau123', 'student', 1, 0, 0, 0),
-(5, 'Joann Love', 'UEJoannLove', 'UEJoannLove123', 'student', 1, 0, 0, 0),
-(6, 'Julie Carter', 'UEJulieCarter', 'UEJulieCarter123', 'student', 1, 0, 0, 0),
-(7, 'John Jenkins', 'UEJohnJenkins', 'UEJohnJenkins123', 'student', 1, 0, 0, 0),
-(8, 'Valerie Lewis', 'UEValerieLewis', 'UEValerieLewis123', 'student', 1, 0, 0, 0),
-(9, 'Julius Bishop', 'UEJuliusBishop', 'UEJuliusBishop123', 'student', 1, 0, 0, 0),
-(10, 'Alana Bell', 'UEAlanaBell', 'UEAlanaBell123', 'student', 1, 0, 0, 0),
-(11, 'Martin Platt', 'UEMartinPlatt', 'UEMartinPlatt123', 'student', 1, 0, 0, 0),
-(12, 'Randi Gibbs', 'UERandiGibbs', 'UERandiGibbs123', 'student', 1, 0, 0, 0),
-(13, 'Raymond Zuhlke', 'UERaymondZuhlke', 'UERaymondZuhlke123', 'student', 1, 0, 0, 0),
-(14, 'James Noland', 'UEJamesNoland', 'UEJamesNoland123', 'student', 1, 0, 0, 0),
-(15, 'Thomas Perez', 'UEThomasPerez', 'UEThomasPerez123', 'student', 1, 0, 0, 0),
-(16, 'Theresa Terrell', 'UETheresaTerrell', 'UETheresaTerrell123', 'student', 1, 0, 0, 0),
-(17, 'Melvin Nunez', 'UEMelvinNunez', 'UEMelvinNunez123', 'student', 1, 0, 0, 0),
-(18, 'Taryn Fernandez', 'UETarynFernandez', 'UETarynFernandez123', 'student', 1, 0, 0, 0),
-(19, 'Allen Morris', 'UEAllenMorris', 'UEAllenMorris123', 'student', 1, 0, 0, 0),
-(20, 'Jimmy Sparkman', 'UEJimmySparkman', 'UEJimmySparkman123', 'student', 1, 0, 0, 0),
-(21, 'Thelma Delagarza', 'UEThelmaDelagarza', 'UEThelmaDelagarza123', 'student', 1, 0, 0, 0),
-(22, 'Jason Beech', 'UEJasonBeech', 'UEJasonBeech123', 'student', 1, 0, 0, 0),
-(23, 'Joyce Johnson', 'UEJoyceJohnson', 'UEJoyceJohnson123', 'student', 1, 0, 0, 0),
-(24, 'John Tran', 'UEJohnTran', 'UEJohnTran123', 'student', 1, 0, 0, 0),
-(25, 'Dustin Rodriguez', 'UEDustinRodriguez', 'UEDustinRodriguez123', 'student', 1, 0, 0, 0),
-(26, 'Dennis Plater', 'UEDennisPlater', 'UEDennisPlater123', 'student', 1, 0, 0, 0),
-(27, 'Brian Graf', 'UEBrianGraf', 'UEBrianGraf123', 'student', 1, 0, 0, 0),
-(28, 'Jason Mondragon', 'UEJasonMondragon', 'UEJasonMondragon123', 'student', 1, 0, 0, 0),
-(29, 'Travis Mapes', 'UETravisMapes', 'UETravisMapes123', 'student', 1, 0, 0, 0),
-(30, 'William Girard', 'UEWilliamGirard', 'UEWilliamGirard123', 'student', 1, 0, 0, 0),
-(31, 'Jerome Duran', 'UEJeromeDuran', 'UEJeromeDuran123', 'student', 1, 0, 0, 0),
-(32, 'Teri Logan', 'UETeriLogan', 'UETeriLogan123', 'student', 1, 0, 0, 0),
-(33, 'Bobby Cagle', 'UEBobbyCagle', 'UEBobbyCagle123', 'student', 1, 0, 0, 0),
-(34, 'Charles Lavalle', 'UECharlesLavalle', 'UECharlesLavalle123', 'student', 1, 0, 0, 0),
-(35, 'John Young', 'UEJohnYoung', 'UEJohnYoung123', 'student', 1, 0, 0, 0),
-(36, 'Robert Watson', 'UERobertWatson', 'UERobertWatson123', 'student', 1, 0, 0, 0),
-(37, 'Edward Calhoun', 'UEEdwardCalhoun', 'UEEdwardCalhoun123', 'student', 1, 0, 0, 0),
-(38, 'Keely Rash', 'UEKeelyRash', 'UEKeelyRash123', 'student', 1, 0, 0, 0),
-(39, 'Jack Christensen', 'UEJackChristensen', 'UEJackChristensen123', 'student', 1, 0, 0, 0),
-(40, 'Michael Osterstuck', 'UEMichaelOsterstuck', 'UEMichaelOsterstuck123', 'student', 1, 0, 0, 0),
-(41, 'Marie Hirtz', 'UEMarieHirtz', 'UEMarieHirtz123', 'student', 1, 0, 0, 0),
-(42, 'William Patel', 'UEWilliamPatel', 'UEWilliamPatel123', 'student', 1, 0, 0, 0),
-(43, 'Dennis Simpson', 'UEDennisSimpson', 'UEDennisSimpson123', 'student', 1, 0, 0, 0),
-(44, 'Joseph Digeorgio', 'UEJosephDigeorgio', 'UEJosephDigeorgio123', 'student', 1, 0, 0, 0),
-(45, 'Annie Cerda', 'UEAnnieCerda', 'UEAnnieCerda123', 'student', 1, 0, 0, 0),
-(46, 'Brittany Marsingill', 'UEBrittanyMarsingill', 'UEBrittanyMarsingill123', 'student', 1, 0, 0, 0),
-(47, 'Lucille Randle', 'UELucilleRandle', 'UELucilleRandle123', 'student', 1, 0, 0, 0),
-(48, 'Sally Stahnke', 'UESallyStahnke', 'UESallyStahnke123', 'student', 1, 0, 0, 0),
-(49, 'Robert Nelson', 'UERobertNelson', 'UERobertNelson123', 'student', 1, 0, 0, 0),
-(50, 'Anthony Burke', 'UEAnthonyBurke', 'UEAnthonyBurke123', 'student', 1, 0, 0, 0),
-(51, 'Marcia Wagner', 'UEMarciaWagner', 'UEMarciaWagner123', 'student', 1, 0, 0, 0),
-(52, 'Nellie Williams', 'UENellieWilliams', 'UENellieWilliams123', 'student', 1, 0, 0, 0),
-(53, 'Amanda Wick', 'UEAmandaWick', 'UEAmandaWick123', 'student', 1, 0, 0, 0),
-(54, 'Michael Marston', 'UEMichaelMarston', 'UEMichaelMarston123', 'student', 1, 0, 0, 0),
-(55, 'Joshua Egerton', 'UEJoshuaEgerton', 'UEJoshuaEgerton123', 'student', 1, 0, 0, 0),
-(56, 'Esther Mcgloster', 'UEEstherMcgloster', 'UEEstherMcgloster123', 'student', 1, 0, 0, 0),
-(57, 'Sharon Capozzoli', 'UESharonCapozzoli', 'UESharonCapozzoli123', 'student', 1, 0, 0, 0),
-(58, 'Curtis Wu', 'UECurtisWu', 'UECurtisWu123', 'student', 1, 0, 0, 0),
-(59, 'Henry Wilson', 'UEHenryWilson', 'UEHenryWilson123', 'student', 1, 0, 0, 0),
-(60, 'Roderick Williams', 'UERoderickWilliams', 'UERoderickWilliams123', 'student', 1, 0, 0, 0),
-(61, 'Lucile Robinson', 'UELucileRobinson', 'UELucileRobinson123', 'student', 1, 0, 0, 0),
-(62, 'Cecil Joy', 'UECecilJoy', 'UECecilJoy123', 'student', 1, 0, 0, 0),
-(63, 'Janet Walker', 'UEJanetWalker', 'UEJanetWalker123', 'student', 1, 0, 0, 0),
-(64, 'Denise Treanor', 'UEDeniseTreanor', 'UEDeniseTreanor123', 'student', 1, 0, 0, 0),
-(65, 'Heather Mccomas', 'UEHeatherMccomas', 'UEHeatherMccomas123', 'student', 1, 0, 0, 0),
-(66, 'Jamie Hood', 'UEJamieHood', 'UEJamieHood123', 'student', 1, 0, 0, 0),
-(67, 'Barbara Pedrick', 'UEBarbaraPedrick', 'UEBarbaraPedrick123', 'student', 1, 0, 0, 0),
-(68, 'John Hursh', 'UEJohnHursh', 'UEJohnHursh123', 'student', 1, 0, 0, 0),
-(69, 'Barbara Lowe', 'UEBarbaraLowe', 'UEBarbaraLowe123', 'student', 1, 0, 0, 0),
-(70, 'Irma Sandifer', 'UEIrmaSandifer', 'UEIrmaSandifer123', 'student', 1, 0, 0, 0),
-(71, 'Thomas Thompson', 'UEThomasThompson', 'UEThomasThompson123', 'student', 1, 0, 0, 0),
-(72, 'Joseph Wittkop', 'UEJosephWittkop', 'UEJosephWittkop123', 'student', 1, 0, 0, 0),
-(73, 'Marvin Lane', 'UEMarvinLane', 'UEMarvinLane123', 'student', 1, 0, 0, 0),
-(74, 'Jacob Clayton', 'UEJacobClayton', 'UEJacobClayton123', 'student', 1, 0, 0, 0),
-(75, 'Angela Wiggins', 'UEAngelaWiggins', 'UEAngelaWiggins123', 'student', 1, 0, 0, 0),
-(76, 'Otha Kramer', 'UEOthaKramer', 'UEOthaKramer123', 'student', 1, 0, 0, 0),
-(77, 'Gregory Brown', 'UEGregoryBrown', 'UEGregoryBrown123', 'student', 1, 0, 0, 0),
-(78, 'Jose Bowen', 'UEJoseBowen', 'UEJoseBowen123', 'student', 1, 0, 0, 0),
-(79, 'Sherry Rubio', 'UESherryRubio', 'UESherryRubio123', 'student', 1, 0, 0, 0),
-(80, 'Dixie Bruce', 'UEDixieBruce', 'UEDixieBruce123', 'student', 1, 0, 0, 0),
-(81, 'Katherine Noman', 'UEKatherineNoman', 'UEKatherineNoman123', 'student', 1, 0, 0, 0),
-(82, 'Marion Gurney', 'UEMarionGurney', 'UEMarionGurney123', 'student', 1, 0, 0, 0),
-(83, 'Edward Ward', 'UEEdwardWard', 'UEEdwardWard123', 'student', 1, 0, 0, 0),
-(84, 'Dale Reveal', 'UEDaleReveal', 'UEDaleReveal123', 'student', 1, 0, 0, 0),
-(85, 'Mark Jones', 'UEMarkJones', 'UEMarkJones123', 'student', 1, 0, 0, 0),
-(86, 'Jose Dietz', 'UEJoseDietz', 'UEJoseDietz123', 'student', 1, 0, 0, 0),
-(87, 'Patience Holderby', 'UEPatienceHolderby', 'UEPatienceHolderby123', 'student', 1, 0, 0, 0),
-(88, 'Verna Ma', 'UEVernaMa', 'UEVernaMa123', 'student', 1, 0, 0, 0),
-(89, 'Troy Williams', 'UETroyWilliams', 'UETroyWilliams123', 'student', 1, 0, 0, 0),
-(90, 'Kimberly Roberto', 'UEKimberlyRoberto', 'UEKimberlyRoberto123', 'student', 1, 0, 0, 0),
-(91, 'Michael Latch', 'UEMichaelLatch', 'UEMichaelLatch123', 'student', 1, 0, 0, 0),
-(92, 'James Fields', 'UEJamesFields', 'UEJamesFields123', 'student', 1, 0, 0, 0),
-(93, 'Katie Walker', 'UEKatieWalker', 'UEKatieWalker123', 'student', 1, 0, 0, 0),
-(94, 'Michael Coy', 'UEMichaelCoy', 'UEMichaelCoy123', 'student', 1, 0, 0, 0),
-(95, 'David Papitto', 'UEDavidPapitto', 'UEDavidPapitto123', 'student', 1, 0, 0, 0),
-(96, 'Ronald Lentini', 'UERonaldLentini', 'UERonaldLentini123', 'student', 1, 0, 0, 0),
-(97, 'Mary Bischoff', 'UEMaryBischoff', 'UEMaryBischoff123', 'student', 1, 0, 0, 0),
-(98, 'Michael Stroh', 'UEMichaelStroh', 'UEMichaelStroh123', 'student', 1, 0, 0, 0),
-(99, 'Scott Brown', 'UEScottBrown', 'UEScottBrown123', 'student', 1, 0, 0, 0),
-(100, 'Jennifer Wilson', 'UEJenniferWilson', 'UEJenniferWilson123', 'student', 1, 0, 0, 0),
-(101, 'Joseph Chambers', 'UEJosephChambers', 'UEJosephChambers123', 'student', 1, 0, 0, 0),
-(102, 'Dick Alford', 'UEDickAlford', 'UEDickAlford123', 'student', 1, 0, 0, 0),
-(103, 'Chase Stakkeland', 'UEChaseStakkeland', 'UEChaseStakkeland123', 'student', 1, 0, 0, 0),
-(104, 'Nathan Herlocker', 'UENathanHerlocker', 'UENathanHerlocker123', 'student', 1, 0, 0, 0),
-(105, 'Troy Williams', 'UETroyWilliams', 'UETroyWilliams123', 'student', 1, 0, 0, 0),
-(106, 'Carlos Gustafson', 'UECarlosGustafson', 'UECarlosGustafson123', 'student', 1, 0, 0, 0),
-(107, 'Robert Stehle', 'UERobertStehle', 'UERobertStehle123', 'student', 1, 0, 0, 0),
-(108, 'Stacey Torres', 'UEStaceyTorres', 'UEStaceyTorres123', 'student', 1, 0, 0, 0),
-(109, 'Paul Seldon', 'UEPaulSeldon', 'UEPaulSeldon123', 'student', 1, 0, 0, 0),
-(110, 'Yong Bartz', 'UEYongBartz', 'UEYongBartz123', 'student', 1, 0, 0, 0),
-(111, 'Chris Ramos', 'UEChrisRamos', 'UEChrisRamos123', 'student', 1, 0, 0, 0),
-(112, 'Brandon Silva', 'UEBrandonSilva', 'UEBrandonSilva123', 'student', 1, 0, 0, 0),
-(113, 'Charles Bormann', 'UECharlesBormann', 'UECharlesBormann123', 'student', 1, 0, 0, 0),
-(114, 'Edward Scott', 'UEEdwardScott', 'UEEdwardScott123', 'student', 1, 0, 0, 0),
-(115, 'Pamela Crockett', 'UEPamelaCrockett', 'UEPamelaCrockett123', 'student', 1, 0, 0, 0),
-(116, 'Reyna Mcnally', 'UEReynaMcnally', 'UEReynaMcnally123', 'student', 1, 0, 0, 0),
-(117, 'Theresa Heimann', 'UETheresaHeimann', 'UETheresaHeimann123', 'student', 1, 0, 0, 0),
-(118, 'Efren Cadena', 'UEEfrenCadena', 'UEEfrenCadena123', 'student', 1, 0, 0, 0),
-(119, 'Lucille Hayes', 'UELucilleHayes', 'UELucilleHayes123', 'student', 1, 0, 0, 0),
-(120, 'Margaret Johnson', 'UEMargaretJohnson', 'UEMargaretJohnson123', 'student', 1, 0, 0, 0),
-(121, 'Amanda Wright', 'UEAmandaWright', 'UEAmandaWright123', 'student', 1, 0, 0, 0),
-(122, 'Donald Inoue', 'UEDonaldInoue', 'UEDonaldInoue123', 'student', 1, 0, 0, 0),
-(123, 'Becky Hutchins', 'UEBeckyHutchins', 'UEBeckyHutchins123', 'student', 1, 0, 0, 0),
-(124, 'Jack Corder', 'UEJackCorder', 'UEJackCorder123', 'student', 1, 0, 0, 0),
-(125, 'Shannon Adkinson', 'UEShannonAdkinson', 'UEShannonAdkinson123', 'student', 1, 0, 0, 0),
-(126, 'Ryan Polsgrove', 'UERyanPolsgrove', 'UERyanPolsgrove123', 'student', 1, 0, 0, 0),
-(127, 'Lisa Perry', 'UELisaPerry', 'UELisaPerry123', 'student', 1, 0, 0, 0),
-(128, 'Judy Simmons', 'UEJudySimmons', 'UEJudySimmons123', 'student', 1, 0, 0, 0),
-(129, 'Billy Hamilton', 'UEBillyHamilton', 'UEBillyHamilton123', 'student', 1, 0, 0, 0),
-(130, 'Judy Addiego', 'UEJudyAddiego', 'UEJudyAddiego123', 'student', 1, 0, 0, 0),
-(131, 'George Rossi', 'UEGeorgeRossi', 'UEGeorgeRossi123', 'student', 1, 0, 0, 0),
-(132, 'Constance Cooper', 'UEConstanceCooper', 'UEConstanceCooper123', 'student', 1, 0, 0, 0),
-(133, 'Darlene Hatfield', 'UEDarleneHatfield', 'UEDarleneHatfield123', 'student', 1, 0, 0, 0),
-(134, 'Ross Moore', 'UERossMoore', 'UERossMoore123', 'student', 1, 0, 0, 0),
-(135, 'Lara Sager', 'UELaraSager', 'UELaraSager123', 'student', 1, 0, 0, 0),
-(136, 'Larry Rodgers', 'UELarryRodgers', 'UELarryRodgers123', 'student', 1, 0, 0, 0),
-(137, 'Susan Michael', 'UESusanMichael', 'UESusanMichael123', 'student', 1, 0, 0, 0),
-(138, 'Francisco Speer', 'UEFranciscoSpeer', 'UEFranciscoSpeer123', 'student', 1, 0, 0, 0),
-(139, 'Chris Shoemaker', 'UEChrisShoemaker', 'UEChrisShoemaker123', 'student', 1, 0, 0, 0),
-(140, 'Jamie Sabbagh', 'UEJamieSabbagh', 'UEJamieSabbagh123', 'student', 1, 0, 0, 0);
+INSERT INTO `user` (`id`, `name`, `username`, `password`, `role`, `is_user`, `is_admin`, `is_itbl`, `is_ito`, `is_acad`) VALUES
+(1, 'Robert Buskirk', 'UERobertBuskirk', 'UERobertBuskirk123', 'student', 1, 0, 0, 0, 0),
+(2, 'Helen Slater', 'UEHelenSlater', 'UEHelenSlater123', 'student', 1, 0, 0, 0, 0),
+(3, 'William Miller', 'UEWilliamMiller', 'UEWilliamMiller123', 'student', 1, 0, 0, 0, 0),
+(4, 'Adam Lau', 'UEAdamLau', 'UEAdamLau123', 'student', 1, 0, 0, 0, 0),
+(5, 'Joann Love', 'UEJoannLove', 'UEJoannLove123', 'student', 1, 0, 0, 0, 0),
+(6, 'Julie Carter', 'UEJulieCarter', 'UEJulieCarter123', 'student', 1, 0, 0, 0, 0),
+(7, 'John Jenkins', 'UEJohnJenkins', 'UEJohnJenkins123', 'student', 1, 0, 0, 0, 0),
+(8, 'Valerie Lewis', 'UEValerieLewis', 'UEValerieLewis123', 'student', 1, 0, 0, 0, 0),
+(9, 'Julius Bishop', 'UEJuliusBishop', 'UEJuliusBishop123', 'student', 1, 0, 0, 0, 0),
+(10, 'Alana Bell', 'UEAlanaBell', 'UEAlanaBell123', 'student', 1, 0, 0, 0, 0),
+(11, 'Martin Platt', 'UEMartinPlatt', 'UEMartinPlatt123', 'student', 1, 0, 0, 0, 0),
+(12, 'Randi Gibbs', 'UERandiGibbs', 'UERandiGibbs123', 'student', 1, 0, 0, 0, 0),
+(13, 'Raymond Zuhlke', 'UERaymondZuhlke', 'UERaymondZuhlke123', 'student', 1, 0, 0, 0, 0),
+(14, 'James Noland', 'UEJamesNoland', 'UEJamesNoland123', 'student', 1, 0, 0, 0, 0),
+(15, 'Thomas Perez', 'UEThomasPerez', 'UEThomasPerez123', 'student', 1, 0, 0, 0, 0),
+(16, 'Theresa Terrell', 'UETheresaTerrell', 'UETheresaTerrell123', 'student', 1, 0, 0, 0, 0),
+(17, 'Melvin Nunez', 'UEMelvinNunez', 'UEMelvinNunez123', 'student', 1, 0, 0, 0, 0),
+(18, 'Taryn Fernandez', 'UETarynFernandez', 'UETarynFernandez123', 'student', 1, 0, 0, 0, 0),
+(19, 'Allen Morris', 'UEAllenMorris', 'UEAllenMorris123', 'student', 1, 0, 0, 0, 0),
+(20, 'Jimmy Sparkman', 'UEJimmySparkman', 'UEJimmySparkman123', 'student', 1, 0, 0, 0, 0),
+(21, 'Thelma Delagarza', 'UEThelmaDelagarza', 'UEThelmaDelagarza123', 'student', 1, 0, 0, 0, 0),
+(22, 'Jason Beech', 'UEJasonBeech', 'UEJasonBeech123', 'student', 1, 0, 0, 0, 0),
+(23, 'Joyce Johnson', 'UEJoyceJohnson', 'UEJoyceJohnson123', 'student', 1, 0, 0, 0, 0),
+(24, 'John Tran', 'UEJohnTran', 'UEJohnTran123', 'student', 1, 0, 0, 0, 0),
+(25, 'Dustin Rodriguez', 'UEDustinRodriguez', 'UEDustinRodriguez123', 'student', 1, 0, 0, 0, 0),
+(26, 'Dennis Plater', 'UEDennisPlater', 'UEDennisPlater123', 'student', 1, 0, 0, 0, 0),
+(27, 'Brian Graf', 'UEBrianGraf', 'UEBrianGraf123', 'student', 1, 0, 0, 0, 0),
+(28, 'Jason Mondragon', 'UEJasonMondragon', 'UEJasonMondragon123', 'student', 1, 0, 0, 0, 0),
+(29, 'Travis Mapes', 'UETravisMapes', 'UETravisMapes123', 'student', 1, 0, 0, 0, 0),
+(30, 'William Girard', 'UEWilliamGirard', 'UEWilliamGirard123', 'student', 1, 0, 0, 0, 0),
+(31, 'Jerome Duran', 'UEJeromeDuran', 'UEJeromeDuran123', 'student', 1, 0, 0, 0, 0),
+(32, 'Teri Logan', 'UETeriLogan', 'UETeriLogan123', 'student', 1, 0, 0, 0, 0),
+(33, 'Bobby Cagle', 'UEBobbyCagle', 'UEBobbyCagle123', 'student', 1, 0, 0, 0, 0),
+(34, 'Charles Lavalle', 'UECharlesLavalle', 'UECharlesLavalle123', 'student', 1, 0, 0, 0, 0),
+(35, 'John Young', 'UEJohnYoung', 'UEJohnYoung123', 'student', 1, 0, 0, 0, 0),
+(36, 'Robert Watson', 'UERobertWatson', 'UERobertWatson123', 'student', 1, 0, 0, 0, 0),
+(37, 'Edward Calhoun', 'UEEdwardCalhoun', 'UEEdwardCalhoun123', 'student', 1, 0, 0, 0, 0),
+(38, 'Keely Rash', 'UEKeelyRash', 'UEKeelyRash123', 'student', 1, 0, 0, 0, 0),
+(39, 'Jack Christensen', 'UEJackChristensen', 'UEJackChristensen123', 'student', 1, 0, 0, 0, 0),
+(40, 'Michael Osterstuck', 'UEMichaelOsterstuck', 'UEMichaelOsterstuck123', 'student', 1, 0, 0, 0, 0),
+(41, 'Marie Hirtz', 'UEMarieHirtz', 'UEMarieHirtz123', 'student', 1, 0, 0, 0, 0),
+(42, 'William Patel', 'UEWilliamPatel', 'UEWilliamPatel123', 'student', 1, 0, 0, 0, 0),
+(43, 'Dennis Simpson', 'UEDennisSimpson', 'UEDennisSimpson123', 'student', 1, 0, 0, 0, 0),
+(44, 'Joseph Digeorgio', 'UEJosephDigeorgio', 'UEJosephDigeorgio123', 'student', 1, 0, 0, 0, 0),
+(45, 'Annie Cerda', 'UEAnnieCerda', 'UEAnnieCerda123', 'student', 1, 0, 0, 0, 0),
+(46, 'Brittany Marsingill', 'UEBrittanyMarsingill', 'UEBrittanyMarsingill123', 'student', 1, 0, 0, 0, 0),
+(47, 'Lucille Randle', 'UELucilleRandle', 'UELucilleRandle123', 'student', 1, 0, 0, 0, 0),
+(48, 'Sally Stahnke', 'UESallyStahnke', 'UESallyStahnke123', 'student', 1, 0, 0, 0, 0),
+(49, 'Robert Nelson', 'UERobertNelson', 'UERobertNelson123', 'student', 1, 0, 0, 0, 0),
+(50, 'Anthony Burke', 'UEAnthonyBurke', 'UEAnthonyBurke123', 'student', 1, 0, 0, 0, 0),
+(51, 'Marcia Wagner', 'UEMarciaWagner', 'UEMarciaWagner123', 'student', 1, 0, 0, 0, 0),
+(52, 'Nellie Williams', 'UENellieWilliams', 'UENellieWilliams123', 'student', 1, 0, 0, 0, 0),
+(53, 'Amanda Wick', 'UEAmandaWick', 'UEAmandaWick123', 'student', 1, 0, 0, 0, 0),
+(54, 'Michael Marston', 'UEMichaelMarston', 'UEMichaelMarston123', 'student', 1, 0, 0, 0, 0),
+(55, 'Joshua Egerton', 'UEJoshuaEgerton', 'UEJoshuaEgerton123', 'student', 1, 0, 0, 0, 0),
+(56, 'Esther Mcgloster', 'UEEstherMcgloster', 'UEEstherMcgloster123', 'student', 1, 0, 0, 0, 0),
+(57, 'Sharon Capozzoli', 'UESharonCapozzoli', 'UESharonCapozzoli123', 'student', 1, 0, 0, 0, 0),
+(58, 'Curtis Wu', 'UECurtisWu', 'UECurtisWu123', 'student', 1, 0, 0, 0, 0),
+(59, 'Henry Wilson', 'UEHenryWilson', 'UEHenryWilson123', 'student', 1, 0, 0, 0, 0),
+(60, 'Roderick Williams', 'UERoderickWilliams', 'UERoderickWilliams123', 'student', 1, 0, 0, 0, 0),
+(61, 'Lucile Robinson', 'UELucileRobinson', 'UELucileRobinson123', 'student', 1, 0, 0, 0, 0),
+(62, 'Cecil Joy', 'UECecilJoy', 'UECecilJoy123', 'student', 1, 0, 0, 0, 0),
+(63, 'Janet Walker', 'UEJanetWalker', 'UEJanetWalker123', 'student', 1, 0, 0, 0, 0),
+(64, 'Denise Treanor', 'UEDeniseTreanor', 'UEDeniseTreanor123', 'student', 1, 0, 0, 0, 0),
+(65, 'Heather Mccomas', 'UEHeatherMccomas', 'UEHeatherMccomas123', 'student', 1, 0, 0, 0, 0),
+(66, 'Jamie Hood', 'UEJamieHood', 'UEJamieHood123', 'student', 1, 0, 0, 0, 0),
+(67, 'Barbara Pedrick', 'UEBarbaraPedrick', 'UEBarbaraPedrick123', 'student', 1, 0, 0, 0, 0),
+(68, 'John Hursh', 'UEJohnHursh', 'UEJohnHursh123', 'student', 1, 0, 0, 0, 0),
+(69, 'Barbara Lowe', 'UEBarbaraLowe', 'UEBarbaraLowe123', 'student', 1, 0, 0, 0, 0),
+(70, 'Irma Sandifer', 'UEIrmaSandifer', 'UEIrmaSandifer123', 'student', 1, 0, 0, 0, 0),
+(71, 'Thomas Thompson', 'UEThomasThompson', 'UEThomasThompson123', 'student', 1, 0, 0, 0, 0),
+(72, 'Joseph Wittkop', 'UEJosephWittkop', 'UEJosephWittkop123', 'student', 1, 0, 0, 0, 0),
+(73, 'Marvin Lane', 'UEMarvinLane', 'UEMarvinLane123', 'student', 1, 0, 0, 0, 0),
+(74, 'Jacob Clayton', 'UEJacobClayton', 'UEJacobClayton123', 'student', 1, 0, 0, 0, 0),
+(75, 'Angela Wiggins', 'UEAngelaWiggins', 'UEAngelaWiggins123', 'student', 1, 0, 0, 0, 0),
+(76, 'Otha Kramer', 'UEOthaKramer', 'UEOthaKramer123', 'student', 1, 0, 0, 0, 0),
+(77, 'Gregory Brown', 'UEGregoryBrown', 'UEGregoryBrown123', 'student', 1, 0, 0, 0, 0),
+(78, 'Jose Bowen', 'UEJoseBowen', 'UEJoseBowen123', 'student', 1, 0, 0, 0, 0),
+(79, 'Sherry Rubio', 'UESherryRubio', 'UESherryRubio123', 'student', 1, 0, 0, 0, 0),
+(80, 'Dixie Bruce', 'UEDixieBruce', 'UEDixieBruce123', 'student', 1, 0, 0, 0, 0),
+(81, 'Katherine Noman', 'UEKatherineNoman', 'UEKatherineNoman123', 'student', 1, 0, 0, 0, 0),
+(82, 'Marion Gurney', 'UEMarionGurney', 'UEMarionGurney123', 'student', 1, 0, 0, 0, 0),
+(83, 'Edward Ward', 'UEEdwardWard', 'UEEdwardWard123', 'student', 1, 0, 0, 0, 0),
+(84, 'Dale Reveal', 'UEDaleReveal', 'UEDaleReveal123', 'student', 1, 0, 0, 0, 0),
+(85, 'Mark Jones', 'UEMarkJones', 'UEMarkJones123', 'student', 1, 0, 0, 0, 0),
+(86, 'Jose Dietz', 'UEJoseDietz', 'UEJoseDietz123', 'student', 1, 0, 0, 0, 0),
+(87, 'Patience Holderby', 'UEPatienceHolderby', 'UEPatienceHolderby123', 'student', 1, 0, 0, 0, 0),
+(88, 'Verna Ma', 'UEVernaMa', 'UEVernaMa123', 'student', 1, 0, 0, 0, 0),
+(89, 'Troy Williams', 'UETroyWilliams', 'UETroyWilliams123', 'student', 1, 0, 0, 0, 0),
+(90, 'Kimberly Roberto', 'UEKimberlyRoberto', 'UEKimberlyRoberto123', 'student', 1, 0, 0, 0, 0),
+(91, 'Michael Latch', 'UEMichaelLatch', 'UEMichaelLatch123', 'student', 1, 0, 0, 0, 0),
+(92, 'James Fields', 'UEJamesFields', 'UEJamesFields123', 'student', 1, 0, 0, 0, 0),
+(93, 'Katie Walker', 'UEKatieWalker', 'UEKatieWalker123', 'student', 1, 0, 0, 0, 0),
+(94, 'Michael Coy', 'UEMichaelCoy', 'UEMichaelCoy123', 'student', 1, 0, 0, 0, 0),
+(95, 'David Papitto', 'UEDavidPapitto', 'UEDavidPapitto123', 'student', 1, 0, 0, 0, 0),
+(96, 'Ronald Lentini', 'UERonaldLentini', 'UERonaldLentini123', 'student', 1, 0, 0, 0, 0),
+(97, 'Mary Bischoff', 'UEMaryBischoff', 'UEMaryBischoff123', 'student', 1, 0, 0, 0, 0),
+(98, 'Michael Stroh', 'UEMichaelStroh', 'UEMichaelStroh123', 'student', 1, 0, 0, 0, 0),
+(99, 'Scott Brown', 'UEScottBrown', 'UEScottBrown123', 'student', 1, 0, 0, 0, 0),
+(100, 'Jennifer Wilson', 'UEJenniferWilson', 'UEJenniferWilson123', 'student', 1, 0, 0, 0, 0),
+(101, 'Joseph Chambers', 'UEJosephChambers', 'UEJosephChambers123', 'student', 1, 0, 0, 0, 0),
+(102, 'Dick Alford', 'UEDickAlford', 'UEDickAlford123', 'student', 1, 0, 0, 0, 0),
+(103, 'Chase Stakkeland', 'UEChaseStakkeland', 'UEChaseStakkeland123', 'student', 1, 0, 0, 0, 0),
+(104, 'Nathan Herlocker', 'UENathanHerlocker', 'UENathanHerlocker123', 'student', 1, 0, 0, 0, 0),
+(105, 'Troy Williams', 'UETroyWilliams', 'UETroyWilliams123', 'student', 1, 0, 0, 0, 0),
+(106, 'Carlos Gustafson', 'UECarlosGustafson', 'UECarlosGustafson123', 'student', 1, 0, 0, 0, 0),
+(107, 'Robert Stehle', 'UERobertStehle', 'UERobertStehle123', 'student', 1, 0, 0, 0, 0),
+(108, 'Stacey Torres', 'UEStaceyTorres', 'UEStaceyTorres123', 'student', 1, 0, 0, 0, 0),
+(109, 'Paul Seldon', 'UEPaulSeldon', 'UEPaulSeldon123', 'student', 1, 0, 0, 0, 0),
+(110, 'Yong Bartz', 'UEYongBartz', 'UEYongBartz123', 'student', 1, 0, 0, 0, 0),
+(111, 'Chris Ramos', 'UEChrisRamos', 'UEChrisRamos123', 'student', 1, 0, 0, 0, 0),
+(112, 'Brandon Silva', 'UEBrandonSilva', 'UEBrandonSilva123', 'student', 1, 0, 0, 0, 0),
+(113, 'Charles Bormann', 'UECharlesBormann', 'UECharlesBormann123', 'student', 1, 0, 0, 0, 0),
+(114, 'Edward Scott', 'UEEdwardScott', 'UEEdwardScott123', 'student', 1, 0, 0, 0, 0),
+(115, 'Pamela Crockett', 'UEPamelaCrockett', 'UEPamelaCrockett123', 'student', 1, 0, 0, 0, 0),
+(116, 'Reyna Mcnally', 'UEReynaMcnally', 'UEReynaMcnally123', 'student', 1, 0, 0, 0, 0),
+(117, 'Theresa Heimann', 'UETheresaHeimann', 'UETheresaHeimann123', 'student', 1, 0, 0, 0, 0),
+(118, 'Efren Cadena', 'UEEfrenCadena', 'UEEfrenCadena123', 'student', 1, 0, 0, 0, 0),
+(119, 'Lucille Hayes', 'UELucilleHayes', 'UELucilleHayes123', 'student', 1, 0, 0, 0, 0),
+(120, 'Margaret Johnson', 'UEMargaretJohnson', 'UEMargaretJohnson123', 'student', 1, 0, 0, 0, 0),
+(121, 'Amanda Wright', 'UEAmandaWright', 'UEAmandaWright123', 'student', 1, 0, 0, 0, 0),
+(122, 'Donald Inoue', 'UEDonaldInoue', 'UEDonaldInoue123', 'student', 1, 0, 0, 0, 0),
+(123, 'Becky Hutchins', 'UEBeckyHutchins', 'UEBeckyHutchins123', 'student', 1, 0, 0, 0, 0),
+(124, 'Jack Corder', 'UEJackCorder', 'UEJackCorder123', 'student', 1, 0, 0, 0, 0),
+(125, 'Shannon Adkinson', 'UEShannonAdkinson', 'UEShannonAdkinson123', 'student', 1, 0, 0, 0, 0),
+(126, 'Ryan Polsgrove', 'UERyanPolsgrove', 'UERyanPolsgrove123', 'student', 1, 0, 0, 0, 0),
+(127, 'Lisa Perry', 'UELisaPerry', 'UELisaPerry123', 'student', 1, 0, 0, 0, 0),
+(128, 'Judy Simmons', 'UEJudySimmons', 'UEJudySimmons123', 'student', 1, 0, 0, 0, 0),
+(129, 'Billy Hamilton', 'UEBillyHamilton', 'UEBillyHamilton123', 'student', 1, 0, 0, 0, 0),
+(130, 'Judy Addiego', 'UEJudyAddiego', 'UEJudyAddiego123', 'student', 1, 0, 0, 0, 0),
+(131, 'George Rossi', 'UEGeorgeRossi', 'UEGeorgeRossi123', 'student', 1, 0, 0, 0, 0),
+(132, 'Constance Cooper', 'UEConstanceCooper', 'UEConstanceCooper123', 'student', 1, 0, 0, 0, 0),
+(133, 'Darlene Hatfield', 'UEDarleneHatfield', 'UEDarleneHatfield123', 'student', 1, 0, 0, 0, 0),
+(134, 'Ross Moore', 'UERossMoore', 'UERossMoore123', 'student', 1, 0, 0, 0, 0),
+(135, 'Lara Sager', 'UELaraSager', 'UELaraSager123', 'student', 1, 0, 0, 0, 0),
+(136, 'Larry Rodgers', 'UELarryRodgers', 'UELarryRodgers123', 'student', 1, 0, 0, 0, 0),
+(137, 'Susan Michael', 'UESusanMichael', 'UESusanMichael123', 'student', 1, 0, 0, 0, 0),
+(138, 'Francisco Speer', 'UEFranciscoSpeer', 'UEFranciscoSpeer123', 'student', 1, 0, 0, 0, 0),
+(139, 'Chris Shoemaker', 'UEChrisShoemaker', 'UEChrisShoemaker123', 'student', 1, 0, 0, 0, 0),
+(140, 'Jamie Sabbagh', 'UEJamieSabbagh', 'UEJamieSabbagh123', 'student', 1, 0, 0, 0, 0),
+(141, 'adab', 'who', 'testing', '', 1, 0, 0, 0, 0),
+(142, 'whowho', 'heyhey', '12345', '', 1, 0, 0, 0, 0),
+(143, 'Joe Joe', 'Joe', '12345', '', 0, 1, 0, 0, 0),
+(144, 'Joe Joe Don', 'whoItbl', '12345', '', 0, 0, 1, 0, 0),
+(145, 'whoIto', 'whoIto', '12345', '', 0, 0, 0, 1, 0),
+(146, 'whoAcad', 'whoAcad', '12345', '', 0, 0, 0, 0, 1);
 
 --
 -- Indexes for dumped tables
@@ -1075,7 +1108,7 @@ ALTER TABLE `auth_permission`
 -- AUTO_INCREMENT for table `auth_user`
 --
 ALTER TABLE `auth_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `auth_user_groups`
@@ -1093,7 +1126,7 @@ ALTER TABLE `auth_user_user_permissions`
 -- AUTO_INCREMENT for table `course`
 --
 ALTER TABLE `course`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `django_admin_log`
@@ -1117,19 +1150,19 @@ ALTER TABLE `django_migrations`
 -- AUTO_INCREMENT for table `likert`
 --
 ALTER TABLE `likert`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
 
 --
 -- AUTO_INCREMENT for table `opinion`
 --
 ALTER TABLE `opinion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `survey`
 --
 ALTER TABLE `survey`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
 
 --
 -- AUTO_INCREMENT for table `surveyquestions`
@@ -1141,7 +1174,7 @@ ALTER TABLE `surveyquestions`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
 
 --
 -- Constraints for dumped tables
