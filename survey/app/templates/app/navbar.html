@@ -1,14 +1,22 @@
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
   <a class="navbar-brand" href="#">Course Feedback Mining System</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link" href="{% url 'sentiment' %}">Sentiment</a>
-      <a class="nav-item nav-link" href="{% url 'likert' %}">Likert</a>
-      <a class="nav-item nav-link active" href="{% url 'survey' %}">Survey <span class="sr-only">(current)</span> </a>
-      <a class="nav-item nav-link" href="{% url 'aspect' %}">Aspect</a>
-    </div>
-  </div>
+  {% if currentPage != "/register/" and currentPage != "/login/" %}
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        {% url 'sentiment' as sent %}
+        {% url 'likert' as likert %}
+        {% url 'survey' as survey %}
+        {% url 'aspect' as aspect %}
+
+        <a href="{% url 'sentiment' %}" class="nav-item nav-link {% if currentPage == sent %} active" {% endif %}">Sentiment</a>
+        <a href="{% url 'likert' %}" class="nav-item nav-link {% if currentPage == likert %} active {% endif %}">Likert</a>
+        <a href="{% url 'survey' %}" class="nav-item nav-link  {% if currentPage == survey %} active {% endif %}">Survey</a>
+        <a href="{% url 'aspect' %}" class="nav-item nav-link {% if currentPage == aspect %} active {% endif %}">Aspect</a>
+      </div>
+      <a type="button" class="btn btn-dark" id="#logout-button" href="{% url 'logout' %}">Logout</a>
+      </div>
+  {% endif %}
 </nav>
