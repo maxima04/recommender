@@ -62,7 +62,7 @@ def login_user(username, password):
             userIsAcads = userInfo.is_acads
 
         if userIsUser == 1:
-            UserVariables.userRole = "student"
+            UserVariables.userRole = "user"
             page = "/survey"
         elif userIsAdmin == 1:
             UserVariables.userRole = "admin"
@@ -244,6 +244,7 @@ def survey(request):
             'questions': questions,
             'opinionform': opinionform,
             'currentPage': currentPage,
+            'role': UserVariables.userRole
         }
 
         return render(request, 'app/survey.html', context)
@@ -267,7 +268,8 @@ def likertPage(request):
     context = {
         'column_name':column_name,
         'likert':likert,
-        'currentPage': currentPage
+        'currentPage': currentPage,
+        'role': UserVariables.userRole
         }
 
     return render(request, 'app/likertChart.html', context)
@@ -284,7 +286,8 @@ def sentimentPage(request):
     context = {
         'sentiment':sentiment,
         'column_name':column_name,
-        'currentPage': currentPage
+        'currentPage': currentPage,
+        'role': UserVariables.userRole
         }
 
     return render(request, 'app/sentimentChart.html', context)
@@ -409,6 +412,7 @@ def aspectPage(request):
 
         'form':form,
         'currentPage': currentPage,
+        'role': UserVariables.userRole
 
         
     }
@@ -502,7 +506,7 @@ def dashboard(request):
         return redirect('/login')
 
     context = {
-
+        'role': UserVariables.userRole
     }
 
     return render(request, 'app/aspectChart.html', context)
