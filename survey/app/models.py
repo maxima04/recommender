@@ -236,6 +236,7 @@ class User(models.Model):
     is_admin = models.IntegerField()
     is_itbl = models.IntegerField()
     is_ito = models.IntegerField()
+    is_acads = models.IntegerField()
 
     class Meta:
         managed = False
