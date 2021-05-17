@@ -12,6 +12,11 @@ urlpatterns = [
     path('likertChart/', views.likertPage, name="likert"),
     path('aspectChart/', views.aspectPage, name="aspect"), 
     path('thankyou/', views.submitted, name="submitted"),
+    #for admin
+    path('dashboard/', views.dashboard, name="dashboard"),\
+
+    path('logout/', views.logout, name="logout"),
+
 
 
 ]
