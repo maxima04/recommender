@@ -143,10 +143,6 @@ class Likert(models.Model):
     a12 = models.CharField(max_length=255)
     a13 = models.CharField(max_length=255)
     a14 = models.CharField(max_length=255)
-    a15 = models.CharField(max_length=255)
-    a16 = models.CharField(max_length=255)
-    a17 = models.CharField(max_length=255)
-    a18 = models.CharField(max_length=255)
     i1 = models.CharField(max_length=255)
     i2 = models.CharField(max_length=255)
     i3 = models.CharField(max_length=255)
@@ -154,11 +150,6 @@ class Likert(models.Model):
     ac2 = models.CharField(max_length=255)
     ac3 = models.CharField(max_length=255)
     ac4 = models.CharField(max_length=255)
-    ac5 = models.CharField(max_length=255)
-    ac6 = models.CharField(max_length=255)
-    ac7 = models.CharField(max_length=255)
-    ac8 = models.CharField(max_length=255)
-
 
     class Meta:
         managed = False
@@ -196,10 +187,6 @@ class Survey(models.Model):
     a12 = models.CharField(max_length=255)
     a13 = models.CharField(max_length=255)
     a14 = models.CharField(max_length=255)
-    a15 = models.CharField(max_length=255)
-    a16 = models.CharField(max_length=255)
-    a17 = models.CharField(max_length=255)
-    a18 = models.CharField(max_length=255)
     i1 = models.CharField(max_length=255)
     i2 = models.CharField(max_length=255)
     i3 = models.CharField(max_length=255)
@@ -207,10 +194,6 @@ class Survey(models.Model):
     ac2 = models.CharField(max_length=255)
     ac3 = models.CharField(max_length=255)
     ac4 = models.CharField(max_length=255)
-    ac5 = models.CharField(max_length=255)
-    ac6 = models.CharField(max_length=255)
-    ac7 = models.CharField(max_length=255)
-    ac8 = models.CharField(max_length=255)
 
     class Meta:
         managed = False
@@ -220,7 +203,6 @@ class Survey(models.Model):
 class Surveyquestions(models.Model):
     question_id = models.AutoField(primary_key=True)
     question_description = models.CharField(max_length=255)
-    type = models.CharField(max_length=20)
 
     class Meta:
         managed = False
@@ -234,9 +216,9 @@ class User(models.Model):
     role = models.CharField(max_length=55)
     is_user = models.IntegerField()
     is_admin = models.IntegerField()
-    is_acad = models.IntegerField()
     is_itbl = models.IntegerField()
     is_ito = models.IntegerField()
+    is_acad = models.IntegerField()
 
     class Meta:
         managed = False
