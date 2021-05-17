@@ -29,15 +29,66 @@ opinion_column = [col for col in op_col.columns]
 
 import pickle
 
-#globalvariable
-global userId;
-global userName;
-userId = 0
-userName = ""
+#class for user variables
 
+class UserVariables:
+    userId = 0
+    userName = ""
+    userRole = ""
+
+def user_auth():
+    # check if user logged in if not, redirect to login page
+    user_id = UserVariables.userId
+    if user_id == 0:
+        redirectUser = True
+        return redirectUser
+
+def login_user(username, password):
+    if User.objects.filter(username=username, password=password):
+        userIsUser = 0
+        userIsAdmin = 0
+        userIsItbl = 0
+        userIsIto = 0
+        userIsAcads = 0
+
+        getUser = User.objects.filter(username=username, password=password)
+        for userInfo in getUser:
+            UserVariables.userId = userInfo.id
+            UserVariables.userName = userInfo.username
+            userIsUser = userInfo.is_user
+            userIsAdmin = userInfo.is_admin
+            userIsItbl = userInfo.is_itbl
+            userIsIto = userInfo.is_ito
+            userIsAcads = userInfo.is_acads
+
+        if userIsUser == 1:
+            UserVariables.userRole = "student"
+            page = "/survey"
+        elif userIsAdmin == 1:
+            UserVariables.userRole = "admin"
+            page = "/dashboard"
+        elif userIsItbl == 1:
+            UserVariables.userRole = "itbl"
+            page = "/aspectChart"
+        elif userIsIto == 1:
+            UserVariables.userRole = "acads"
+            page = "/aspectChart"
+        elif userIsAcads == 1:
+            UserVariables.userRole = "ito"
+            page = "/aspectChart"
+        else:
+            page = "/login"
+    else:
+        page = "/login"
+
+    return page
 # Create your views here.
 
 def home(request):
+    # check if user logged in if not, redirect to login page
+    redirectUser = user_auth()
+    if redirectUser == True:
+        return redirect('/login')
     aspect, comment = getAspect()
 
     ASPECT_DICT_DIR = os.path.join(COMMONS_DIR,'aspect.pkl')
@@ -59,9 +110,12 @@ def home(request):
     return render(request, 'app/dashboard.html')
 
 def survey(request):
-    if userId == 0:
-        messages.success(request, "You need to login!")
+    #check if user logged in if not, redirect to login page
+    redirectUser = user_auth()
+    if redirectUser == True:
+        messages.error(request, "You need to login!")
         return redirect('/login')
+
 
     if request.method == 'POST':
 
@@ -159,19 +213,20 @@ def survey(request):
             opinion_data = [e1,e2,e3]
 
             timeStamp = timezone.make_naive(timezone.now())
+            user_id=UserVariables.userId
 
             #save data to database
-            likertData = Likert(user_id=userId, course_name=courseName, timestamp=timeStamp, a1=a1, a2=a2, a3=a3, a4=a4, a5=a5, a6=a6, a7=a7, a8=a8, a9=a9, a10=a10, a11=a11, a12=a12, a13=a13, a14=a14, a15=a15, a16=a16, a17=a17, a18=a18, i1=i1, i2=i2, i3=i3, ac1=ac1, ac2=ac2, ac3=ac3, ac4=ac4, ac5=ac5, ac6=ac6, ac7=ac7, ac8=ac8)
+            likertData = Likert(user_id=user_id, course_name=courseName, timestamp=timeStamp, a1=a1, a2=a2, a3=a3, a4=a4, a5=a5, a6=a6, a7=a7, a8=a8, a9=a9, a10=a10, a11=a11, a12=a12, a13=a13, a14=a14, a15=a15, a16=a16, a17=a17, a18=a18, i1=i1, i2=i2, i3=i3, ac1=ac1, ac2=ac2, ac3=ac3, ac4=ac4, ac5=ac5, ac6=ac6, ac7=ac7, ac8=ac8)
             likertData.save()
 
-            surveyData = Survey(user_id=userId, course_name=courseName, timestamp=timeStamp, a1=sa1, a2=sa2, a3=sa3, a4=sa4, a5=sa5, a6=sa6, a7=sa7, a8=sa8, a9=sa9, a10=sa10, a11=sa11, a12=sa12, a13=sa13, a14=sa14, a15=sa15, a16=sa16, a17=sa17, a18=sa18, i1=si1, i2=si2, i3=si3, ac1=sac1, ac2=sac2, ac3=sac3, ac4=sac4, ac5=sac5, ac6=sac6, ac7=sac7, ac8=sac8)
+            surveyData = Survey(user_id=user_id, course_name=courseName, timestamp=timeStamp, a1=sa1, a2=sa2, a3=sa3, a4=sa4, a5=sa5, a6=sa6, a7=sa7, a8=sa8, a9=sa9, a10=sa10, a11=sa11, a12=sa12, a13=sa13, a14=sa14, a15=sa15, a16=sa16, a17=sa17, a18=sa18, i1=si1, i2=si2, i3=si3, ac1=sac1, ac2=sac2, ac3=sac3, ac4=sac4, ac5=sac5, ac6=sac6, ac7=sac7, ac8=sac8)
             surveyData.save()
 
-            opinionData = Opinion(user_id=userId, e1=e2, e2=e2, e3=e3)
+            opinionData = Opinion(user_id=user_id, e1=e2, e2=e2, e3=e3)
             opinionData.save()
 
             messages.success(request, "Submitted successfully!")
-            return render(request, 'app/submitted.html')
+            return render(request, 'app/survey.html')
             
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -183,11 +238,12 @@ def survey(request):
 
         zipped_data = zip(likertform, surveyform)
         survey = list(zipped_data)
-
+        currentPage = "/survey/"
         context = {
             'form': survey,
             'questions': questions,
             'opinionform': opinionform,
+            'currentPage': currentPage,
         }
 
         return render(request, 'app/survey.html', context)
@@ -197,30 +253,48 @@ def about(request):
 
 
 def likertPage(request):
+    # check if user logged in if not, redirect to login page
+    redirectUser = user_auth()
+    if redirectUser == True:
+        messages.error(request, "You need to login!")
+        return redirect('/login')
+
 
     likert = countLikert()
     likert = json.dumps(likert)
+    currentPage = "/likertChart/"
+
     context = {
         'column_name':column_name,
         'likert':likert,
-        
+        'currentPage': currentPage
         }
 
     return render(request, 'app/likertChart.html', context)
 
 def sentimentPage(request):
+    # check if user logged in if not, redirect to login page
+    redirectUser = user_auth()
+    if redirectUser == True:
+        messages.error(request, "You need to login!")
+        return redirect('/login')
 
     sentiment = calculateSentiment()
-
+    currentPage = "/sentimentChart/"
     context = {
         'sentiment':sentiment,
         'column_name':column_name,
-        
+        'currentPage': currentPage
         }
 
     return render(request, 'app/sentimentChart.html', context)
 
 def aspectPage(request):
+    # check if user logged in if not, redirect to login page
+    redirectUser = user_auth()
+    if redirectUser == True:
+        messages.error(request, "You need to login!")
+        return redirect('/login')
 
     ASPECT_DICT_DIR = os.path.join(COMMONS_DIR,'aspect.pkl')
     COMMENT_DICT_DIR = os.path.join(COMMONS_DIR,'comment.pkl')
@@ -317,6 +391,7 @@ def aspectPage(request):
     string = base64.b64encode(buf.read())
 
     uri = 'data:image/png;base64,' + urllib.parse.quote(string)
+    currentPage = "/aspectChart/"
 
     context = {
         'column_name':column_name,
@@ -333,6 +408,7 @@ def aspectPage(request):
         'filterd_itbl_comment':filterd_itbl_comment,
 
         'form':form,
+        'currentPage': currentPage,
 
         
     }
@@ -349,53 +425,31 @@ def login(request):
             username = loginForm.cleaned_data['username']
             userpass = loginForm.cleaned_data['password']
 
-            if User.objects.filter(username=username, password=userpass):
-                userIsUser = 0
-                userIsAdmin = 0
-                userIsItbl = 0
-                userIsIto = 0
+            redirectToPage = login_user(username, userpass)
 
-                getUser = User.objects.filter(username=username, password=userpass)
-                for userInfo in getUser:
-                    global userId;
-                    userId = userInfo.id
-                    userName = userInfo.username
-                    userIsUser = userInfo.is_user
-                    userIsAdmin = userInfo.is_admin
-                    userIsItbl = userInfo.is_itbl
-                    userIsIto = userInfo.is_ito
+            if redirectToPage != "/login":
+                message = "Hello " + UserVariables.userName + "!"
+                messages.success(request, message)
+            else:
+                messages.error(request, "Wrong username/password!")
 
-                context = {
-                    'username': userName
-                }
-                messages.success(request, "You have login successfully!")
+            return redirect(redirectToPage)
 
-                if userIsUser == 1:
-                    print("Done")
-                    return redirect('/survey', context)
-                elif userIsAdmin == 1:
-                    return redirect('/dashboard', context)
-                elif userIsItbl == 1:
-                    return redirect('/survey', context)
-                elif userIsIto == 1:
-                    return redirect('/survey', context)
-                else:
-                    return redirect('/login')
-
-        messages.error(request, "Wrong Username/Password!")
-        return redirect('/login')
+        else:
+            messages.error(request, "Wrong Username/Password!")
+            return redirect('/login')
 
     else:
         loginForm = LoginForm()
-
+        currentPage = "/login/"
         context = {
             'loginForm': loginForm,
-        }
+            'currentPage': currentPage,
 
+        }
         return render(request, 'app/login.html', context)
 
 def register(request):
-
 
     if request.method == 'POST':
         registrationForm = RegistrationForm(request.POST)
@@ -408,21 +462,30 @@ def register(request):
             userdata = User(name=name, username=uname, password=pword, is_user=1, is_admin=0, is_itbl=0, is_ito=0)
             userdata.save()
 
-            context = {
-                'name': name,
-                'uname': uname,
-            }
-            return redirect('/home', context)
+            redirectToPage = login_user(name, pword)
+
+            message = "Hello " + UserVariables.userName + "!"
+            messages.success(request, message)
+
+            return redirect(redirectToPage)
+        else:
+            messages.error(request, "Try again!")
+            return redirect('/register')
     else:
         registrationForm = RegistrationForm()
-
+        currentPage = "/register/"
         context = {
             'registrationForm': registrationForm,
+            'currentPage': currentPage,
         }
-
         return render(request, 'app/register.html', context)
 
 def submitted(request):
+    # check if user logged in if not, redirect to login page
+    redirectUser = user_auth()
+    if redirectUser == True:
+        messages.error(request, "You need to login!")
+        return redirect('/login')
 
     message = "Submitted Successfully!"
     context = {
@@ -430,3 +493,26 @@ def submitted(request):
     }
 
     return render(request, 'app/thankyou.html', context)
+
+def dashboard(request):
+    # check if user logged in if not, redirect to login page
+    redirectUser = user_auth()
+    if redirectUser == True:
+        messages.error(request, "You need to login!")
+        return redirect('/login')
+
+    context = {
+
+    }
+
+    return render(request, 'app/aspectChart.html', context)
+
+def logout(request):
+    # check if user logged in if not, redirect to login page
+    redirectUser = user_auth()
+    if redirectUser == True:
+        return redirect('/login')
+    UserVariables.userId = 0
+
+    messages.success(request, "Successfully logout!")
+    return redirect('/login')
