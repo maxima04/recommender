@@ -156,10 +156,7 @@ def survey(request):
             a12 = likertForm.cleaned_data['a12']
             a13 = likertForm.cleaned_data['a13']
             a14 = likertForm.cleaned_data['a14']
-            a15 = likertForm.cleaned_data['a15']
-            a16 = likertForm.cleaned_data['a16']
-            a17 = likertForm.cleaned_data['a17']
-            a18 = likertForm.cleaned_data['a18']
+
             i1 = likertForm.cleaned_data['i1']
             i2 = likertForm.cleaned_data['i2']
             i3 = likertForm.cleaned_data['i3']
@@ -167,46 +164,37 @@ def survey(request):
             ac2 = likertForm.cleaned_data['ac3']
             ac3 = likertForm.cleaned_data['ac3']
             ac4 = likertForm.cleaned_data['ac4']
-            ac5 = likertForm.cleaned_data['ac5']
-            ac6 = likertForm.cleaned_data['ac6']
-            ac7 = likertForm.cleaned_data['ac7']
-            ac8 = likertForm.cleaned_data['ac8']
 
-            likert_data = [a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16,a17,a18,i1,i2,i3,ac1,ac2,ac3,ac4,ac5,ac6,ac7,ac8]
+
+            likert_data = [a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,i1,i2,i3,ac1,ac2,ac3,ac4]
             #uploadDataLikert(likert_data) ## upload form data to csv
 
             #Get opinion form data, do not include subject name
-            sa1 = surveyform.cleaned_data['a1']
-            sa2 = surveyform.cleaned_data['a2']
-            sa3 = surveyform.cleaned_data['a3']
-            sa4 = surveyform.cleaned_data['a4']
-            sa5 = surveyform.cleaned_data['a5']
-            sa6 = surveyform.cleaned_data['a6']
-            sa7 = surveyform.cleaned_data['a7']
-            sa8 = surveyform.cleaned_data['a8']
-            sa9 = surveyform.cleaned_data['a9']
-            sa10 = surveyform.cleaned_data['a10']
-            sa11 = surveyform.cleaned_data['a11']
-            sa12 = surveyform.cleaned_data['a12']
-            sa13 = surveyform.cleaned_data['a13']
-            sa14 = surveyform.cleaned_data['a14']
-            sa15 = surveyform.cleaned_data['a15']
-            sa16 = surveyform.cleaned_data['a16']
-            sa17 = surveyform.cleaned_data['a17']
-            sa18 = surveyform.cleaned_data['a18']
-            si1 = surveyform.cleaned_data['i1']
-            si2 = surveyform.cleaned_data['i2']
-            si3 = surveyform.cleaned_data['i3']
-            sac1 = surveyform.cleaned_data['ac1']
-            sac2 = surveyform.cleaned_data['ac3']
-            sac3 = surveyform.cleaned_data['ac3']
-            sac4 = surveyform.cleaned_data['ac4']
-            sac5 = surveyform.cleaned_data['ac5']
-            sac6 = surveyform.cleaned_data['ac6']
-            sac7 = surveyform.cleaned_data['ac7']
-            sac8 = surveyform.cleaned_data['ac8']
+            sa1 = surveyform.cleaned_data['sa1']
+            sa2 = surveyform.cleaned_data['sa2']
+            sa3 = surveyform.cleaned_data['sa3']
+            sa4 = surveyform.cleaned_data['sa4']
+            sa5 = surveyform.cleaned_data['sa5']
+            sa6 = surveyform.cleaned_data['sa6']
+            sa7 = surveyform.cleaned_data['sa7']
+            sa8 = surveyform.cleaned_data['sa8']
+            sa9 = surveyform.cleaned_data['sa9']
+            sa10 = surveyform.cleaned_data['sa10']
+            sa11 = surveyform.cleaned_data['sa11']
+            sa12 = surveyform.cleaned_data['sa12']
+            sa13 = surveyform.cleaned_data['sa13']
+            sa14 = surveyform.cleaned_data['sa14']
 
-            survey_data = [sa1,sa2,sa3,sa4,sa5,sa6,sa7,sa8,sa9,sa10,sa11,sa12,sa13,sa14,sa15,sa16,sa17,sa18,si1,si2,si3,sac1,sac2,sac3,sac4,sac5,sac6,sac7,sac8]
+            si1 = surveyform.cleaned_data['si1']
+            si2 = surveyform.cleaned_data['si2']
+            si3 = surveyform.cleaned_data['si3']
+            sac1 = surveyform.cleaned_data['sac1']
+            sac2 = surveyform.cleaned_data['sac3']
+            sac3 = surveyform.cleaned_data['sac3']
+            sac4 = surveyform.cleaned_data['sac4']
+
+
+            survey_data = [sa1,sa2,sa3,sa4,sa5,sa6,sa7,sa8,sa9,sa10,sa11,sa12,sa13,sa14,si1,si2,si3,sac1,sac2,sac3,sac4]
             #uploadDataSentiment(survey_data) ## upload form data to csv
 
             #Get opinion form data
@@ -221,14 +209,18 @@ def survey(request):
             user_id=UserVariables.userId
 
             #save data to database
-            likertData = Likert(user_id=user_id, course_name=courseName, timestamp=timeStamp, a1=a1, a2=a2, a3=a3, a4=a4, a5=a5, a6=a6, a7=a7, a8=a8, a9=a9, a10=a10, a11=a11, a12=a12, a13=a13, a14=a14, a15=a15, a16=a16, a17=a17, a18=a18, i1=i1, i2=i2, i3=i3, ac1=ac1, ac2=ac2, ac3=ac3, ac4=ac4, ac5=ac5, ac6=ac6, ac7=ac7, ac8=ac8)
+            likertData = Likert(user_id=user_id, course_name=courseName, timestamp=timeStamp, a1=a1, a2=a2, a3=a3, a4=a4, a5=a5, a6=a6, a7=a7, a8=a8, a9=a9, a10=a10, a11=a11, a12=a12, a13=a13, a14=a14, i1=i1, i2=i2, i3=i3, ac1=ac1, ac2=ac2, ac3=ac3, ac4=ac4)
             likertData.save()
 
-            surveyData = Survey(user_id=user_id, course_name=courseName, timestamp=timeStamp, a1=sa1, a2=sa2, a3=sa3, a4=sa4, a5=sa5, a6=sa6, a7=sa7, a8=sa8, a9=sa9, a10=sa10, a11=sa11, a12=sa12, a13=sa13, a14=sa14, a15=sa15, a16=sa16, a17=sa17, a18=sa18, i1=si1, i2=si2, i3=si3, ac1=sac1, ac2=sac2, ac3=sac3, ac4=sac4, ac5=sac5, ac6=sac6, ac7=sac7, ac8=sac8)
+            surveyData = Survey(user_id=user_id, course_name=courseName, timestamp=timeStamp, a1=sa1, a2=sa2, a3=sa3, a4=sa4, a5=sa5, a6=sa6, a7=sa7, a8=sa8, a9=sa9, a10=sa10, a11=sa11, a12=sa12, a13=sa13, a14=sa14, i1=si1, i2=si2, i3=si3, ac1=sac1, ac2=sac2, ac3=sac3, ac4=sac4)
             surveyData.save()
 
             opinionData = Opinion(user_id=user_id, e1=e2, e2=e2, e3=e3)
             opinionData.save()
+
+            print(likert_data)
+            print(survey_data)
+            print(opinion_data)
 
             messages.success(request, "Submitted successfully!")
             return render(request, 'app/survey.html')
@@ -474,7 +466,6 @@ def login(request):
         context = {
             'loginForm': loginForm,
             'currentPage': currentPage,
-
         }
         return render(request, 'app/login.html', context)
 
