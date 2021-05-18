@@ -1,0 +1,121 @@
+{% extends 'app/main.html' %}
+{% block content %}
+
+<div class="container" id="div-margin-top">
+  <br>
+  <h3 class="text-center">CANVAS EXPERIENCE SURVEY</h3>
+  <br>
+
+  <form action="#" method="post" >
+    {% csrf_token %}
+
+    <!--Fields-->
+    {% for radioButtons, commentsField in form %}
+
+      {% if forloop.counter0 == 1 %}
+        <h5 id="survey-label">ACCESSIBILITY</h5>
+
+      {% elif forloop.counter0 == 19 %}
+        <h5 id="survey-label">INSTRUCTION</h5>
+
+      {% elif forloop.counter0 == 22  %}
+        <h5 id="survey-label">ASSESSMENT AND COLLABORATION</h5>
+      {% endif %}
+
+
+      {% if forloop.counter0 == 0 %}
+        <!-- Display Course Field -->
+        <div class="form-group">
+          <label>{{ radioButtons.label }}</label>
+          {{ radioButtons }}
+        </div>
+
+      {% elif forloop.counter0 == 15  %}
+        <div class="form-group">
+          {{ questions.14.question_description }}
+        </div>
+        <!-- Display Questions No Fields -->
+        <!-- Question ID si equal to 15, 23, 28-->
+        <!--  {{ questions.15.question_description }} -->
+        <div class="form-group">
+          {{ radioButtons.label }}
+        </div>
+        <div class="form-check">
+          {{ radioButtons }}
+        </div>
+
+        <div class="form-group">
+          <label>Comment</label>
+          {{ commentsField }}
+        </div>
+      {% elif forloop.counter0 == 22  %}
+        <div class="form-group">
+          {{ questions.22.question_description }}
+        </div>
+        <!-- Display Questions No Fields -->
+        <!-- Question ID si equal to 15, 23, 28-->
+        <!--  {{ questions.15.question_description }} -->
+        <div class="form-group">
+          {{ radioButtons.label }}
+        </div>
+        <div class="form-check">
+          {{ radioButtons }}
+        </div>
+        <div class="form-group">
+          <label>Comment</label>
+          {{ commentsField }}
+        </div>
+
+      {% elif forloop.counter0 == 26  %}
+        <div class="form-group">
+          {{ questions.27.question_description }}
+        </div>
+        <!-- Display Questions No Fields -->
+        <!-- Question ID si equal to 15, 23, 28-->
+        <!--  {{ questions.15.question_description }} -->
+        <div class="form-group">
+          {{ radioButtons.label }}
+        </div>
+        <div class="form-check">
+          {{ radioButtons }}
+        </div>
+        <div class="form-group">
+          <label>Comment</label>
+          {{ commentsField }}
+        </div>
+
+      {% elif forloop.counter0 != 15 or forloop.counter0 != 22 or forloop.counter0 != 26 %}
+        <div class="form-group">
+          {{ radioButtons.label }}
+        </div>
+        <div class="form-check">
+          {{ radioButtons }}
+        </div>
+        <div class="form-group">
+          <label>Comment</label>
+          {{ commentsField }}
+        </div>
+      {% endif %}
+    {% endfor %}
+
+    {% for opinion in opinionform %}
+      <div class="form-group">
+        <label>{{ opinion.label }}</label>
+          {{ opinion }}
+      </div>
+    {% endfor %}
+
+    <div class="row" id="survey-submit-button">
+      <div class="col-sm-2 col-md-auto col-lg-4">
+      </div>
+      <div class="col-sm-8 col-md-4 col-lg-4">
+        <input class="btn btn-primary btn-block" type="submit" value="Submit">
+      </div>
+      <div class="col-sm-2 col-md-auto col-lg-4">
+      </div>
+    </div>
+  </form>
+</div>
+<!--End of container-->
+
+{% endblock %}

@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <title>Likert Chart</title>
+</head>
+<body>
+    
+    <div>
+
+        <div style="float:left">
+            <canvas id="myChart" width="300" height="300"></canvas>
+        </div>
+        
+        
+        <div style="float: left;">
+            <canvas id="2ndChart" width="300" height="300"></canvas>
+            
+        </div>
+        <div style="float: left;">
+            <canvas id="Chart3" width="300" height="300"></canvas>
+        </div>
+
+        <div style="float: left;">
+            <canvas id="Chart4" width="300" height="300"></canvas>
+
+        </div>
+
+        <div style="float: left;">
+            <canvas id="Chart5" width="300" height="300"></canvas>
+        </div>
+
+        <div style="float: left;">
+            <canvas id="Chart6" width="300" height="300"></canvas>
+        </div>
+        <div style="float: left;">
+            <canvas id="Chart7" width="300" height="300"></canvas>
+        </div>
+
+        <div style="float: left;">
+            <canvas id="Chart8" width="300" height="300"></canvas>
+        </div>
+
+        <div style="float: left;">
+            <canvas id="Chart9" width="300" height="300"></canvas>
+        </div>
+
+        <div style="float: left;">
+            <canvas id="Chart10" width="300" height="300"></canvas>
+        </div>
+
+        <div style="float: left;">
+            <canvas id="Chart11" width="300" height="300"></canvas>
+            
+        </div>
+        <div style="float: left;">
+            <canvas id="Chart12" width="300" height="300"></canvas>
+        </div>
+
+        <div style="float: left;">
+            <canvas id="Chart13" width="300" height="300"></canvas>
+
+        </div>
+
+        <div style="float: left;">
+            <canvas id="Chart14" width="300" height="300"></canvas>
+        </div>
+
+        <div style="float: left;">
+            <canvas id="Chart15" width="300" height="300"></canvas>
+        </div>
+        <div style="float: left;">
+            <canvas id="Chart16" width="300" height="300"></canvas>
+        </div>
+
+        <div style="float: left;">
+            <canvas id="Chart17" width="300" height="300"></canvas>
+        </div>
+
+        <div style="float: left;">
+            <canvas id="Chart18" width="300" height="300"></canvas>
+        </div>
+
+        <div style="float: left;">
+            <canvas id="Chart19" width="300" height="300"></canvas>
+        </div>
+
+        <div style="float: left;">
+            <canvas id="Chart20" width="300" height="300"></canvas>
+        </div>
+
+        <div style="float: left;">
+            <canvas id="Chart21" width="300" height="300"></canvas>
+        </div>
+
+        
+        
+        
+      </div>
+
+        
+
+
+</div>
+<script type="text/javascript">
+    var a = '{{likert|safe}}'
+
+
+        var ctx = document.getElementById('myChart').getContext('2d')
+
+            new Chart(ctx, {
+            type: 'pie',
+            data: {
+            labels: ['Strongly Agree', 'Agree', 'Disagree', 'Strongly Disagree'],
+            datasets: [{
+                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                data: JSON.parse(a)[0] /// BABAGUHIN BAWAT CHART
+            }]
+            },
+            options: {
+                responsive: false,
+                maintainAspectRatio: false,
+                
+                plugins: {
+                    title: {
+                    display: true,
+                    text: "{{column_name.0}}" /// PATI ITO BABAGUHIN BAWAT CHART
+                 },
+                    legend:{
+                        display:true,
+                        
+                    }
+                }
+            }
+        });
+
+        var ctx = document.getElementById('2ndChart').getContext('2d')
+
+            new Chart(ctx, {
+            type: 'pie',
+            data: {
+            labels: ['Strongly Agree', 'Agree', 'Disagree', 'Strongly Disagree'],
+            datasets: [{
+                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                data: JSON.parse(a)[1]
+            }]
+            },
+            options: {
+                responsive: false,
+                maintainAspectRatio: false,
+                
+                plugins: {
+                    title: {
+                    display: true,
+                    text: "{{column_name.1}}"
+                 },
+                    legend:{
+                        display:false
+                    }
+                }
+            }
+        });
+
+        var ctx = document.getElementById('Chart3').getContext('2d')
+
+            new Chart(ctx, {
+            type: 'pie',
+            data: {
+            labels: ['Strongly Agree', 'Agree', 'Disagree', 'Strongly Disagree'],
+            datasets: [{
+                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                data: JSON.parse(a)[2]
+            }]
+            },
+            options: {
+                responsive: false,
+                maintainAspectRatio: false,
+                
+                plugins: {
+                    title: {
+                    display: true,
+                    text: "{{column_name.2}}"
+                 },
+                    legend:{
+                        display:false
+                    }
+                }
+            }
+        });
+
+        var ctx = document.getElementById('Chart4').getContext('2d')
+
+            new Chart(ctx, {
+            type: 'pie',
+            data: {
+            labels: ['Strongly Agree', 'Agree', 'Disagree', 'Strongly Disagree'],
+            datasets: [{
+                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                data: JSON.parse(a)[3]
+            }]
+            },
+            options: {
+                responsive: false,
+                maintainAspectRatio: false,
+                
+                plugins: {
+                    title: {
+                    display: true,
+                    text: "{{column_name.3}}"
+                 },
+                    legend:{
+                        display:false
+                    }
+                }
+            }
+        });
+
+
+        var ctx = document.getElementById('Chart5').getContext('2d')
+        
+            new Chart(ctx, {
+            type: 'pie',
+            data: {
+            labels: ['Strongly Agree', 'Agree', 'Disagree', 'Strongly Disagree'],
+            datasets: [{
+                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                data: JSON.parse(a)[4]
+            }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                
+                plugins: {
+                    title: {
+                    display: true,
+                    text: "{{column_name.4}}",
+                   
+                 },
+                    legend:{
+                        display:false,
+                        
+
+                    }
+                }
+            }
+        });
+
+        var ctx = document.getElementById('Chart6').getContext('2d')
+        
+            new Chart(ctx, {
+            type: 'pie',
+            data: {
+            labels: ['Strongly Agree', 'Agree', 'Disagree', 'Strongly Disagree'],
+            datasets: [{
+                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                data: JSON.parse(a)[5]
+            }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                
+                plugins: {
+                    title: {
+                    display: true,
+                    text: "{{column_name.5}}",
+                   
+                 },
+                    legend:{
+                        display:false,
+                        
+
+                    }
+                }
+            }
+        });
+    
+        var ctx = document.getElementById('Chart7').getContext('2d')
+        
+            new Chart(ctx, {
+            type: 'pie',
+            data: {
+            labels: ['Strongly Agree', 'Agree', 'Disagree', 'Strongly Disagree'],
+            datasets: [{
+                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                data: JSON.parse(a)[6]
+            }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                
+                plugins: {
+                    title: {
+                    display: true,
+                    text: "{{column_name.6}}",
+                   
+                 },
+                    legend:{
+                        display:false,
+                        
+
+                    }
+                }
+            }
+        });
+    
+        var ctx = document.getElementById('Chart8').getContext('2d')
+        
+            new Chart(ctx, {
+        type: 'pie',
+        data: {
+        labels: ['Strongly Agree', 'Agree', 'Disagree', 'Strongly Disagree'],
+        datasets: [{
+            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+            data: JSON.parse(a)[7]
+        }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            
+            plugins: {
+                title: {
+                display: true,
+                text: "{{column_name.7}}",
+               
+             },
+                legend:{
+                    display:false,
+                    
+
+                }
+            }
+        }
+    });
+        
+        var ctx = document.getElementById('Chart9').getContext('2d')
+        
+            new Chart(ctx, {
+    type: 'pie',
+    data: {
+    labels: ['Strongly Agree', 'Agree', 'Disagree', 'Strongly Disagree'],
+    datasets: [{
+        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+        data: JSON.parse(a)[8]
+    }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        
+        plugins: {
+            title: {
+            display: true,
+            text: "{{column_name.8}}",
+           
+         },
+            legend:{
+                display:false,
+                
+
+            }
+        }
+    }
+});
+
+        var ctx = document.getElementById('Chart10').getContext('2d')
+        
+             new Chart(ctx, {
+                type: 'pie',
+                data: {
+                labels: ['Strongly Agree', 'Agree', 'Disagree', 'Strongly Disagree'],
+                datasets: [{
+                    backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                    data: JSON.parse(a)[9]
+                }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    
+                    plugins: {
+                        title: {
+                        display: true,
+                        text: "{{column_name.9}}",
+                    
+                    },
+                        legend:{
+                            display:false,
+                            
+
+                        }
+                    }
+                }
+                });
+        
+        var ctx = document.getElementById('Chart11').getContext('2d')
+        
+        new Chart(ctx, {
+           type: 'pie',
+           data: {
+           labels: ['Strongly Agree', 'Agree', 'Disagree', 'Strongly Disagree'],
+           datasets: [{
+               backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+               data: JSON.parse(a)[10]
+           }]
+           },
+           options: {
+               responsive: true,
+               maintainAspectRatio: false,
+               
+               plugins: {
+                   title: {
+                   display: true,
+                   text: "{{column_name.10}}",
+               
+               },
+                   legend:{
+                       display:false,
+                       
+
+                   }
+               }
+           }
+           });
+
+        var ctx = document.getElementById('Chart12').getContext('2d')
+        
+        new Chart(ctx, {
+           type: 'pie',
+           data: {
+           labels: ['Strongly Agree', 'Agree', 'Disagree', 'Strongly Disagree'],
+           datasets: [{
+               backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+               data: JSON.parse(a)[11]
+           }]
+           },
+           options: {
+               responsive: true,
+               maintainAspectRatio: false,
+               
+               plugins: {
+                   title: {
+                   display: true,
+                   text: "{{column_name.11}}",
+               
+               },
+                   legend:{
+                       display:false,
+                       
+
+                   }
+               }
+           }
+           });
+
+        var ctx = document.getElementById('Chart13').getContext('2d')
+        
+        new Chart(ctx, {
+           type: 'pie',
+           data: {
+           labels: ['Strongly Agree', 'Agree', 'Disagree', 'Strongly Disagree'],
+           datasets: [{
+               backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+               data: JSON.parse(a)[12]
+           }]
+           },
+           options: {
+               responsive: true,
+               maintainAspectRatio: false,
+               
+               plugins: {
+                   title: {
+                   display: true,
+                   text: "{{column_name.12}}",
+               
+               },
+                   legend:{
+                       display:false,
+                       
+
+                   }
+               }
+           }
+           });
+
+        var ctx = document.getElementById('Chart14').getContext('2d')
+        
+        new Chart(ctx, {
+           type: 'pie',
+           data: {
+           labels: ['Strongly Agree', 'Agree', 'Disagree', 'Strongly Disagree'],
+           datasets: [{
+               backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+               data: JSON.parse(a)[13]
+           }]
+           },
+           options: {
+               responsive: true,
+               maintainAspectRatio: false,
+               
+               plugins: {
+                   title: {
+                   display: true,
+                   text: "{{column_name.13}}",
+               
+               },
+                   legend:{
+                       display:false,
+                       
+
+                   }
+               }
+           }
+           });
+
+        var ctx = document.getElementById('Chart15').getContext('2d')
+        
+        new Chart(ctx, {
+           type: 'pie',
+           data: {
+           labels: ['Strongly Agree', 'Agree', 'Disagree', 'Strongly Disagree'],
+           datasets: [{
+               backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+               data: JSON.parse(a)[14]
+           }]
+           },
+           options: {
+               responsive: true,
+               maintainAspectRatio: false,
+               
+               plugins: {
+                   title: {
+                   display: true,
+                   text: "{{column_name.14}}",
+               
+               },
+                   legend:{
+                       display:false,
+                       
+
+                   }
+               }
+           }
+           });
+
+
+        var ctx = document.getElementById('Chart16').getContext('2d')
+        
+        new Chart(ctx, {
+           type: 'pie',
+           data: {
+           labels: ['Strongly Agree', 'Agree', 'Disagree', 'Strongly Disagree'],
+           datasets: [{
+               backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+               data: JSON.parse(a)[15]
+           }]
+           },
+           options: {
+               responsive: true,
+               maintainAspectRatio: false,
+               
+               plugins: {
+                   title: {
+                   display: true,
+                   text: "{{column_name.15}}",
+               
+               },
+                   legend:{
+                       display:false,
+                       
+
+                   }
+               }
+           }
+           });
+
+        var ctx = document.getElementById('Chart17').getContext('2d')
+        
+        new Chart(ctx, {
+           type: 'pie',
+           data: {
+           labels: ['Strongly Agree', 'Agree', 'Disagree', 'Strongly Disagree'],
+           datasets: [{
+               backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+               data: JSON.parse(a)[16]
+           }]
+           },
+           options: {
+               responsive: true,
+               maintainAspectRatio: false,
+               
+               plugins: {
+                   title: {
+                   display: true,
+                   text: "{{column_name.16}}",
+               
+               },
+                   legend:{
+                       display:false,
+                       
+
+                   }
+               }
+           }
+           });
+
+        var ctx = document.getElementById('Chart18').getContext('2d')
+        
+        new Chart(ctx, {
+           type: 'pie',
+           data: {
+           labels: ['Strongly Agree', 'Agree', 'Disagree', 'Strongly Disagree'],
+           datasets: [{
+               backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+               data: JSON.parse(a)[17]
+           }]
+           },
+           options: {
+               responsive: true,
+               maintainAspectRatio: false,
+               
+               plugins: {
+                   title: {
+                   display: true,
+                   text: "{{column_name.17}}",
+               
+               },
+                   legend:{
+                       display:false,
+                       
+
+                   }
+               }
+           }
+           });
+
+        var ctx = document.getElementById('Chart19').getContext('2d')
+        
+        new Chart(ctx, {
+           type: 'pie',
+           data: {
+           labels: ['Strongly Agree', 'Agree', 'Disagree', 'Strongly Disagree'],
+           datasets: [{
+               backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+               data: JSON.parse(a)[18]
+           }]
+           },
+           options: {
+               responsive: true,
+               maintainAspectRatio: false,
+               
+               plugins: {
+                   title: {
+                   display: true,
+                   text: "{{column_name.18}}",
+               
+               },
+                   legend:{
+                       display:false,
+                       
+
+                   }
+               }
+           }
+           });
+
+        var ctx = document.getElementById('Chart20').getContext('2d')
+        
+        new Chart(ctx, {
+           type: 'pie',
+           data: {
+           labels: ['Strongly Agree', 'Agree', 'Disagree', 'Strongly Disagree'],
+           datasets: [{
+               backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+               data: JSON.parse(a)[19]
+           }]
+           },
+           options: {
+               responsive: true,
+               maintainAspectRatio: false,
+               
+               plugins: {
+                   title: {
+                   display: true,
+                   text: "{{column_name.19}}",
+               
+               },
+                   legend:{
+                       display:false,
+                       
+
+                   }
+               }
+           }
+           });
+
+        var ctx = document.getElementById('Chart21').getContext('2d')
+        
+        new Chart(ctx, {
+           type: 'pie',
+           data: {
+           labels: ['Strongly Agree', 'Agree', 'Disagree', 'Strongly Disagree'],
+           datasets: [{
+               backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+               data: JSON.parse(a)[20]
+           }]
+           },
+           options: {
+               responsive: true,
+               maintainAspectRatio: false,
+               
+               plugins: {
+                   title: {
+                   display: true,
+                   text: "{{column_name.20}}",
+               
+               },
+                   legend:{
+                       display:false,
+                       
+
+                   }
+               }
+           }
+           });
+
+
+
+</script>
+    
+</body>
+
+</html>
