@@ -79,10 +79,10 @@ WSGI_APPLICATION = 'survey.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'survey',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',
+        'NAME': 'freedbtech_recommenderEingel',
+        'USER': 'freedbtech_eingelDB',
+        'PASSWORD': 'eingelpogi123',
+        'HOST': 'http://freedb.tech',
         'PORT': '3306',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
