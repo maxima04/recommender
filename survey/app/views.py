@@ -14,6 +14,7 @@ from wordcloud import WordCloud
 import io
 import base64
 import urllib
+import csv
 # Create your views here.
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -167,7 +168,7 @@ def survey(request):
 
 
             likert_data = [a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,i1,i2,i3,ac1,ac2,ac3,ac4]
-            #uploadDataLikert(likert_data) ## upload form data to csv
+            uploadDataLikert(likert_data) ## upload form data to csv
 
             #Get opinion form data, do not include subject name
             sa1 = surveyform.cleaned_data['sa1']
@@ -195,7 +196,7 @@ def survey(request):
 
 
             survey_data = [sa1,sa2,sa3,sa4,sa5,sa6,sa7,sa8,sa9,sa10,sa11,sa12,sa13,sa14,si1,si2,si3,sac1,sac2,sac3,sac4]
-            #uploadDataSentiment(survey_data) ## upload form data to csv
+            uploadDataSentiment(survey_data) ## upload form data to csv
 
             #Get opinion form data
             e1 = opinionForm.cleaned_data['e1']

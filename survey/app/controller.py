@@ -32,8 +32,8 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer 
 from nltk.corpus import wordnet 
 from sklearn.feature_extraction.text import CountVectorizer
-nltk.download('averaged_perceptron_tagger')
-nltk.download('vader_lexicon')
+
+import csv
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -48,7 +48,7 @@ def uploadDataSentiment(data):
     with open(OPINION_SURVEY_DIR, 'a') as csv_file:
         csv_writer = csv.writer(csv_file, delimiter=',')
         csv_writer.writerow(data)
-        csv_writer.close()
+        
 
     return None
 
@@ -57,7 +57,7 @@ def uploadDataLikert(data):
     with open(LIKERT_SURVEY_DIR, 'a') as csv_file:
         csv_writer = csv.writer(csv_file, delimiter=',')
         csv_writer.writerow(data)
-        csv_writer.close()
+        
 
     return None
 
