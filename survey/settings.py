@@ -82,7 +82,7 @@ DATABASES = {
         'NAME': 'freedbtech_recommenderEingel',
         'USER': 'freedbtech_eingelDB',
         'PASSWORD': 'eingelpogi123',
-        'HOST': 'http://freedb.tech',
+        'HOST': 'https://freedb.tech',
         'PORT': '3306',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
