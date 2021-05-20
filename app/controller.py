@@ -319,11 +319,11 @@ def actionPlan(aspect,sentiment):
 
     answer =' '.join(unique_list(tok.split()))
 
-    if sentiment >= 0.2 and len(answer) != 0:
+    if sentiment >= 0.05 and len(answer) != 0:
         return "The students enjoyed the services of: " + answer
-    elif sentiment <= 0.15 and len(answer) != 0:
+    elif sentiment <= 0.03 and len(answer) != 0:
         return "There is significant unsatisfaction in terms of ["+ answer + "] provide immediate intervention" 
-    elif sentiment > 0.15 and sentiment < 0.2 and len(answer) != 0:
+    elif sentiment < 0.05 and sentiment > 0.03 and len(answer) != 0:
         return "There is no immediate action needed for [" + answer +"] but needs improvement"
     else:
         return "No Aspect and Comment to decide on"
