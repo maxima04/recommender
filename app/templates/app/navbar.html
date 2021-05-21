@@ -11,15 +11,15 @@
         {% url 'likert' as likert %}
         {% url 'survey' as survey %}
         {% url 'aspect' as aspect %}
-        {% if role == "admin" or role == "head" %}
+          {% if role == "itbl" or role == "acads" or role == "ito" %}
           <a href="{% url 'sentiment' %}" class="nav-item nav-link {% if currentPage == sent %} active" {% endif %}">Sentiment</a>
           <a href="{% url 'likert' %}" class="nav-item nav-link {% if currentPage == likert %} active {% endif %}">Likert</a>
+          <a href="{% url 'aspect' %}" class="nav-item nav-link {% if currentPage == aspect %} active {% endif %}">Aspect</a>
           <a href="{% url 'survey' %}" class="nav-item nav-link  {% if currentPage == survey %} active {% endif %}">Survey</a>
-          <a href="{% url 'aspect' %}" class="nav-item nav-link {% if currentPage == aspect %} active {% endif %}">Aspect</a>
-        {% elif role == "itbl" or role == "acads" or role == "ito" %}
-          <a href="{% url 'aspect' %}" class="nav-item nav-link {% if currentPage == aspect %} active {% endif %}">Aspect</a>
+
         {% else %}
           <a href="{% url 'survey' %}" class="nav-item nav-link  {% if currentPage == survey %} active {% endif %}">Survey</a>
+
         {% endif %}
       </div>
       <a type="button" class="btn btn-dark" id="#logout-button" href="{% url 'logout' %}">Logout</a>
