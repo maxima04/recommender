@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.utils import timezone
 from django.contrib import messages
 from django.http import HttpResponse
-from app.forms import SurveyForm, LikertForm, OpinionForm, RegistrationForm, LoginForm, TitleForm
+from app.forms import LikertSurveyForm, RegistrationForm, LoginForm, TitleForm
 from .models import Surveyquestions, User, Likert, Opinion, Survey
 from django.contrib.auth import authenticate, login, logout
 from .controller import *
@@ -114,89 +114,83 @@ def survey(request):
     #check if user logged in if not, redirect to login page
     redirectUser = user_auth()
     if redirectUser == True:
-        messages.error(request, "You need to login!")
         return redirect('/login')
 
 
     if request.method == 'POST':
 
-        surveyform = SurveyForm(request.POST)
-        likertForm = LikertForm(request.POST)
-        opinionForm = OpinionForm(request.POST)
+        likertSurvey = LikertSurveyForm(request.POST)
 
-        if surveyform.is_valid() and likertForm.is_valid() and opinionForm.is_valid():
-            '''
-            !!! Note !!!
-            Try to print a1 variable if form.cleaned_data.get() is working accordingly
-            you can remove controller.py if it takes too long to load
-            '''
-            
-            #Get likert form data
-            #a1 = likertForm.cleaned_data.get('a1')
-            #a2 = likertForm.cleaned_data.get('a2')
-            #Please contiue until finished
+        if likertSurvey.is_valid():
 
             # Likert data
-            courseName = likertForm.cleaned_data['course_name']
-            a1 = likertForm.cleaned_data['a1']
-            a2 = likertForm.cleaned_data['a2']
-            a3 = likertForm.cleaned_data['a3']
-            a4 = likertForm.cleaned_data['a4']
-            a5 = likertForm.cleaned_data['a5']
-            a6 = likertForm.cleaned_data['a6']
-            a7 = likertForm.cleaned_data['a7']
-            a8 = likertForm.cleaned_data['a8']
-            a9 = likertForm.cleaned_data['a9']
-            a10 = likertForm.cleaned_data['a10']
-            a11 = likertForm.cleaned_data['a11']
-            a12 = likertForm.cleaned_data['a12']
-            a13 = likertForm.cleaned_data['a13']
-            a14 = likertForm.cleaned_data['a14']
+            courseName = likertSurvey.cleaned_data['course_name']
+            a1 = likertSurvey.cleaned_data['a1']
+            a2 = likertSurvey.cleaned_data['a2']
+            a3 = likertSurvey.cleaned_data['a3']
+            a4 = likertSurvey.cleaned_data['a4']
+            a5 = likertSurvey.cleaned_data['a5']
+            a6 = likertSurvey.cleaned_data['a6']
+            a7 = likertSurvey.cleaned_data['a7']
+            a8 = likertSurvey.cleaned_data['a8']
+            a9 = likertSurvey.cleaned_data['a9']
+            a10 = likertSurvey.cleaned_data['a10']
+            a11 = likertSurvey.cleaned_data['a11']
+            a12 = likertSurvey.cleaned_data['a12']
+            a13 = likertSurvey.cleaned_data['a13']
+            a14 = likertSurvey.cleaned_data['a14']
+            a15 = likertSurvey.cleaned_data['a15']
+            a16 = likertSurvey.cleaned_data['a16']
+            a17 = likertSurvey.cleaned_data['a17']
 
-            i1 = likertForm.cleaned_data['i1']
-            i2 = likertForm.cleaned_data['i2']
-            i3 = likertForm.cleaned_data['i3']
-            ac1 = likertForm.cleaned_data['ac1']
-            ac2 = likertForm.cleaned_data['ac3']
-            ac3 = likertForm.cleaned_data['ac3']
-            ac4 = likertForm.cleaned_data['ac4']
+            i1 = likertSurvey.cleaned_data['i1']
+            i2 = likertSurvey.cleaned_data['i2']
+            i3 = likertSurvey.cleaned_data['i3']
+            ac1 = likertSurvey.cleaned_data['ac1']
+            ac2 = likertSurvey.cleaned_data['ac3']
+            ac3 = likertSurvey.cleaned_data['ac3']
+            ac4 = likertSurvey.cleaned_data['ac4']
+            ac5 = likertSurvey.cleaned_data['ac1']
+            ac6 = likertSurvey.cleaned_data['ac3']
+            ac7 = likertSurvey.cleaned_data['ac3']
+            ac8 = likertSurvey.cleaned_data['ac4']
 
 
-            likert_data = [a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,i1,i2,i3,ac1,ac2,ac3,ac4]
+            likert_data = [a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15, a16,a17,i1,i2,i3,ac1,ac2,ac3,ac4,ac5,ac6,ac7,ac8]
             uploadDataLikert(likert_data) ## upload form data to csv
 
             #Get opinion form data, do not include subject name
-            sa1 = surveyform.cleaned_data['sa1']
-            sa2 = surveyform.cleaned_data['sa2']
-            sa3 = surveyform.cleaned_data['sa3']
-            sa4 = surveyform.cleaned_data['sa4']
-            sa5 = surveyform.cleaned_data['sa5']
-            sa6 = surveyform.cleaned_data['sa6']
-            sa7 = surveyform.cleaned_data['sa7']
-            sa8 = surveyform.cleaned_data['sa8']
-            sa9 = surveyform.cleaned_data['sa9']
-            sa10 = surveyform.cleaned_data['sa10']
-            sa11 = surveyform.cleaned_data['sa11']
-            sa12 = surveyform.cleaned_data['sa12']
-            sa13 = surveyform.cleaned_data['sa13']
-            sa14 = surveyform.cleaned_data['sa14']
+            sa1 = likertSurvey.cleaned_data['sa1']
+            sa2 = likertSurvey.cleaned_data['sa2']
+            sa3 = likertSurvey.cleaned_data['sa3']
+            sa4 = likertSurvey.cleaned_data['sa4']
+            sa5 = likertSurvey.cleaned_data['sa5']
+            sa6 = likertSurvey.cleaned_data['sa6']
+            sa7 = likertSurvey.cleaned_data['sa7']
+            sa8 = likertSurvey.cleaned_data['sa8']
+            sa9 = likertSurvey.cleaned_data['sa9']
+            sa10 = likertSurvey.cleaned_data['sa10']
+            sa11 = likertSurvey.cleaned_data['sa11']
+            sa12 = likertSurvey.cleaned_data['sa12']
+            sa13 = likertSurvey.cleaned_data['sa13']
+            sa14 = likertSurvey.cleaned_data['sa14']
 
-            si1 = surveyform.cleaned_data['si1']
-            si2 = surveyform.cleaned_data['si2']
-            si3 = surveyform.cleaned_data['si3']
-            sac1 = surveyform.cleaned_data['sac1']
-            sac2 = surveyform.cleaned_data['sac3']
-            sac3 = surveyform.cleaned_data['sac3']
-            sac4 = surveyform.cleaned_data['sac4']
+            si1 = likertSurvey.cleaned_data['si1']
+            si2 = likertSurvey.cleaned_data['si2']
+            si3 = likertSurvey.cleaned_data['si3']
+            sac1 = likertSurvey.cleaned_data['sac1']
+            sac2 = likertSurvey.cleaned_data['sac3']
+            sac3 = likertSurvey.cleaned_data['sac3']
+            sac4 = likertSurvey.cleaned_data['sac4']
 
 
             survey_data = [sa1,sa2,sa3,sa4,sa5,sa6,sa7,sa8,sa9,sa10,sa11,sa12,sa13,sa14,si1,si2,si3,sac1,sac2,sac3,sac4]
             uploadDataSentiment(survey_data) ## upload form data to csv
 
             #Get opinion form data
-            e1 = opinionForm.cleaned_data['e1']
-            e2 = opinionForm.cleaned_data['e2']
-            e3 = opinionForm.cleaned_data['e3']
+            e1 = likertSurvey.cleaned_data['e1']
+            e2 = likertSurvey.cleaned_data['e2']
+            e3 = likertSurvey.cleaned_data['e3']
 
             ### No function for here yet
             opinion_data = [e1,e2,e3]
@@ -205,7 +199,7 @@ def survey(request):
             user_id=UserVariables.userId
 
             #save data to database
-            likertData = Likert(user_id=user_id, course_name=courseName, timestamp=timeStamp, a1=a1, a2=a2, a3=a3, a4=a4, a5=a5, a6=a6, a7=a7, a8=a8, a9=a9, a10=a10, a11=a11, a12=a12, a13=a13, a14=a14, i1=i1, i2=i2, i3=i3, ac1=ac1, ac2=ac2, ac3=ac3, ac4=ac4)
+            likertData = Likert(user_id=user_id, course_name=courseName, timestamp=timeStamp, a1=a1, a2=a2, a3=a3, a4=a4, a5=a5, a6=a6, a7=a7, a8=a8, a9=a9, a10=a10, a11=a11, a12=a12, a13=a13, a14=a14, a15=a15, a16=a16, a17=a17, i1=i1, i2=i2, i3=i3, ac1=ac1, ac2=ac2, ac3=ac3, ac4=ac4, ac5=ac5, ac6=ac6, ac7=ac7, ac8=ac8)
             likertData.save()
 
             surveyData = Survey(user_id=user_id, course_name=courseName, timestamp=timeStamp, a1=sa1, a2=sa2, a3=sa3, a4=sa4, a5=sa5, a6=sa6, a7=sa7, a8=sa8, a9=sa9, a10=sa10, a11=sa11, a12=sa12, a13=sa13, a14=sa14, i1=si1, i2=si2, i3=si3, ac1=sac1, ac2=sac2, ac3=sac3, ac4=sac4)
@@ -219,27 +213,24 @@ def survey(request):
             print(opinion_data)
 
             messages.success(request, "Submitted successfully!")
-            return render(request, 'app/survey.html')
+            return redirect('/survey')
+
+        else:
+            messages.error(request, "Try Again!")
+            return redirect('/survey')
             
     # if a GET (or any other method) we'll create a blank form
     else:
-        surveyform = SurveyForm()
-        likertform = LikertForm()
-        opinionform = OpinionForm()
-
+        likertSurvey = LikertSurveyForm()
         questions = Surveyquestions.objects.all()
 
-        zipped_data = zip(likertform, surveyform)
-        survey = list(zipped_data)
         currentPage = "/survey/"
         context = {
-            'form': survey,
             'questions': questions,
-            'opinionform': opinionform,
+            'form': likertSurvey,
             'currentPage': currentPage,
             'role': UserVariables.userRole
         }
-
         return render(request, 'app/survey.html', context)
 
 
