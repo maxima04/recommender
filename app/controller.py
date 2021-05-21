@@ -25,7 +25,6 @@ from .commons import *
 
 import nltk
 
-
 from nltk import word_tokenize, pos_tag, pos_tag_sents
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.corpus import stopwords
