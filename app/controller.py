@@ -24,7 +24,6 @@ import spacy
 from .commons import *
 
 import nltk
-nltk.download('stopwords')
 
 from nltk import word_tokenize, pos_tag, pos_tag_sents
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
