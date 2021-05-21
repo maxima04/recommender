@@ -247,23 +247,17 @@ def survey(request):
 
         return render(request, 'app/survey.html', context)
 
-def about(request):
-    return render(request, 'app/about.html')
-
 
 def likertPage(request):
     # check if user logged in if not, redirect to login page
     redirectUser = user_auth()
     if redirectUser == True:
-        messages.error(request, "You need to login!")
         return redirect('/login')
 
 
     likert = countLikert()
     likert = json.dumps(likert)
     currentPage = "/likertChart/"
-  
-
 
     context = {
         'column_name':column_name,
@@ -271,7 +265,7 @@ def likertPage(request):
         'currentPage': currentPage,
         'role': UserVariables.userRole,
         
-        }
+    }
 
     return render(request, 'app/likertChart.html', context)
 
@@ -279,7 +273,6 @@ def sentimentPage(request):
     # check if user logged in if not, redirect to login page
     redirectUser = user_auth()
     if redirectUser == True:
-        messages.error(request, "You need to login!")
         return redirect('/login')
 
     sentiment,comp = calculateSentiment()
@@ -299,7 +292,6 @@ def aspectPage(request):
     # check if user logged in if not, redirect to login page
     redirectUser = user_auth()
     if redirectUser == True:
-        messages.error(request, "You need to login!")
         return redirect('/login')
 
     ASPECT_DICT_DIR = os.path.join(COMMONS_DIR,'aspect.pkl')
@@ -384,7 +376,7 @@ def aspectPage(request):
         comment += " ".join(i)+" "
 
     wordcloud = WordCloud(background_color="white",width=1000,height=1000, max_words=10).generate(comment)
-    plt.figure(figsize=(3,3))
+    plt.figure(figsize=(5,3))
     plt.imshow(wordcloud, interpolation="bilinear", aspect='auto')
     plt.axis('off')
 
@@ -433,8 +425,6 @@ def aspectPage(request):
         'form':form,
         'currentPage': currentPage,
         'role': UserVariables.userRole
-
-        
     }
     return render(request, 'app/aspectChart.html', context)
 
@@ -449,10 +439,7 @@ def login(request):
 
             redirectToPage = login_user(username, userpass, request)
 
-            if redirectToPage != "/login":
-                message = "Hello " + UserVariables.userName + "!"
-                messages.success(request, message)
-            else:
+            if redirectToPage == "/login":
                 messages.error(request, "Wrong username/password!")
 
             return redirect(redirectToPage)
@@ -485,9 +472,6 @@ def register(request):
 
             redirectToPage = login_user(name, pword)
 
-            message = "Hello " + UserVariables.userName + "!"
-            messages.success(request, message)
-
             return redirect(redirectToPage)
         else:
             messages.error(request, "Try again!")
@@ -501,31 +485,15 @@ def register(request):
         }
         return render(request, 'app/register.html', context)
 
-def submitted(request):
-    # check if user logged in if not, redirect to login page
-    redirectUser = user_auth()
-    if redirectUser == True:
-        messages.error(request, "You need to login!")
-        return redirect('/login')
-
-    message = "Submitted Successfully!"
-    context = {
-        'message': message,
-    }
-
-    return render(request, 'app/thankyou.html', context)
-
 def dashboard(request):
     # check if user logged in if not, redirect to login page
     redirectUser = user_auth()
     if redirectUser == True:
-        messages.error(request, "You need to login!")
         return redirect('/login')
 
     context = {
         'role': UserVariables.userRole
     }
-
     return render(request, 'app/aspectChart.html', context)
 
 def logout(request):
