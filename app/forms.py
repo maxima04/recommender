@@ -16,8 +16,8 @@ opinion_column = [tuple([col,col]) for col in op_col.columns]
 COLUMN_CHOICES = opinion_column
 
 class TitleForm(forms.Form):
- 
-    title = forms.ChoiceField(choices = COLUMN_CHOICES)
+    #title = forms.ChoiceField(choices = COLUMN_CHOICES)
+    title = forms.CharField(widget=forms.Select(choices=COLUMN_CHOICES, attrs={'class': 'form-control'}))
 
 questions = Surveyquestions.objects.all()
 
