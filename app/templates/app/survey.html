@@ -17,59 +17,73 @@
   <br>
 
   <form action="#" method="post" >
-    {% csrf_token %}
+      {% csrf_token %}
 
-    <!--Fields-->
-    {% for radioButtons, commentsField in form %}
+      {% for item in form %}
+          <!--Display Part-->
+          {% if forloop.counter0 == 1 %}
+              <h5 id="survey-label">ACCESSIBILITY</h5>
 
-      {% if forloop.counter0 == 1 %}
-        <h5 id="survey-label">ACCESSIBILITY</h5>
+          {% elif forloop.counter0 == 32 %}
+              <h5 id="survey-label">INSTRUCTION</h5>
 
-      {% elif forloop.counter0 == 15 %}
-        <h5 id="survey-label">INSTRUCTION</h5>
+          {% elif forloop.counter0 == 38  %}
+              <h5 id="survey-label">ASSESSMENT AND COLLABORATION</h5>
+          {% endif %}
 
-      {% elif forloop.counter0 == 18  %}
-        <h5 id="survey-label">ASSESSMENT AND COLLABORATION</h5>
-      {% endif %}
+          {% if forloop.counter0 == 27 %}
+                <div class="form-group">
+                  {{ questions.13.question_description }}
+                </div>
+          {% elif forloop.counter0 == 38 %}
+                <div class="form-group">
+                  {{ questions.21.question_description }}
+                </div>
+          {% elif forloop.counter0 == 44 %}
+                <div class="form-group">
+                  {{ questions.26.question_description }}
+                </div>
+          {% endif %}
 
+          {% if forloop.counter0 == 0 %}
+              <div class="form-group">
+                  <label>{{ item.label }}</label>
+                  {{ item }}
+              </div>
 
-      {% if forloop.counter0 == 0 %}
+          {% elif forloop.counter0 == 50 or  forloop.counter0 == 51 or forloop.counter0 == 52 %}
+              <div class="form-group">
+                  <label>{{ item.label }}</label>
+                  {{ item }}
+              </div>
 
-        <div class="form-group">
-          <label>{{ radioButtons.label }}</label>
-          {{ radioButtons }}
-        </div>
+          {% else %}
+              {% if item.label == "Comment" %}
+                  <div class="form-group">
+                      <label>{{ item.label }}</label>
+                      {{ item }}
+                  </div>
+              {% else %}
+                  <div class="form-group">
+                      {{ item.label }}
+                  </div>
+                  <div class="form-check">
+                      {{ item }}
+                  </div>
+              {% endif %}
 
-      {% else %}
-        <div class="form-group">
-          {{ radioButtons.label }}
-        </div>
-        <div class="form-check">
-          {{ radioButtons }}
-        </div>
-        <div class="form-group">
-          <label>Comment</label>
-          {{ commentsField }}
-        </div>
-      {% endif %}
-    {% endfor %}
+          {% endif %}
+      {% endfor %}
 
-    {% for opinion in opinionform %}
-      <div class="form-group">
-        <label>{{ opinion.label }}</label>
-          {{ opinion }}
+      <div class="row" id="survey-submit-button">
+          <div class="col-sm-2 col-md-auto col-lg-4">
+          </div>
+          <div class="col-sm-8 col-md-4 col-lg-4">
+              <input class="btn btn-primary btn-block" type="submit" value="Submit">
+          </div>
+          <div class="col-sm-2 col-md-auto col-lg-4">
+          </div>
       </div>
-    {% endfor %}
-
-    <div class="row" id="survey-submit-button">
-      <div class="col-sm-2 col-md-auto col-lg-4">
-      </div>
-      <div class="col-sm-8 col-md-4 col-lg-4">
-        <input class="btn btn-primary btn-block" type="submit" value="Submit">
-      </div>
-      <div class="col-sm-2 col-md-auto col-lg-4">
-      </div>
-    </div>
   </form>
 </div>
 <!--End of container-->
