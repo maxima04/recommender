@@ -143,6 +143,9 @@ class Likert(models.Model):
     a12 = models.CharField(max_length=255)
     a13 = models.CharField(max_length=255)
     a14 = models.CharField(max_length=255)
+    a15 = models.CharField(max_length=255)
+    a16 = models.CharField(max_length=255)
+    a17 = models.CharField(max_length=255)
     i1 = models.CharField(max_length=255)
     i2 = models.CharField(max_length=255)
     i3 = models.CharField(max_length=255)
@@ -150,6 +153,10 @@ class Likert(models.Model):
     ac2 = models.CharField(max_length=255)
     ac3 = models.CharField(max_length=255)
     ac4 = models.CharField(max_length=255)
+    ac5 = models.CharField(max_length=255)
+    ac6 = models.CharField(max_length=255)
+    ac7 = models.CharField(max_length=255)
+    ac8 = models.CharField(max_length=255)
 
     class Meta:
         managed = False
