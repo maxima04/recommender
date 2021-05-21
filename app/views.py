@@ -48,7 +48,6 @@ def user_auth():
 def login_user(username, password, request):
     if User.objects.filter(username=username, password=password):
         userIsUser = 0
-        userIsAdmin = 0
         userIsItbl = 0
         userIsIto = 0
         userIsAcad = 0
@@ -58,7 +57,6 @@ def login_user(username, password, request):
             UserVariables.userId = userInfo.id
             UserVariables.userName = userInfo.username
             userIsUser = userInfo.is_user
-            userIsAdmin = userInfo.is_admin
             userIsItbl = userInfo.is_itbl
             userIsIto = userInfo.is_ito
             userIsAcad = userInfo.is_acad
@@ -72,13 +70,13 @@ def login_user(username, password, request):
             page = "/survey"
         elif userIsItbl == 1:
             UserVariables.userRole = "itbl"
-            page = "/sentimentChart"
+            page = "/aspectChart"
         elif userIsIto == 1:
             UserVariables.userRole = "acads"
-            page = "/sentimentChart"
+            page = "/aspectChart"
         elif userIsAcad == 1:
             UserVariables.userRole = "ito"
-            page = "/sentimentChart"
+            page = "/aspectChart"
         else:
             page = "/login"
     else:
