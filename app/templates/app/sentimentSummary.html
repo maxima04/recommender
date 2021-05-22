@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <title>Document</title>
+</head>
+<body>
+    <div>
+     
+      <table class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th>Question</th>
+            <th>Sentiment Score</th>
+            <th>Sentiment</th>
+            
+
+          </tr>
+        </thead>
+        <tbody>
+
+
+       {% if thisSent %}
+       {% for j in thisSent %}
+          {% for i,k in j.items %}
+        
+          <tr>
+            <td>{{i}}</td>
+            <td>{{k}}</td>
+
+            {% if k > 0.05 %}
+            <td> POSITIVE </td>
+            {% elif k <= 0.03 %}
+            <td>NEGATIVE</td>
+            {% elif k < 0.05 and k > 0.03%}
+            <td>NEUTAL</td>
+
+            {% endif %}
+            
+          </tr>
+            {% endfor %}
+
+            {% endfor %}
+        {% endif %}
+   
+        </tbody>
+      </table>
+
+
+</body>
+</html>

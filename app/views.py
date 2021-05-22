@@ -241,7 +241,8 @@ def likertPage(request):
         return redirect('/login')
 
 
-    likert = countLikert()
+    likert, dataframe, _dict = countLikert()
+
     likert = json.dumps(likert)
     currentPage = "/likertChart/"
 
@@ -254,6 +255,80 @@ def likertPage(request):
     }
 
     return render(request, 'app/likertChart.html', context)
+
+def likertSummary(request):
+
+    _likert, dataframe, _dict = countLikert()
+
+    context = {
+        'dataframe':dataframe,
+        '_dict':_dict
+
+    }
+
+    return render(request, 'app/likertSummary.html', context)
+
+def sentimentSummary(request):
+
+    thisSent,comp = calculateSentiment()
+
+
+    context = {
+        'thisSent':thisSent,
+        'comp':comp
+
+    }
+
+    return render(request, 'app/sentimentSummary.html', context)
+
+def aspectSummary(request):
+
+    ASPECT_DICT_DIR = os.path.join(COMMONS_DIR,'aspect.pkl')
+
+    with open(ASPECT_DICT_DIR, "rb") as tf:
+        aspect = pickle.load(tf)
+
+ 
+    sent, comp = calculateSentiment()
+    
+    acad_filter = ['subject','teacher','teach','faculty',
+                    'professor','school','system','learning',
+                    'modules','module','teaching'
+                    'assignments','assignment','knowledge','activities']
+
+    ito_filter = ['system','internet','connection',
+                    'slow','laboratory','access',
+                    'equipment']
+
+    itbl_filter = ['canvas','design','slow','platform',
+                    'application','survey',
+                    'modules','modules','log']
+
+
+    sent_value = [i for i in sent.values()]
+
+    AcadSummary = summarized_aspect(acad_filter,sent_value,aspect)
+    ItoSummary = summarized_aspect(ito_filter,sent_value,aspect)
+    ItblSummary = summarized_aspect(itbl_filter,sent_value,aspect)
+
+    userIsAcad = request.session['userIsAcad']
+    userIsItbl = request.session['userIsItbl']
+    userIsIto = request.session['userIsIto']
+
+
+    context = {
+
+        'AcadSummary':AcadSummary,
+        'ItoSummary':ItoSummary,
+        'ItblSummary':ItblSummary,
+
+        'userIsAcad':userIsAcad,
+        'userIsItbl':userIsItbl,
+        'userIsIto':userIsIto,
+        
+    }
+
+    return render(request, 'app/aspectSummary.html', context)
 
 def sentimentPage(request):
     # check if user logged in if not, redirect to login page

@@ -86,7 +86,12 @@ def countLikert():
     likert_list = agg_results.values.tolist()
     likert_results = [i[1:] for i in likert_list]
 
-    return likert_results
+    agg_results.columns = ['index','StronglyAgree', 'Agree', 'Disagree','StronglyDisagree']
+    to_df = agg_results.to_json(orient ='records')
+    to_dct = agg_results.to_dict()
+    data = json.loads(to_df)
+
+    return likert_results, data, to_dct
 
 
 def calculateSentiment():
@@ -265,7 +270,77 @@ def getAspect():
 
     return aspects, original_value
 
+def summarized_aspect(filterVal, sentiment,aspect):
+	#nlp = spacy.load('en_core_web_sm')
+
+
+	df = pd.DataFrame(list(aspect.items()),columns=['Question','Aspect'])
+	asp_dept = [findAc(filterVal,i) for i in df['Aspect']]
+
+	df.insert(loc=2, column='Sentiment_Score', value=sentiment)
+
+	df.insert(loc=2, column='Dept_aspect', value=asp_dept)
+
+	for i in range(0, 21):
+		df['Sentiments'] = df['Sentiment_Score'].apply(parse_values)
+
+	nndf = df[df.astype(str)['Dept_aspect'] != '[]']
+
+	for i in range(0, len(nndf['Question'])):
+		nndf['Action_Plan'] = df.apply(lambda row: plan(row.Sentiments,str(row.Dept_aspect)), axis=1)   
+
+	nndf = nndf.drop(['Aspect'], axis = 1)
+	
+	ndf_json = nndf.to_json(orient ='records')
+
+	parsed = json.loads(ndf_json)
+
+	return parsed
+
+
+
+
+
 ### Functions used in functions ####
+
+def plan(sentiment,answer):
+    if sentiment == 'POSITIVE':
+        return "The students enjoyed the services of: " + answer
+    elif sentiment == 'NEGATIVE':
+        return "There is significant unsatisfaction in terms of "+ answer + " provide immediate intervention" 
+    elif sentiment == 'NEUTRAL':
+        return "There is no immediate action needed for " + answer +" but needs improvement"
+    else:
+        return "No Aspect and Comment to decide on"
+
+
+def parse_values(x):
+    if x>= 0.05 :
+        return 'POSITIVE'
+    elif x<= 0.03:
+        return 'NEGATIVE'
+    else:
+        return 'NEUTRAL'
+    
+def parse_actionPlan(df):
+    nlp = spacy.load('en_core_web_sm')
+    tok = ''
+    for ap in (df['Dept_aspect']):
+
+        if len(str(ap)) != 0:
+            doc = nlp(str(ap))
+
+            for token in doc:
+                if token.pos_ == 'NOUN':
+                    tok += token.text +' ' 
+                    #print(token.text)
+                if token.pos == 'ADJ':
+                    print(token)
+                if token.pos == 'VERB':
+                    print(token)
+
+    answer =' '.join(unique_list(tok.split()))
+    return answer
 
 def pos_tagger(nltk_tag): 
     if nltk_tag.startswith('J'): 

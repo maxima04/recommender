@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <title>Document</title>
+</head>
+<body>
+    <div>
+
+    <table class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th>Question</th>
+            <th>Strongly Agree</th>
+            <th>Agree</th>
+            <th>Disagree</th>
+            <th>Strongly Disagree</th>
+          </tr>
+        </thead>
+        <tbody>
+
+
+       {% if dataframe %}
+          {% for i in dataframe %}
+        
+          <tr>
+            <td>{{i.index}}</td>
+            <td>{{i.StronglyAgree}}</td>
+            <td>{{i.Agree}}</td>
+            <td>{{i.Disagree}}</td>
+            <td>{{i.StronglyDisagree}}</td>
+          </tr>
+
+            {% endfor %}
+        {% endif %}
+   
+        </tbody>
+      </table>
+      
+     
+
+
+</body>
+</html>
