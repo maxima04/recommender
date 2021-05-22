@@ -311,6 +311,32 @@ def aspectSummary(request):
     ItoSummary = summarized_aspect(ito_filter,sent_value,aspect)
     ItblSummary = summarized_aspect(itbl_filter,sent_value,aspect)
 
+    Acaddept = [i['Dept_aspect'] for i in AcadSummary]
+    Itodept = [i['Dept_aspect'] for i in ItoSummary]
+    Itbldept = [i['Dept_aspect'] for i in ItblSummary]
+
+    Acaddept = flatten_list(Acaddept)
+    Itodept = flatten_list(Itodept)
+    Itbldept = flatten_list(Itbldept)
+
+    Acadcomment = ''
+    for i in Acaddept:
+        Acadcomment += " ".join(i)+" "
+
+    Itocomment = ''
+    for i in Itodept:
+        Itocomment += " ".join(i)+" "
+
+    Itblcomment = ''
+    for i in Itbldept:
+        Itblcomment += " ".join(i)+" "
+
+
+    acadWordCloud = generateWordcloud(Acadcomment)
+    ItboWordCloud = generateWordcloud(Itocomment)
+    ItblWordCloud = generateWordcloud(Itblcomment)
+
+
     userIsAcad = request.session['userIsAcad']
     userIsItbl = request.session['userIsItbl']
     userIsIto = request.session['userIsIto']
@@ -325,6 +351,11 @@ def aspectSummary(request):
         'userIsAcad':userIsAcad,
         'userIsItbl':userIsItbl,
         'userIsIto':userIsIto,
+
+        'acadWordCloud':acadWordCloud,
+        'ItboWordCloud':ItboWordCloud,
+        'ItblWordCloud':ItblWordCloud,
+
         
     }
 
@@ -436,19 +467,7 @@ def aspectPage(request):
     for i in aspect[selected_title].values():
         comment += " ".join(i)+" "
 
-    wordcloud = WordCloud(background_color="white",width=1000,height=1000, max_words=10).generate(comment)
-    plt.figure(figsize=(5,3))
-    plt.imshow(wordcloud, interpolation="bilinear", aspect='auto')
-    plt.axis('off')
 
-    fig = plt.gcf()
-    buf = io.BytesIO()
-    fig.savefig(buf, format='png')
-    buf.seek(0)
-    string = base64.b64encode(buf.read())
-
-    uri = 'data:image/png;base64,' + urllib.parse.quote(string)
-    currentPage = "/aspectChart/"
 
     acadPlan = actionPlan(filterd_acad_comment,sentiment)
     itoPlan = actionPlan(filterd_ito_comment,sentiment)
@@ -462,7 +481,7 @@ def aspectPage(request):
 
     context = {
         'column_name':column_name,
-        'uri':uri,
+
 
         'acad_dict':acad_dict,
         'ito_dict':ito_dict,

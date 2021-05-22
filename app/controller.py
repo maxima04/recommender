@@ -34,6 +34,12 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 import csv
 
+from PIL import Image
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
+import io
+import base64
+import urllib
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -296,10 +302,35 @@ def summarized_aspect(filterVal, sentiment,aspect):
 	parsed = json.loads(ndf_json)
 
 	return parsed
+    
+def flatten_list(_2d_list):
+    flat_list = []
+    # Iterate through the outer list
+    for element in _2d_list:
+        if type(element) is list:
+            # If the element is of type list, iterate through the sublist
+            for item in element:
+                flat_list.append(item)
+        else:
+            flat_list.append(element)
+    return flat_list
 
 
+def generateWordcloud(value):
+    wordcloud = WordCloud(background_color="white",width=1000,height=1000, max_words=10).generate(value)
+    plt.figure(figsize=(5,3))
+    plt.imshow(wordcloud, interpolation="bilinear", aspect='auto')
+    plt.axis('off')
 
+    fig = plt.gcf()
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png')
+    buf.seek(0)
+    string = base64.b64encode(buf.read())
 
+    uri = 'data:image/png;base64,' + urllib.parse.quote(string)
+
+    return uri
 
 ### Functions used in functions ####
 
