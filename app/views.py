@@ -315,9 +315,6 @@ def aspectSummary(request):
     Itodept = [i['Dept_aspect'] for i in ItoSummary]
     Itbldept = [i['Dept_aspect'] for i in ItblSummary]
 
-    Acaddept = flatten_list(Acaddept)
-    Itodept = flatten_list(Itodept)
-    Itbldept = flatten_list(Itbldept)
 
     Acadcomment = ''
     for i in Acaddept:
