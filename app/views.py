@@ -330,7 +330,7 @@ def aspectSummary(request):
 
 
     acadWordCloud = generateWordcloud(Acadcomment)
-    ItboWordCloud = generateWordcloud(Itocomment)
+    ItoWordCloud = generateWordcloud(Itocomment)
     ItblWordCloud = generateWordcloud(Itblcomment)
 
 
