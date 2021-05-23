@@ -3,7 +3,13 @@
 
 
 <div class="row" id="form-label">
-    <h3 class="text-center">Course Feedback Summary</h3>
+    {% if userIsAcad == 1 %}
+    <h3 class="text-center">Academic Council Course Feedback Summary</h3>
+    {% elif userIsIto == 1 %}
+    <h3 class="text-center">Information Technology Office Course Feedback Summary</h3>
+    {% elif userIsItbl == 1 %}
+    <h3 class="text-center">Institute of Technology-Based Learning Course Feedback Summary</h3>
+    {% endif %}
 </div>
 
 <div class="container">
@@ -173,7 +179,7 @@
             <div class="row" style="margin-top: 20px;">
         <div class="col">
           <div class="text-center">
-            <img src="{{ ItboWordCloud }}" alt="word cloud" class="img-fluid rounded">
+            <img src="{{ ItoWordCloud }}" alt="word cloud" class="img-fluid rounded">
           </div>
         </div>
       </div>
