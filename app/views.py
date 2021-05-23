@@ -45,7 +45,7 @@ def user_auth():
         redirectUser = True
         return redirectUser
 
-def login_user(username, password):
+def login_user(username, password, request):
     if User.objects.filter(username=username, password=password):
         userIsUser = 0
         userIsItbl = 0
@@ -561,7 +561,7 @@ def register(request):
             userdata = User(name=name, username=uname, password=pword, is_user=1,is_admin=0, is_itbl=0, is_ito=0, is_acad=0)
             userdata.save()
 
-            redirectToPage = login_user(name, pword)
+            redirectToPage = login_user(name, pword, request)
 
             return redirect(redirectToPage)
         else:
