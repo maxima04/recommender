@@ -350,7 +350,7 @@ def aspectSummary(request):
         'userIsIto':userIsIto,
 
         'acadWordCloud':acadWordCloud,
-        'ItboWordCloud':ItboWordCloud,
+        'ItoWordCloud':ItoWordCloud,
         'ItblWordCloud':ItblWordCloud,
 
         
