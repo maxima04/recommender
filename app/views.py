@@ -558,7 +558,7 @@ def register(request):
             uname = registrationForm.cleaned_data['username']
             pword = registrationForm.cleaned_data['password']
 
-            userdata = User(name=name, username=uname, password=pword, is_user=1, is_admin=0, is_itbl=0, is_ito=0)
+            userdata = User(name=name, username=uname, password=pword, is_user=1,is_admin=0, is_itbl=0, is_ito=0, is_acad=0)
             userdata.save()
 
             redirectToPage = login_user(name, pword)
