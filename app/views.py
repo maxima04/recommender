@@ -464,7 +464,18 @@ def aspectPage(request):
     for i in aspect[selected_title].values():
         comment += " ".join(i)+" "
 
+    wordcloud = WordCloud(background_color="white",width=1000,height=1000, max_words=10).generate(comment)
+    plt.figure(figsize=(3,3))
+    plt.imshow(wordcloud, interpolation="bilinear", aspect='auto')
+    plt.axis('off')
 
+    fig = plt.gcf()
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png')
+    buf.seek(0)
+    string = base64.b64encode(buf.read())
+
+    uri = 'data:image/png;base64,' + urllib.parse.quote(string)
 
     acadPlan = actionPlan(filterd_acad_comment,sentiment)
     itoPlan = actionPlan(filterd_ito_comment,sentiment)
@@ -479,6 +490,8 @@ def aspectPage(request):
 
     context = {
         'column_name':column_name,
+
+        'uri':uri,
 
 
         'acad_dict':acad_dict,
