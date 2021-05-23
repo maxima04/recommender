@@ -475,6 +475,7 @@ def aspectPage(request):
     userIsItbl = request.session['userIsItbl']
     userIsIto = request.session['userIsIto']
 
+    currentPage = "/aspect/"
 
     context = {
         'column_name':column_name,
@@ -582,3 +583,115 @@ def logout(request):
 
     messages.success(request, "Successfully logout!")
     return redirect('/login')
+
+def summaryPage(request):
+    # check if user logged in if not, redirect to login page
+    redirectUser = user_auth()
+    if redirectUser == True:
+        return redirect('/login')
+
+
+    #aspect
+    def summaryAspect():
+        ASPECT_DICT_DIR = os.path.join(COMMONS_DIR, 'aspect.pkl')
+
+        with open(ASPECT_DICT_DIR, "rb") as tf:
+            aspect = pickle.load(tf)
+
+        sent, comp = calculateSentiment()
+
+        acad_filter = ['subject', 'teacher', 'teach', 'faculty',
+                       'professor', 'school', 'system', 'learning',
+                       'modules', 'module', 'teaching'
+                                            'assignments', 'assignment', 'knowledge', 'activities']
+
+        ito_filter = ['system', 'internet', 'connection',
+                      'slow', 'laboratory', 'access',
+                      'equipment']
+
+        itbl_filter = ['canvas', 'design', 'slow', 'platform',
+                       'application', 'survey',
+                       'modules', 'modules', 'log']
+
+        sent_value = [i for i in sent.values()]
+
+        AcadSummary = summarized_aspect(acad_filter, sent_value, aspect)
+        ItoSummary = summarized_aspect(ito_filter, sent_value, aspect)
+        ItblSummary = summarized_aspect(itbl_filter, sent_value, aspect)
+
+        Acaddept = [i['Dept_aspect'] for i in AcadSummary]
+        Itodept = [i['Dept_aspect'] for i in ItoSummary]
+        Itbldept = [i['Dept_aspect'] for i in ItblSummary]
+
+        Acadcomment = ''
+        for i in Acaddept:
+            Acadcomment += " ".join(i) + " "
+
+        Itocomment = ''
+        for i in Itodept:
+            Itocomment += " ".join(i) + " "
+
+        Itblcomment = ''
+        for i in Itbldept:
+            Itblcomment += " ".join(i) + " "
+
+        acadWordCloud = generateWordcloud(Acadcomment)
+        ItboWordCloud = generateWordcloud(Itocomment)
+        ItblWordCloud = generateWordcloud(Itblcomment)
+
+        userIsAcad = request.session['userIsAcad']
+        userIsItbl = request.session['userIsItbl']
+        userIsIto = request.session['userIsIto']
+
+        contextAsp = {
+
+            'AcadSummary': AcadSummary,
+            'ItoSummary': ItoSummary,
+            'ItblSummary': ItblSummary,
+
+            'userIsAcad': userIsAcad,
+            'userIsItbl': userIsItbl,
+            'userIsIto': userIsIto,
+
+            'acadWordCloud': acadWordCloud,
+            'ItboWordCloud': ItboWordCloud,
+            'ItblWordCloud': ItblWordCloud,
+
+        }
+        return contextAsp
+
+    #likert
+    def summaryLikert():
+        _likert, dataframe, _dict = countLikert()
+
+        contextLik = {
+            'dataframe': dataframe,
+            '_dict': _dict
+
+        }
+        return contextLik
+
+    #sentiment
+    def summarySentiment():
+
+        thisSent, comp = calculateSentiment()
+
+        contextSen = {
+            'thisSent': thisSent,
+            'comp': comp
+        }
+        return contextSen
+
+    currentPage = "/summary/"
+    context = {
+        'role': UserVariables.userRole,
+        'currentPage': currentPage,
+        'column_name': column_name,
+    }
+
+    context.update(summaryAspect())
+    context.update(summaryLikert())
+    context.update(summarySentiment())
+
+
+    return render(request, 'app/summary.html', context)
