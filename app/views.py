@@ -70,13 +70,13 @@ def login_user(username, password, request):
             page = "/survey"
         elif userIsItbl == 1:
             UserVariables.userRole = "itbl"
-            page = "/aspectChart"
+            page = "/summaryPage"
         elif userIsIto == 1:
             UserVariables.userRole = "acads"
-            page = "/aspectChart"
+            page = "/summaryPage"
         elif userIsAcad == 1:
             UserVariables.userRole = "ito"
-            page = "/aspectChart"
+            page = "/summaryPage"
         else:
             page = "/login"
     else:
