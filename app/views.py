@@ -45,7 +45,7 @@ def user_auth():
         redirectUser = True
         return redirectUser
 
-def login_user(username, password, request):
+def login_user(username, password):
     if User.objects.filter(username=username, password=password):
         userIsUser = 0
         userIsItbl = 0
