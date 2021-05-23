@@ -11,22 +11,14 @@
         {% url 'likert' as likert %}
         {% url 'survey' as survey %}
         {% url 'aspect' as aspect %}
+        {% url 'summary' as sum %}
           {% if role == "itbl" or role == "acads" or role == "ito" %}
           <a href="{% url 'aspect' %}" class="nav-item nav-link {% if currentPage == aspect %} active {% endif %}">Aspect</a>
-          <a href="{% url 'sentiment' %}" class="nav-item nav-link {% if currentPage == sent %} active {% endif %}">Sentiment</a>
           <a href="{% url 'likert' %}" class="nav-item nav-link {% if currentPage == likert %} active {% endif %}">Likert</a>
+          <a href="{% url 'sentiment' %}" class="nav-item nav-link {% if currentPage == sent %} active {% endif %}">Sentiment</a>
+          <a href="{% url 'summary' %}" class="nav-item nav-link {% if currentPage == sum %} active {% endif %}">Summary</a>
           <a href="{% url 'survey' %}" class="nav-item nav-link  {% if currentPage == survey %} active {% endif %}">Survey</a>
 
-          <div class="dropdown">
-              <button class="dropbtn" onclick="myFunction()">Dropdown
-                <i class="fa fa-caret-down"></i>
-              </button>
-              <div class="dropdown-content" id="myDropdown">
-                <a href="{% url 'summaryLikert' %}" class="nav-item nav-link  {% if currentPage == survey %} active {% endif %}">Likert Summary</a>
-                <a href="{% url 'summarySentiment' %}" class="nav-item nav-link  {% if currentPage == survey %} active {% endif %}">Sentiment Summary</a>
-                <a href="{% url 'summaryAspect' %}" class="nav-item nav-link  {% if currentPage == survey %} active {% endif %}">Aspect Summary</a>
-              </div>
-           </div> 
         {% else %}
           <a href="{% url 'survey' %}" class="nav-item nav-link  {% if currentPage == survey %} active {% endif %}">Survey</a>
 
@@ -36,20 +28,3 @@
       </div>
   {% endif %}
 </nav>
-<script>
-/* When the user clicks on the button, 
-toggle between hiding and showing the dropdown content */
-function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
-}
-
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(e) {
-  if (!e.target.matches('.dropbtn')) {
-  var myDropdown = document.getElementById("myDropdown");
-    if (myDropdown.classList.contains('show')) {
-      myDropdown.classList.remove('show');
-    }
-  }
-}
-</script>
