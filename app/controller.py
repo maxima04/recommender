@@ -335,14 +335,16 @@ def generateWordcloud(value):
 ### Functions used in functions ####
 
 def plan(sentiment,answer):
-    if sentiment == 'POSITIVE':
+	
+	return "Attributed aspect "+ answer +" have sufficiently yielded overall student sentiment."
+    '''if sentiment == 'POSITIVE':
         return "The students enjoyed the services of: " + answer
     elif sentiment == 'NEGATIVE':
         return "There is significant unsatisfaction in terms of "+ answer + " provide immediate intervention" 
     elif sentiment == 'NEUTRAL':
         return "There is no immediate action needed for " + answer +" but needs improvement"
     else:
-        return "No Aspect and Comment to decide on"
+        return "No Aspect and Comment to decide on"'''
 
 
 def parse_values(x):
