@@ -167,7 +167,7 @@
 
         <div class="tab-pane fade" id="pills-word-cloud" role="tabpanel" aria-labelledby="pills-word-clooud-tab">
         <h4>Word Cloud</h4>
-        {% if role == "acad" %}
+        {% if userIsAcad == 1 %}
             <div class="row" style="margin-top: 20px;">
         <div class="col">
           <div class="text-center">
@@ -175,15 +175,16 @@
           </div>
         </div>
       </div>
-        {% elif role == "ito" %}
+        {% elif userIsIto == 1%}
             <div class="row" style="margin-top: 20px;">
         <div class="col">
           <div class="text-center">
             <img src="{{ ItoWordCloud }}" alt="word cloud" class="img-fluid rounded">
+            
           </div>
         </div>
       </div>
-        {% elif role == "itbl" %}
+        {% elif userIsItbl == 1 %}
             <div class="row" style="margin-top: 20px;">
                 <div class="col">
                     <div class="text-center">

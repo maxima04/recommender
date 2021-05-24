@@ -636,6 +636,7 @@ def summaryPage(request):
         Itodept = [i['Dept_aspect'] for i in ItoSummary]
         Itbldept = [i['Dept_aspect'] for i in ItblSummary]
 
+        
         Acadcomment = ''
         for i in Acaddept:
             Acadcomment += " ".join(i) + " "
@@ -648,8 +649,11 @@ def summaryPage(request):
         for i in Itbldept:
             Itblcomment += " ".join(i) + " "
 
+    
+        
+
         acadWordCloud = generateWordcloud(Acadcomment)
-        ItboWordCloud = generateWordcloud(Itocomment)
+        ItoWordCloud = generateWordcloud(Itocomment)
         ItblWordCloud = generateWordcloud(Itblcomment)
 
         userIsAcad = request.session['userIsAcad']
@@ -657,6 +661,7 @@ def summaryPage(request):
         userIsIto = request.session['userIsIto']
 
         contextAsp = {
+            
 
             'AcadSummary': AcadSummary,
             'ItoSummary': ItoSummary,
@@ -667,7 +672,7 @@ def summaryPage(request):
             'userIsIto': userIsIto,
 
             'acadWordCloud': acadWordCloud,
-            'ItboWordCloud': ItboWordCloud,
+            'ItoWordCloud': ItoWordCloud,
             'ItblWordCloud': ItblWordCloud,
 
         }
